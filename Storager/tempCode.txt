@@ -1,0 +1,6 @@
+﻿<Border.Background>
+            <LinearGradientBrush>
+                <GradientStop Color="#7be9f6" Offset="0.0"/>
+                <GradientStop Color="#f083da" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.Background>
