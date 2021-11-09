@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Storager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Storager.ViewModels
 {
-    public class PageLoginViewModel : Screen
+    public class UserControlLoginViewModel : Screen
     {
         #region Properties
 
@@ -30,18 +31,44 @@ namespace Storager.ViewModels
         #endregion
 
         #region Constructor
-        public PageLoginViewModel()
+        public UserControlLoginViewModel()
         {
-            Console.WriteLine("dsfsdf");
+
         }
         #endregion
 
         #region Methods
+        private void LogIn()
+        {
+            UserModel userModel = DataAcces.GetUser(UserLogin, SecurePassword);
+            
+            if (userModel == null)
+            {
+                Console.WriteLine("Login failed");
+            }
+            else
+            {
+                Console.WriteLine($"Welcome {userModel.Login} - {userModel.Email}");
+            }
+        }
+        #endregion
+
+        #region Button clicks
         public void ExitButton()
         {
             Console.WriteLine($"Login - {UserLogin}");
             Console.WriteLine($"Password - {UserPassword}");
             Console.WriteLine($"Secure Password - {new System.Net.NetworkCredential(string.Empty, SecurePassword).Password}");
+        }
+        #endregion
+
+        #region Key input
+        public void LoginPreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                LogIn();
+            }
         }
         #endregion
     }

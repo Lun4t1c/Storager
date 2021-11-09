@@ -16,23 +16,23 @@ using System.Windows.Shapes;
 namespace Storager.Views
 {
     /// <summary>
-    /// Interaction logic for PageLoginView.xaml
+    /// Interaction logic for UserControlLoginView.xaml
     /// </summary>
-    public partial class PageLoginView : UserControl
+    public partial class UserControlLoginView : UserControl
     {
-        public PageLoginView()
+        #region Constructor
+        public UserControlLoginView()
         {
             InitializeComponent();
         }
+        #endregion
 
-        public void PasswordBox_PasswordChanged(object sender, MouseButtonEventArgs e)
+        #region Methods
+        private void SecurePassword_PasswordChanged(object sender, RoutedEventArgs e)
         {
-
+            if (this.DataContext != null)
+            { ((dynamic)this.DataContext).SecurePassword = ((PasswordBox)sender).SecurePassword; }
         }
-
-        public void Button_Click(object sender, MouseButtonEventArgs e)
-        {
-
-        }
+        #endregion
     }
 }

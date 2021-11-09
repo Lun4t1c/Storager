@@ -1,17 +1,15 @@
-﻿<UserControl x:Class="Storager.Views.PageLoginView"
+﻿<UserControl x:Class="Storager.Views.UserControlLoginView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Storager.Views"
-        xmlns:vms="clr-namespace:Storager.ViewModels"
+        xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
         mc:Ignorable="d" Background="Transparent"
         FontFamily="Helvetica"
         FontSize="30"
-        Height="650" Width="470">
-    <UserControl.DataContext>
-        <vms:PageLoginViewModel/>
-    </UserControl.DataContext>
+        Height="650" Width="470"
+        cal:Message.Attach="[Event PreviewKeyDown] = [Action LoginPreviewKeyDown($source, $eventArgs)]">
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -66,7 +64,7 @@
 
                     <TextBox Width="250"
                                 Margin="5"
-                                Text="{Binding UserLogin, Mode=TwoWay}"
+                                x:Name="UserLogin"
                                 Style="{StaticResource LoginTextboxStyle}"/>
 
                 </StackPanel>
@@ -85,9 +83,10 @@
                 <StackPanel Orientation="Horizontal">
 
                     <PasswordBox Width="250"
-                             
-                     Margin="5"
-                         Style="{StaticResource PasswordTextboxStyle}"/>
+                             x:Name="SecurePassword"
+                                 PasswordChanged="SecurePassword_PasswordChanged"
+                             Margin="5"
+                             Style="{StaticResource PasswordTextboxStyle}"/>
 
                 </StackPanel>
             </Border>

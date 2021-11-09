@@ -54,6 +54,7 @@
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.19\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Runtime.Serialization.Primitives, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -83,11 +84,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModels\PageLoginViewModel.cs" />
+    <Compile Include="Models\DataAcces.cs" />
+    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="ViewModels\UserControlLoginViewModel.cs" />
     <Compile Include="ViewModels\WindowShellViewModel.cs" />
     <Compile Include="ViewModels\WindowWelcomeViewModel.cs" />
-    <Compile Include="Views\PageLoginView.xaml.cs">
-      <DependentUpon>PageLoginView.xaml</DependentUpon>
+    <Compile Include="Views\UserControlLoginView.xaml.cs">
+      <DependentUpon>UserControlLoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WindowShellView.xaml.cs">
       <DependentUpon>WindowShellView.xaml</DependentUpon>
@@ -124,15 +127,13 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="ControlStyles\LoginTextboxStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\PageLoginView.xaml">
+    <Page Include="Views\UserControlLoginView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

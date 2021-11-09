@@ -31,8 +31,11 @@
             </Grid.RowDefinitions>
 
 
+            <!--
             <local:PageLoginView Grid.Column="1" Grid.Row="1"/>
-
+            -->
+            <ContentControl Grid.Column="1" Grid.Row="1"
+                            x:Name="ActiveItem"/>
 
         </Grid>
         

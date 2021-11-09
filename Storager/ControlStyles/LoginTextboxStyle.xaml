@@ -6,6 +6,7 @@
         <Setter Property="BorderThickness" Value="0,0,0,0"/>
         <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="Foreground" Value="White" />
+        <Setter Property="CaretBrush" Value="White" />
     </Style>
 
     <Style x:Key="PasswordTextboxStyle" TargetType="{x:Type PasswordBox}">
@@ -13,6 +14,7 @@
         <Setter Property="BorderThickness" Value="0,0,0,0"/>
         <Setter Property="BorderBrush" Value="White"/>
         <Setter Property="Foreground" Value="White" />
+        <Setter Property="CaretBrush" Value="White" />
     </Style>
     
 </ResourceDictionary>

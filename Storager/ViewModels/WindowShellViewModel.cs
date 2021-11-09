@@ -9,6 +9,19 @@ namespace Storager.ViewModels
 {
     public class WindowShellViewModel : Screen
     {
+        #region Properties
 
+        #endregion
+
+        #region Constructor
+        public WindowShellViewModel()
+        {
+
+        }
+        #endregion
+
+        #region Methods
+
+        #endregion
     }
 }
