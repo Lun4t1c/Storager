@@ -46,6 +46,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
@@ -58,7 +59,8 @@
                        VerticalContentAlignment="Bottom"/>
 
             <Border Grid.Column="1" BorderThickness="0,0,0,2"
-                        BorderBrush="White">
+                        BorderBrush="White"
+                    Margin="0,0,10,0">
 
                 <StackPanel Orientation="Horizontal">
 
@@ -72,14 +74,16 @@
 
             <!-- PASSWORD -->
             <Label Grid.Row="1" Content="Password:"
+                   Margin="0,20,0,0"
                        FontSize="25"
                        FontWeight="Light"
-                               Foreground="#70ffffff"
-                               HorizontalContentAlignment="Right"
+                       Foreground="#70ffffff"
+                       HorizontalContentAlignment="Right"
                        VerticalContentAlignment="Bottom"/>
 
             <Border Grid.Row="1" Grid.Column="1" BorderThickness="0,0,0,2"
-                        BorderBrush="White">
+                        BorderBrush="White"
+                    Margin="0,0,10,0">
                 <StackPanel Orientation="Horizontal">
 
                     <PasswordBox Width="250"
@@ -92,16 +96,19 @@
             </Border>
 
 
+            <Label Grid.Row="2" Grid.ColumnSpan="2"
+                   Content="{Binding LastLoginMessage}"
+                   FontSize="20"
+                   FontWeight="Light"
+                   Foreground="#70919191"
+                   HorizontalContentAlignment="Center"/>
 
-            <Button Grid.Row="2" Grid.ColumnSpan="2" 
+            <Button Grid.Row="3" Grid.ColumnSpan="2" 
                     x:Name="ExitButton"
                     Content="Exit"
                     Margin="5"/>
 
         </Grid>
-
-
-
 
     </Grid>
 </UserControl>

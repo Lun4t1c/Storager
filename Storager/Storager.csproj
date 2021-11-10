@@ -84,6 +84,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Enums\LoginResultCodesEnum.cs" />
     <Compile Include="Models\DataAcces.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="ViewModels\UserControlLoginViewModel.cs" />

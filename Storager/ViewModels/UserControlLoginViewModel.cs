@@ -14,6 +14,13 @@ namespace Storager.ViewModels
 
         public System.Security.SecureString SecurePassword { private get; set; }
 
+        private string _lastLoginMessage = "";
+        public string LastLoginMessage
+        {
+            get { return _lastLoginMessage; }
+            set { _lastLoginMessage = value; NotifyOfPropertyChange(() => LastLoginMessage); }
+        }
+
         private string _userLogin;
         public string UserLogin
         {
@@ -40,25 +47,39 @@ namespace Storager.ViewModels
         #region Methods
         private void LogIn()
         {
-            UserModel userModel = DataAcces.GetUser(UserLogin, SecurePassword);
-            
-            if (userModel == null)
+            UserModel userModel;
+
+            switch (DataAcces.CheckCredentials(UserLogin, SecurePassword))
             {
-                Console.WriteLine("Login failed");
+                case Enums.LoginResultCodesEnum.OK:
+                    userModel = DataAcces.GetUser(UserLogin, SecurePassword);
+                    LastLoginMessage = "Logging in...";
+                    break;
+
+                case Enums.LoginResultCodesEnum.INVALID_LOGIN:
+                    LastLoginMessage = "Invalid login.";
+                    return;
+
+                case Enums.LoginResultCodesEnum.INVALID_PASSWORD:
+                    LastLoginMessage = "Invalid password";
+                    return;
+
+                case Enums.LoginResultCodesEnum.LOGIN_FAILED:
+                    LastLoginMessage = "Login failed";
+                    return;
+
+                default:
+                    return;
             }
-            else
-            {
-                Console.WriteLine($"Welcome {userModel.Login} - {userModel.Email}");
-            }
+
+            userModel = DataAcces.GetUser(UserLogin, SecurePassword);
         }
         #endregion
 
         #region Button clicks
         public void ExitButton()
         {
-            Console.WriteLine($"Login - {UserLogin}");
-            Console.WriteLine($"Password - {UserPassword}");
-            Console.WriteLine($"Secure Password - {new System.Net.NetworkCredential(string.Empty, SecurePassword).Password}");
+            Environment.Exit(1);
         }
         #endregion
 

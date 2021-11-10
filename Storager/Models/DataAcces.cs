@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Dapper;
+using Storager.Enums;
 
 namespace Storager.Models
 {
@@ -41,6 +42,14 @@ namespace Storager.Models
                 else
                     return false;
             }
+        }
+
+        public static LoginResultCodesEnum CheckCredentials(string login, SecureString password)
+        {
+            if (!CheckPassword(login, password))
+                return LoginResultCodesEnum.INVALID_PASSWORD;
+
+            return LoginResultCodesEnum.OK;
         }
 
         public static UserModel GetUser(string login, SecureString password)
