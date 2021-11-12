@@ -38,7 +38,7 @@
                             x:Name="ActiveItem"/>
 
         </Grid>
-        
+
         <Border.Background>
             <LinearGradientBrush x:Name="BorderLGB">
                 <GradientStop x:Name="GradientStop1" Color="#0d0933" Offset="0"/>
