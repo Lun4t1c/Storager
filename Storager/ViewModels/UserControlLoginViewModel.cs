@@ -45,6 +45,12 @@ namespace Storager.ViewModels
         #endregion
 
         #region Methods
+        private void StartUpMainShell(UserModel userModel)
+        {
+            IWindowManager manager = new WindowManager();
+            manager.ShowWindowAsync(new ViewModels.WindowShellViewModel(userModel));
+        }
+
         private void LogIn()
         {
             UserModel userModel;
@@ -81,13 +87,20 @@ namespace Storager.ViewModels
 
             UserModel userModel;
 
-            Enums.LoginResultCodesEnum result = await Task.Run( () => DataAcces.CheckCredentials(UserLogin, SecurePassword));
+            Enums.LoginResultCodesEnum result = await Task.Run( () => DataAcces.CheckCredentials(UserLogin, SecurePassword) );
 
-            switch (DataAcces.CheckCredentials(UserLogin, SecurePassword))
+            switch (result)
             {
-                case Enums.LoginResultCodesEnum.OK:
-                    userModel = DataAcces.GetUser(UserLogin, SecurePassword);
+                case Enums.LoginResultCodesEnum.OK:                    
                     LastLoginMessage = "Logging in...";
+                    userModel = await Task.Run( () => DataAcces.GetUser(UserLogin, SecurePassword) );
+                    
+
+                    //Finds and closes WindowWelcomeView after succesfuly logging in
+                    var window = System.Windows.Window.GetWindow((System.Windows.Controls.UserControl)this.GetView());
+                    window.Close();
+
+                    StartUpMainShell(userModel);
                     break;
 
                 case Enums.LoginResultCodesEnum.INVALID_LOGIN:
@@ -104,9 +117,7 @@ namespace Storager.ViewModels
 
                 default:
                     return;
-            }
-
-            userModel = DataAcces.GetUser(UserLogin, SecurePassword);
+            }            
         }
         #endregion
 

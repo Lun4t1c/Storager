@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Storager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,13 +11,13 @@ namespace Storager.ViewModels
     public class WindowShellViewModel : Screen
     {
         #region Properties
-
+        public UserModel LoggedUser { get; set; }
         #endregion
 
         #region Constructor
-        public WindowShellViewModel()
+        public WindowShellViewModel(UserModel userModel = null)
         {
-
+            LoggedUser = userModel;
         }
         #endregion
 

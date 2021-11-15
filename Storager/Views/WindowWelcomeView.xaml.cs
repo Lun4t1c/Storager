@@ -78,7 +78,7 @@ namespace Storager.Views
             PointAnimationUsingKeyFrames anim1 = new PointAnimationUsingKeyFrames()
             {
 
-                Duration = new Duration(TimeSpan.FromSeconds(10)),
+                Duration = new Duration(TimeSpan.FromSeconds(20)),
                 AutoReverse = false,
                 RepeatBehavior = RepeatBehavior.Forever
             };
@@ -113,7 +113,7 @@ namespace Storager.Views
             PointAnimationUsingKeyFrames anim2 = new PointAnimationUsingKeyFrames()
             {
 
-                Duration = new Duration(TimeSpan.FromSeconds(10)),
+                Duration = new Duration(TimeSpan.FromSeconds(20)),
                 AutoReverse = false,
                 RepeatBehavior = RepeatBehavior.Forever
             };

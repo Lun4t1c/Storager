@@ -4,9 +4,26 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Storager.Views"
-        mc:Ignorable="d" Background="Blue"
-        Title="WindowShellView" Height="450" Width="800">
+        mc:Ignorable="d" Background="White"
+        Title="WindowShellView" Height="450" Width="800"
+        WindowState="Maximized">
+    
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- SIDE CONTROLS -->
+        <Border Grid.Column="0"
+                Background="LightGray">
+
+            <StackPanel Orientation="Vertical">
+
+            </StackPanel>
+            
+        </Border>
+
     </Grid>
+
 </Window>
