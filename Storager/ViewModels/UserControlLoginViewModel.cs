@@ -74,6 +74,40 @@ namespace Storager.ViewModels
 
             userModel = DataAcces.GetUser(UserLogin, SecurePassword);
         }
+
+        private async Task LogInAsync()
+        {
+            LastLoginMessage = "Loading...";
+
+            UserModel userModel;
+
+            Enums.LoginResultCodesEnum result = await Task.Run( () => DataAcces.CheckCredentials(UserLogin, SecurePassword));
+
+            switch (DataAcces.CheckCredentials(UserLogin, SecurePassword))
+            {
+                case Enums.LoginResultCodesEnum.OK:
+                    userModel = DataAcces.GetUser(UserLogin, SecurePassword);
+                    LastLoginMessage = "Logging in...";
+                    break;
+
+                case Enums.LoginResultCodesEnum.INVALID_LOGIN:
+                    LastLoginMessage = "Invalid login.";
+                    return;
+
+                case Enums.LoginResultCodesEnum.INVALID_PASSWORD:
+                    LastLoginMessage = "Invalid password";
+                    return;
+
+                case Enums.LoginResultCodesEnum.LOGIN_FAILED:
+                    LastLoginMessage = "Login failed";
+                    return;
+
+                default:
+                    return;
+            }
+
+            userModel = DataAcces.GetUser(UserLogin, SecurePassword);
+        }
         #endregion
 
         #region Button clicks
@@ -88,7 +122,7 @@ namespace Storager.ViewModels
         {
             if (e.Key == System.Windows.Input.Key.Enter)
             {
-                LogIn();
+                LogInAsync();
             }
         }
         #endregion
