@@ -11,6 +11,44 @@
         Height="650" Width="470"
         cal:Message.Attach="[Event PreviewKeyDown] = [Action LoginPreviewKeyDown($source, $eventArgs)]">
 
+    <UserControl.Resources>
+        <Style x:Key="LoginScreenButtonStyle" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="#373737" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="FontSize" Value="15" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+
+                        
+                        <ContentPresenter x:Name="buttonTextBlock"
+                                               TextBlock.FontFamily="Segoe UI Light"
+                                               TextBlock.FontSize="40"
+                                               TextBlock.Foreground="White"
+                                               HorizontalAlignment="Center">
+                                        
+                        </ContentPresenter>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="buttonTextBlock" Property="TextBlock.Foreground" Value="Gray" />
+                            </Trigger>
+
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="buttonTextBlock" Property="TextBlock.Foreground" Value="Orange" />
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
@@ -38,6 +76,7 @@
 
         </StackPanel>
 
+        <!-- LOWER GRID (INTERACTIVE PART) -->
         <Grid Grid.Column="1" Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -47,6 +86,7 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="50"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
@@ -104,9 +144,19 @@
                    HorizontalContentAlignment="Center"/>
 
             <Button Grid.Row="3" Grid.ColumnSpan="2" 
+                    x:Name="LoginButton"
+                    Content="Login"
+                    Margin="5"
+                    Cursor="Hand"
+                    Style="{StaticResource LoginScreenButtonStyle}"/>
+            
+            <!-- EXIT BUTTON -->
+            <Button Grid.Row="4" Grid.ColumnSpan="2" 
                     x:Name="ExitButton"
                     Content="Exit"
-                    Margin="5"/>
+                    Margin="5"
+                    Cursor="Hand"
+                    Style="{StaticResource LoginScreenButtonStyle}"/>
 
         </Grid>
 

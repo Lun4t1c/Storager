@@ -10,7 +10,7 @@
     
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
@@ -19,7 +19,15 @@
                 Background="LightGray">
 
             <StackPanel Orientation="Vertical">
-
+                
+                <Border>
+                    <StackPanel Orientation="Vertical">
+                        <Label Content="Logged as:"/>
+                        <Label Content="{Binding LoggedUser.Login}"/>
+                        <Label Content="{Binding LoggedUser.Email}"/>
+                    </StackPanel>
+                </Border>
+                
             </StackPanel>
             
         </Border>

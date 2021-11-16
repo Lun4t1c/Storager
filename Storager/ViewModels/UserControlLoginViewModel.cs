@@ -83,7 +83,7 @@ namespace Storager.ViewModels
 
         private async Task LogInAsync()
         {
-            LastLoginMessage = "Loading...";
+            LastLoginMessage = "Checking credentials...";
 
             UserModel userModel;
 
@@ -125,6 +125,11 @@ namespace Storager.ViewModels
         public void ExitButton()
         {
             Environment.Exit(1);
+        }
+
+        public void LoginButton()
+        {
+            LogInAsync();
         }
         #endregion
 
