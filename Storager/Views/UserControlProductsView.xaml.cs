@@ -10,23 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Storager.Views
 {
     /// <summary>
-    /// Interaction logic for WindowShellView.xaml
+    /// Interaction logic for UserControlProductsView.xaml
     /// </summary>
-    public partial class WindowShellView : Window
+    public partial class UserControlProductsView : UserControl
     {
-        public WindowShellView()
+        public UserControlProductsView()
         {
             InitializeComponent();
-        }
-
-        private void ProductsButton_Click(object sender, RoutedEventArgs e)
-        {
-            ActiveItem.Content = new Misc.LoadingScreen();
         }
     }
 }

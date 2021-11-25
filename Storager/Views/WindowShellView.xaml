@@ -27,10 +27,22 @@
                         <Label Content="{Binding LoggedUser.Email}"/>
                     </StackPanel>
                 </Border>
-                
+
+                <Button x:Name="ProductsButton"
+                        Click="ProductsButton_Click"
+                        Content="Products"/>
+
+                <Button x:Name="StorageLayoutButton"
+                        Content="Storage layout"/>
+
             </StackPanel>
             
         </Border>
+
+
+        <!-- MAIN DISPLAY -->
+        <ContentControl Grid.Column="1"
+                        x:Name="ActiveItem"/>
 
     </Grid>
 
