@@ -13,9 +13,28 @@
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        
+        <!-- TOP MENU -->
+        <Menu Grid.Row="0" Grid.ColumnSpan="2">
+            
+            <MenuItem Header="File">
+                <MenuItem Header="New"/>
+            </MenuItem>
 
-        <!-- SIDE CONTROLS -->
-        <Border Grid.Column="0"
+            <MenuItem Header="Options">
+                <MenuItem Header="Settings" x:Name="SettingsButton"/>
+                <MenuItem Header="Database connection"/>
+            </MenuItem>
+            
+        </Menu>
+
+        <!-- LEFT SIDE CONTROLS -->
+        <Border Grid.Column="0" Grid.Row="1"
                 Background="LightGray">
 
             <StackPanel Orientation="Vertical">
@@ -29,7 +48,6 @@
                 </Border>
 
                 <Button x:Name="ProductsButton"
-                        Click="ProductsButton_Click"
                         Content="Products"/>
 
                 <Button x:Name="StorageLayoutButton"
@@ -41,8 +59,37 @@
 
 
         <!-- MAIN DISPLAY -->
-        <ContentControl Grid.Column="1"
+        <ContentControl Grid.Column="1" Grid.Row="1"
                         x:Name="ActiveItem"/>
+
+        <!-- STATUS BAR -->
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="2">
+            
+            <!-- TEMPLATE -->
+            <StatusBar.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+                </ItemsPanelTemplate>
+            </StatusBar.ItemsPanel>
+
+            <!-- ITEMS -->
+            <StatusBarItem>
+                <TextBlock Text="status bar benc benc"/>
+            </StatusBarItem>
+
+            <Separator Grid.Column="1"/>
+
+            <StatusBarItem Grid.Column="2">
+                <ProgressBar Value="50" Width="100" Height="16"/>
+            </StatusBarItem>
+            
+        </StatusBar>
 
     </Grid>
 

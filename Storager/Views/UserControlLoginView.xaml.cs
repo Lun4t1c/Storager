@@ -24,6 +24,12 @@ namespace Storager.Views
         public UserControlLoginView()
         {
             InitializeComponent();
+            Loaded += UserControlLoginView_Loaded;
+        }
+
+        private void UserControlLoginView_Loaded(object sender, RoutedEventArgs e)
+        {
+            UserLogin.Focus();
         }
         #endregion
 

@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Storager.Models
 {
-    public class UserModel
+    public class StorageRackModel
     {
         #region Database columns
-        public string Login { get; set; }
-        public string Email { get; set; }
-        public int Id_privilege { get; set; }
+        public int Id { get; set; }
+        public string Code { get; set; }
+        public ushort LevelsCount { get; set; }
         #endregion
     }
 }

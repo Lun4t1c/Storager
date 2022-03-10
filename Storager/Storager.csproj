@@ -84,22 +84,35 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Enums\LoginResultCodesEnum.cs" />
-    <Compile Include="Misc\LoadingScreen.xaml.cs">
-      <DependentUpon>LoadingScreen.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Enums\eSettingsPages.cs" />
+    <Compile Include="Enums\eLoginResultCodesEnum.cs" />
     <Compile Include="Models\DataAcces.cs" />
     <Compile Include="Models\dummydata.cs" />
+    <Compile Include="Models\Globals.cs" />
+    <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\StorageRackModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="ViewModels\UserControlLoadingScreenViewModel.cs" />
     <Compile Include="ViewModels\UserControlLoginViewModel.cs" />
     <Compile Include="ViewModels\UserControlProductsViewModel.cs" />
+    <Compile Include="ViewModels\UserControlProductViewModel.cs" />
+    <Compile Include="ViewModels\WindowSettingsViewModel.cs" />
     <Compile Include="ViewModels\WindowShellViewModel.cs" />
     <Compile Include="ViewModels\WindowWelcomeViewModel.cs" />
+    <Compile Include="Views\UserControlLoadingScreenView.xaml.cs">
+      <DependentUpon>UserControlLoadingScreenView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControlLoginView.xaml.cs">
       <DependentUpon>UserControlLoginView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControlProductsView.xaml.cs">
       <DependentUpon>UserControlProductsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControlProductView.xaml.cs">
+      <DependentUpon>UserControlProductView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WindowSettingsView.xaml.cs">
+      <DependentUpon>WindowSettingsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WindowShellView.xaml.cs">
       <DependentUpon>WindowShellView.xaml</DependentUpon>
@@ -142,7 +155,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Misc\LoadingScreen.xaml">
+    <Page Include="Views\UserControlLoadingScreenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -151,6 +164,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControlProductsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControlProductView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WindowSettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

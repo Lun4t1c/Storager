@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Storager.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,7 @@ namespace Storager.Views
         public WindowWelcomeView()
         {
             InitializeComponent();
+            Globals.windowWelcomeView = this;
             AnimateWindowIn();
             StartAnimatingBorderBackgroundStartPoint();
         }
@@ -114,6 +116,88 @@ namespace Storager.Views
             {
 
                 Duration = new Duration(TimeSpan.FromSeconds(20)),
+                AutoReverse = false,
+                RepeatBehavior = RepeatBehavior.Forever
+            };
+
+            anim2.KeyFrames.Add(new LinearPointKeyFrame()
+            {
+                Value = new Point(0, 1),
+
+            });
+            anim2.KeyFrames.Add(new LinearPointKeyFrame()
+            {
+                Value = new Point(0, 0),
+
+            });
+            anim2.KeyFrames.Add(new LinearPointKeyFrame()
+            {
+                Value = new Point(1, 0),
+
+            });
+            anim2.KeyFrames.Add(new LinearPointKeyFrame()
+            {
+                Value = new Point(1, 1),
+
+            });
+
+            Storyboard.SetTargetName(anim2, "BorderLGB");
+            Storyboard.SetTargetProperty(anim2, new PropertyPath(LinearGradientBrush.EndPointProperty));
+            sb.Children.Add(anim2);
+            #endregion
+
+            sb.Begin(MainBorder);
+        }
+
+        public void StartLoadingAnimation()
+        {
+            Storyboard sb = new Storyboard();
+
+            #region Anim1
+            PointAnimationUsingKeyFrames anim1 = new PointAnimationUsingKeyFrames()
+            {
+
+                Duration = new Duration(TimeSpan.FromSeconds(1)),
+                AutoReverse = false,
+                RepeatBehavior = RepeatBehavior.Forever
+            };
+
+            anim1.KeyFrames.Add(new LinearPointKeyFrame()
+            {
+                Value = new Point(1, 0),
+
+            });
+            anim1.KeyFrames.Add(new LinearPointKeyFrame()
+            {
+                Value = new Point(1, 1),
+
+            });
+            anim1.KeyFrames.Add(new LinearPointKeyFrame()
+            {
+                Value = new Point(0, 1),
+
+            });
+            anim1.KeyFrames.Add(new LinearPointKeyFrame()
+            {
+                Value = new Point(0, 0),
+
+            });
+            anim1.KeyFrames.Add(new LinearPointKeyFrame()
+            {
+                Value = new Point(1, 0),
+
+            });
+
+            Storyboard.SetTargetName(anim1, "BorderLGB");
+            Storyboard.SetTargetProperty(anim1, new PropertyPath(LinearGradientBrush.StartPointProperty));
+            sb.Children.Add(anim1);
+            #endregion
+
+            #region anim2
+            PointAnimationUsingKeyFrames anim2 = new PointAnimationUsingKeyFrames()
+            {
+
+                Duration = new Duration(TimeSpan.FromSeconds(1)),
                 AutoReverse = false,
                 RepeatBehavior = RepeatBehavior.Forever
             };

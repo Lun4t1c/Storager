@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace Storager.Views
 {
     /// <summary>
-    /// Interaction logic for WindowShellView.xaml
+    /// Interaction logic for WindowSettingsView.xaml
     /// </summary>
-    public partial class WindowShellView : Window
+    public partial class WindowSettingsView : Window
     {
-        public WindowShellView()
+        public WindowSettingsView()
         {
             InitializeComponent();
         }

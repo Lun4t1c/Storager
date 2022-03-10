@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Storager.Views
 {
     /// <summary>
-    /// Interaction logic for WindowShellView.xaml
+    /// Interaction logic for UserControlProductView.xaml
     /// </summary>
-    public partial class WindowShellView : Window
+    public partial class UserControlProductView : UserControl
     {
-        public WindowShellView()
+        public UserControlProductView()
         {
             InitializeComponent();
         }

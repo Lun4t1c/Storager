@@ -44,12 +44,12 @@ namespace Storager.Models
             }
         }
 
-        public static LoginResultCodesEnum CheckCredentials(string login, SecureString password)
+        public static eLoginResultCodes CheckCredentials(string login, SecureString password)
         {
             if (!CheckPassword(login, password))
-                return LoginResultCodesEnum.INVALID_PASSWORD;
+                return eLoginResultCodes.INVALID_PASSWORD;
 
-            return LoginResultCodesEnum.OK;
+            return eLoginResultCodes.OK;
         }
 
         public static UserModel GetUser(string login, SecureString password)

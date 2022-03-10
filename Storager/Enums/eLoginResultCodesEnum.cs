@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Storager.Enums
 {
-    public enum LoginResultCodesEnum
+    public enum eLoginResultCodes
     {
         OK = 0,
         INVALID_LOGIN = 1,

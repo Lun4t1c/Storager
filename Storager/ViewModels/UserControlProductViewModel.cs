@@ -1,5 +1,5 @@
 ﻿using Caliburn.Micro;
-using Storager.Views;
+using Storager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Storager.ViewModels
 {
-    public class WindowWelcomeViewModel : Conductor<object>
+    public class UserControlProductViewModel : Screen
     {
         #region Properties
-
+        public ProductModel AssignedProduct { get; set; }
         #endregion
 
         #region Constructor
-        public WindowWelcomeViewModel()
+        public UserControlProductViewModel()
         {
-            ActivateItemAsync(new UserControlLoginViewModel());
+
         }
         #endregion
 
