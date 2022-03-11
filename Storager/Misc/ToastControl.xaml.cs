@@ -10,23 +10,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Storager.Views
+namespace Storager.Misc
 {
     /// <summary>
-    /// Interaction logic for WindowShellView.xaml
+    /// Interaction logic for ToastControl.xaml
     /// </summary>
-    public partial class WindowShellView : Window
+    public partial class ToastControl : UserControl
     {
-        public WindowShellView()
+        public ToastControl(string text)
         {
             InitializeComponent();
-        }
-
-        public void ShowToast(string text)
-        {
-
+            ToastTextBlock.Text = text;
         }
     }
 }

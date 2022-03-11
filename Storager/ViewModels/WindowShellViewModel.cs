@@ -44,6 +44,11 @@ namespace Storager.ViewModels
         {
             await ActivateItemAsync(new UserControlLoadingScreenViewModel(loadingText));
         }
+
+        private async void ShowToast(string text)
+        {
+
+        }
         #endregion
 
         #region Button clicks
