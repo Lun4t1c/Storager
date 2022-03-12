@@ -32,7 +32,6 @@ namespace Storager.ViewModels
             get { return _filterString; }
             set { _filterString = value; NotifyOfPropertyChange(() => FilterString); FilterProducts(); }
         }
-
         #endregion
 
         #region Constructor
