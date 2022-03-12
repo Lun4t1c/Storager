@@ -40,7 +40,6 @@ namespace Storager.ViewModels
         {
             Products = Models.dummydata.GetProducts();
             FilteredProducts = new BindableCollection<Models.dummydata.product>(Products);
-            cwlist();
         }
         #endregion
 
@@ -51,24 +50,16 @@ namespace Storager.ViewModels
                 FilteredProducts = new BindableCollection<Models.dummydata.product>(Products);
             else
             {
-                FilteredProducts.Clear();
-                List<Models.dummydata.product> tempList = Products.Where(pr => pr.name.Contains(FilterString)).ToList();
-                foreach (var p in tempList)
-                    FilteredProducts.Add(p);
-            }
+                IEnumerable<Models.dummydata.product> tempList = 
+                    from Product 
+                    in Products
+                    where Product.name.ToLower().Contains(FilterString.ToLower())
+                        || Product.description.ToLower().Contains(FilterString.ToLower())
+                    select Product;
 
-            cwlist();
+                FilteredProducts = new BindableCollection<Models.dummydata.product>(tempList);
+            }
         }
         #endregion
-
-        private void cwlist()
-        {
-            Console.WriteLine("cwing list:");
-            foreach (var item in FilteredProducts)
-            {
-                Console.WriteLine($"-{item.name}");
-                Console.WriteLine();
-            }
-        }
     }
 }
