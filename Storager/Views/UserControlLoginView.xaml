@@ -11,6 +11,7 @@
         Height="650" Width="470"
         cal:Message.Attach="[Event PreviewKeyDown] = [Action LoginPreviewKeyDown($source, $eventArgs)]">
 
+    <!--#region USER CONTROL RESOURCES -->
     <UserControl.Resources>
         <Style x:Key="LoginScreenButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="#373737" />
@@ -22,13 +23,13 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
 
-                        
+
                         <ContentPresenter x:Name="buttonTextBlock"
                                                TextBlock.FontFamily="Segoe UI Light"
                                                TextBlock.FontSize="40"
                                                TextBlock.Foreground="White"
                                                HorizontalAlignment="Center">
-                                        
+
                         </ContentPresenter>
 
                         <ControlTemplate.Triggers>
@@ -48,8 +49,10 @@
             </Setter>
         </Style>
     </UserControl.Resources>
+    <!--#endregion-->
 
     <Grid>
+        <!--#region GRID DEFINITIONS -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="10"/>
             <ColumnDefinition Width="*"/>
@@ -61,7 +64,9 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
+        <!--#endregion-->
 
+        <!--#region LOGO AND TITLE -->
         <StackPanel Grid.Column="1" Grid.Row="1"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center">
@@ -75,9 +80,11 @@
                        HorizontalContentAlignment="Center"/>
 
         </StackPanel>
+        <!--#endregion-->
 
-        <!-- LOWER GRID (INTERACTIVE PART) -->
+        <!--#region LOGGIN ING -->
         <Grid Grid.Column="1" Grid.Row="2">
+            <!--#region GRID DEFINITIONS -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="3*"/>
@@ -89,8 +96,9 @@
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
+            <!--#endregion-->
 
-            <!-- LOGIN  -->
+            <!--#region LOGIN -->
             <Label Grid.Column="0" Content="Login:"
                        FontSize="25"
                        FontWeight="Light"
@@ -111,8 +119,9 @@
 
                 </StackPanel>
             </Border>
+            <!--#endregion-->
 
-            <!-- PASSWORD -->
+            <!--#region PASSWORD -->
             <Label Grid.Row="1" Content="Password:"
                    Margin="0,20,0,0"
                        FontSize="25"
@@ -134,6 +143,7 @@
 
                 </StackPanel>
             </Border>
+            <!--#endregion-->
 
 
             <Label Grid.Row="2" Grid.ColumnSpan="2"
@@ -149,7 +159,7 @@
                     Margin="5"
                     Cursor="Hand"
                     Style="{StaticResource LoginScreenButtonStyle}"/>
-            
+
             <!-- EXIT BUTTON -->
             <Button Grid.Row="4" Grid.ColumnSpan="2" 
                     x:Name="ExitButton"
@@ -159,6 +169,7 @@
                     Style="{StaticResource LoginScreenButtonStyle}"/>
 
         </Grid>
+        <!--#endregion-->
 
     </Grid>
 </UserControl>

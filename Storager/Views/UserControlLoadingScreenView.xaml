@@ -4,12 +4,27 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Storager.Views"
-             mc:Ignorable="d" Background="White"
+             xmlns:fa="http://schemas.fontawesome.io/icons/"
+             mc:Ignorable="d" Background="White" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid>
-        <Label Content="{Binding LoadingText}"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <fa:ImageAwesome Icon="CircleOutlineNotch" 
+                         Width="100"
+                         Spin="True" 
+                         SpinDuration="2.5"
+                         VerticalAlignment="Bottom"/>
+
+        <Label Grid.Row="1"
+               Content="{Binding LoadingText}"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Center"
                FontSize="40"/>
+        
     </Grid>
 </UserControl>

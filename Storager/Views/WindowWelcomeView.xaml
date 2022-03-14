@@ -19,6 +19,7 @@
             CornerRadius="25">
 
         <Grid>
+            <!--#region Grid definitions -->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="15"/>
                 <ColumnDefinition Width="*"/>
@@ -29,6 +30,7 @@
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="5"/>
             </Grid.RowDefinitions>
+            <!--#endregion-->
 
 
             <!--

@@ -7,40 +7,15 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <!--
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding Products}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        
-                        <StackPanel Orientation="Horizontal"
-                                        Margin="5">
-                            
-                            <Label Content="{Binding id}"/>
-                            <Separator/>
-                            <Label Content="{Binding name}"/>
-                            <Separator/>
-                            <Label Content="{Binding description}"/>
-                            <Separator/>
-                            <Label Content="{Binding price}"/>
-                            
-                        </StackPanel>
-                        
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>-->
 
+        <!--#region Grid Definitions -->
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <!--#endregion-->
 
+        <!--#region Search box -->
         <TextBox Grid.Row="0"
                  x:Name="FilterString">
 
@@ -68,10 +43,14 @@
             </TextBox.Style>
 
         </TextBox>
+        <!--#endregion-->
 
+        <!--#region PRODUCTS DISPLAY -->
         <DataGrid Grid.Row="1"
                   ItemsSource="{Binding FilteredProducts}">
-            
+
         </DataGrid>
+        <!--#endregion-->
+    
     </Grid>
 </UserControl>

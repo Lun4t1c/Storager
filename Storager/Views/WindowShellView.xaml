@@ -7,8 +7,9 @@
         mc:Ignorable="d" Background="White"
         Title="WindowShellView" Height="450" Width="800"
         WindowState="Maximized">
-    
+
     <Grid>
+        <!--#region Grid definitions -->
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"/>
             <ColumnDefinition Width="*"/>
@@ -18,10 +19,11 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        
-        <!-- TOP MENU -->
+        <!--#endregion-->
+
+        <!--#region TOP MENU -->
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
-            
+
             <MenuItem Header="File">
                 <MenuItem Header="New"/>
             </MenuItem>
@@ -30,15 +32,16 @@
                 <MenuItem Header="Settings" x:Name="SettingsButton"/>
                 <MenuItem Header="Database connection"/>
             </MenuItem>
-            
-        </Menu>
 
-        <!-- LEFT SIDE CONTROLS -->
+        </Menu>
+        <!--#endregion-->
+
+        <!--#region LEFT SIDE CONTROLS -->
         <Border Grid.Column="0" Grid.Row="1"
                 Background="LightGray">
 
             <StackPanel Orientation="Vertical">
-                
+
                 <Border>
                     <StackPanel Orientation="Vertical">
                         <Label Content="Logged as:"/>
@@ -54,17 +57,19 @@
                         Content="Storage layout"/>
 
             </StackPanel>
-            
+
         </Border>
+        <!--#endregion-->
 
 
-        <!-- MAIN DISPLAY -->
+        <!--#region MAIN DISPLAY -->
         <ContentControl Grid.Column="1" Grid.Row="1"
                         x:Name="ActiveItem"/>
+        <!--#endregion-->
 
-        <!-- STATUS BAR -->
+        <!--#region STATUS BAR -->
         <StatusBar Grid.Row="2" Grid.ColumnSpan="2">
-            
+
             <!-- TEMPLATE -->
             <StatusBar.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -88,8 +93,9 @@
             <StatusBarItem Grid.Column="2">
                 <ProgressBar Value="50" Width="100" Height="16"/>
             </StatusBarItem>
-            
+
         </StatusBar>
+        <!--#endregion-->
 
     </Grid>
 
