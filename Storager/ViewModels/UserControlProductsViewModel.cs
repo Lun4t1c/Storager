@@ -43,6 +43,11 @@ namespace Storager.ViewModels
         #endregion
 
         #region Methods
+        private void AddProduct()
+        {
+
+        }
+
         private void FilterProducts()
         {
             if (FilterString == "" || FilterString == null)
@@ -58,6 +63,13 @@ namespace Storager.ViewModels
 
                 FilteredProducts = new BindableCollection<Models.dummydata.product>(tempList);
             }
+        }
+        #endregion
+
+        #region Button clicks
+        public void AddProductButton()
+        {
+            AddProduct();
         }
         #endregion
     }

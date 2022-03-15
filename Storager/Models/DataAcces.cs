@@ -15,7 +15,7 @@ namespace Storager.Models
 {
     public static class DataAcces
     {
-        #region Getting data with Dapper
+        #region Get data
         private static bool CheckPassword(string login, SecureString password)
         {
             string s = new System.Net.NetworkCredential(string.Empty, password).Password;
@@ -70,7 +70,7 @@ namespace Storager.Models
         }
         #endregion
 
-        #region Inserting data With Dapper
+        #region Insert data
         public static int RegisterUser(string login, string email, string password)
         {
             Console.WriteLine($"Registering user - {login} - {email} - {password}");
@@ -98,10 +98,6 @@ namespace Storager.Models
 
             return 0;
         }
-        #endregion
-
-        #region Deleting data with Dapper
-
         #endregion
     }
 }

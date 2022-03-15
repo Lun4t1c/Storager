@@ -99,6 +99,7 @@
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\StorageRackModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="ViewModels\UserControlAddProductViewModel.cs" />
     <Compile Include="ViewModels\UserControlLoadingScreenViewModel.cs" />
     <Compile Include="ViewModels\UserControlLoginViewModel.cs" />
     <Compile Include="ViewModels\UserControlProductsViewModel.cs" />
@@ -106,6 +107,9 @@
     <Compile Include="ViewModels\WindowSettingsViewModel.cs" />
     <Compile Include="ViewModels\WindowShellViewModel.cs" />
     <Compile Include="ViewModels\WindowWelcomeViewModel.cs" />
+    <Compile Include="Views\UserControlAddProductView.xaml.cs">
+      <DependentUpon>UserControlAddProductView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControlLoadingScreenView.xaml.cs">
       <DependentUpon>UserControlLoadingScreenView.xaml</DependentUpon>
     </Compile>
@@ -167,6 +171,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Misc\ToastControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControlAddProductView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
