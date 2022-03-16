@@ -45,6 +45,12 @@ namespace Storager.ViewModels
             await ActivateItemAsync(new UserControlLoadingScreenViewModel(loadingText));
         }
 
+        private async void DisplayAddProductControl()
+        {
+            DisplayLoadingScreen();
+            await ActivateItemAsync(new UserControlAddProductViewModel());
+        }
+
         private async void ShowToast(string text)
         {
 
@@ -65,6 +71,11 @@ namespace Storager.ViewModels
         public void SettingsButton()
         {
             ShowSettingsWindow();
+        }
+
+        public void AddProductButton()
+        {
+            DisplayAddProductControl();
         }
         #endregion
     }

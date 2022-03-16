@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Storager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Storager.ViewModels
 {
     public class UserControlProductsViewModel : Screen
     {
-        #region Properties
+        #region Properties        
         private BindableCollection<Models.dummydata.product> _products;
         private BindableCollection<Models.dummydata.product> _filteredProducts;
         private string _filterString;
@@ -32,6 +33,7 @@ namespace Storager.ViewModels
             get { return _filterString; }
             set { _filterString = value; NotifyOfPropertyChange(() => FilterString); FilterProducts(); }
         }
+        
         #endregion
 
         #region Constructor
@@ -43,11 +45,6 @@ namespace Storager.ViewModels
         #endregion
 
         #region Methods
-        private void AddProduct()
-        {
-
-        }
-
         private void FilterProducts()
         {
             if (FilterString == "" || FilterString == null)
@@ -67,10 +64,7 @@ namespace Storager.ViewModels
         #endregion
 
         #region Button clicks
-        public void AddProductButton()
-        {
-            AddProduct();
-        }
+
         #endregion
     }
 }

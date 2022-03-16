@@ -56,6 +56,9 @@
                 <Button x:Name="StorageLayoutButton"
                         Content="Storage layout"/>
 
+                <Button x:Name="AddProductButton"
+                        Content="Add product"/>
+
             </StackPanel>
 
         </Border>

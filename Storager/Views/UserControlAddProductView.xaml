@@ -7,6 +7,8 @@
              mc:Ignorable="d" Background="Red"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <ComboBox Width="100" Height="40"
+                  x:Name="UnitsOfMeasure"
+                  DisplayMemberPath="UnitName"/>
     </Grid>
 </UserControl>

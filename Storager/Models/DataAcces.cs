@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Security;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-
+using Caliburn.Micro;
 using Dapper;
 using Storager.Enums;
 
@@ -67,6 +68,20 @@ namespace Storager.Models
                 OutV = temp;
             }
             return OutV;
+        }
+        
+        public static BindableCollection<UnitOfMeasureModel> GetAllUnitsOfMeasure()
+        {
+            IEnumerable<UnitOfMeasureModel> units = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                units = connection.Query<UnitOfMeasureModel>($"SELECT * FROM UNITS_OF_MEASURE");
+            }
+
+            return new BindableCollection<UnitOfMeasureModel>(units);
         }
         #endregion
 

@@ -47,9 +47,6 @@
 
             </TextBox>
             <!--#endregion-->
-
-            <Button x:Name="AddProductButton"
-                    Content="Add product"/>
             
         </StackPanel>
         <!--#endregion-->
