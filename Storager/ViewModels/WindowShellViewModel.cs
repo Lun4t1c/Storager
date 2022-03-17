@@ -77,6 +77,15 @@ namespace Storager.ViewModels
         {
             DisplayAddProductControl();
         }
+
+        public void TestButton()
+        {
+            foreach (string item in dummydata.GenerateRandomNames())
+            {
+                Console.WriteLine(item);                
+            }
+            Console.WriteLine();
+        }
         #endregion
     }
 }

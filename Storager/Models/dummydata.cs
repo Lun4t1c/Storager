@@ -31,6 +31,64 @@ namespace Storager.Models
 
             return OutV;
         }
+
+        public static void InsertRandomValuesToDatabase()
+        {
+
+        }
+
+        public static IEnumerable<string> GenerateRandomNames()
+        {
+            List<string> OutV = new List<string>();
+            Random random = new Random();
+
+            List<string> adjectives = new List<string>(Adjectives);
+            List<string> nouns = new List<string>(Nouns);
+
+            while (adjectives.Count > 0 && nouns.Count > 0)
+            {
+                int adjInd = random.Next(0, adjectives.Count - 1);
+                int nounInd = random.Next(0, nouns.Count - 1);
+
+                string tempName = adjectives[adjInd] + " " + nouns[nounInd];
+                OutV.Add(tempName);
+
+                adjectives.RemoveAt(adjInd);
+                nouns.RemoveAt(nounInd);
+            }
+
+            return OutV;
+        }
+        #endregion
+
+        #region Words
+        static string[] Adjectives = 
+        {
+            "toothsome",
+            "hollow",
+            "vivacious",
+            "caring",
+            "distinct",
+            "peaceful",
+            "astonishing",
+            "yellow",
+            "bulky",
+            "parsimonious"
+        };
+
+        static string[] Nouns =
+        {
+            "mud",
+            "TV",
+            "elevator",
+            "doormat",
+            "cabinet",
+            "desk",
+            "apple",
+            "bike",
+            "computer",
+            "book"
+        };
         #endregion
     }
 }
