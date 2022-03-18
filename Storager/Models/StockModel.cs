@@ -6,16 +6,10 @@ using System.Threading.Tasks;
 
 namespace Storager.Models
 {
-    public class StorageRackModel
+    public class StockModel
     {
         #region Database columns
         public int Id { get; set; }
-        public string Code { get; set; }
-        public ushort LevelsCount { get; set; }
-        #endregion
-
-        #region Other properties
-        public IEnumerable<StockModel> Stocks { get; set; }
         #endregion
     }
 }

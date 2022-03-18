@@ -97,6 +97,7 @@
     <Compile Include="Models\dummydata.cs" />
     <Compile Include="Models\Globals.cs" />
     <Compile Include="Models\ProductModel.cs" />
+    <Compile Include="Models\StockModel.cs" />
     <Compile Include="Models\StorageRackModel.cs" />
     <Compile Include="Models\UnitOfMeasureModel.cs" />
     <Compile Include="Models\UserModel.cs" />

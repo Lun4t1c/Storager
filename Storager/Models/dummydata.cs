@@ -37,6 +37,15 @@ namespace Storager.Models
 
         }
 
+        public static IEnumerable<ProductModel> GenerateRandomProducts()
+        {
+            IEnumerable<ProductModel> OutV = new List<ProductModel>();
+
+
+
+            return OutV;
+        }
+
         public static IEnumerable<string> GenerateRandomNames()
         {
             List<string> OutV = new List<string>();

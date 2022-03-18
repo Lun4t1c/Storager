@@ -13,7 +13,6 @@ namespace Storager.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal PricePerUnit { get; set; }
-
         #endregion
 
         #region Constructor
