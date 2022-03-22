@@ -32,6 +32,18 @@ namespace Storager.Models
             return OutV;
         }
 
+        public static BindableCollection<DocumentTypeModel> GetDocuments()
+        {
+            BindableCollection<DocumentTypeModel> OutV = new BindableCollection<DocumentTypeModel>();
+
+            OutV.Add(new DocumentTypeModel() { Name = "Benc" });
+            OutV.Add(new DocumentTypeModel() { Name = "sdfdfdf" });
+            OutV.Add(new DocumentTypeModel() { Name = "sdasd" });
+            OutV.Add(new DocumentTypeModel() { Name = "vbvcbv" });
+
+            return OutV;
+        }
+
         public static void InsertRandomValuesToDatabase()
         {
 

@@ -94,6 +94,7 @@
       <DependentUpon>ToastControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\DataAcces.cs" />
+    <Compile Include="Models\DocumentTypeModel.cs" />
     <Compile Include="Models\dummydata.cs" />
     <Compile Include="Models\Globals.cs" />
     <Compile Include="Models\ProductModel.cs" />
@@ -101,14 +102,19 @@
     <Compile Include="Models\StorageRackModel.cs" />
     <Compile Include="Models\UnitOfMeasureModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="ViewModels\UserControlAddDocumentViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddProductViewModel.cs" />
     <Compile Include="ViewModels\UserControlLoadingScreenViewModel.cs" />
     <Compile Include="ViewModels\UserControlLoginViewModel.cs" />
     <Compile Include="ViewModels\UserControlProductsViewModel.cs" />
     <Compile Include="ViewModels\UserControlProductViewModel.cs" />
+    <Compile Include="ViewModels\UserControlWarehouseDocumentsViewModel.cs" />
     <Compile Include="ViewModels\WindowSettingsViewModel.cs" />
     <Compile Include="ViewModels\WindowShellViewModel.cs" />
     <Compile Include="ViewModels\WindowWelcomeViewModel.cs" />
+    <Compile Include="Views\UserControlAddDocumentView.xaml.cs">
+      <DependentUpon>UserControlAddDocumentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControlAddProductView.xaml.cs">
       <DependentUpon>UserControlAddProductView.xaml</DependentUpon>
     </Compile>
@@ -123,6 +129,9 @@
     </Compile>
     <Compile Include="Views\UserControlProductView.xaml.cs">
       <DependentUpon>UserControlProductView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControlWarehouseDocumentsView.xaml.cs">
+      <DependentUpon>UserControlWarehouseDocumentsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WindowSettingsView.xaml.cs">
       <DependentUpon>WindowSettingsView.xaml</DependentUpon>
@@ -176,6 +185,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControlAddDocumentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControlAddProductView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,6 +206,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControlProductView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControlWarehouseDocumentsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

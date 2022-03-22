@@ -59,6 +59,9 @@
                 <Button x:Name="AddProductButton"
                         Content="Add product"/>
 
+                <Button x:Name="DocumentsButton"
+                        Content="Documents"/>
+
                 <Button x:Name="TestButton"
                         Content="Test button"/>
             </StackPanel>
