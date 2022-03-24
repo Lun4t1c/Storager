@@ -11,20 +11,20 @@ namespace Storager.ViewModels
     public class UserControlWarehouseDocumentsViewModel : Screen
     {
         #region Properties
-        private BindableCollection<DocumentTypeModel> _documentTypes;
+        private BindableCollection<DocumentTypeModel> _documentTypes = dummydata.GetDocuments();
 
         public BindableCollection<DocumentTypeModel> DocumentTypes
         {
             get { return _documentTypes; }
             set { _documentTypes = value; NotifyOfPropertyChange(() => DocumentTypes); }
-        }
+        } 
 
         #endregion
 
         #region Constructor
         public UserControlWarehouseDocumentsViewModel()
         {
-            DocumentTypes = dummydata.GetDocuments();
+
         }
         #endregion
 

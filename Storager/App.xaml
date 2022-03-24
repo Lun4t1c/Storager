@@ -10,10 +10,27 @@
                     <local:Bootstrapper x:Key="Bootstrapper" />
                 </ResourceDictionary>
 
+                <!-- LOGIN TEXT BOX STYLE -->
                 <ResourceDictionary Source="./ControlStyles/LoginTextboxStyle.xaml"/>
+
+                <!-- DEFAULT FONT -->
+                <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property="FontSize" Value="20" />
+                        <Setter Property="FontFamily" Value="Segoe UI" />
+                    </Style>
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="FontSize" Value="20" />
+                        <Setter Property="FontFamily" Value="Segoe UI" />
+                    </Style>
+
+                </ResourceDictionary>
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        
+ 
+
     </Application.Resources>
 </Application>

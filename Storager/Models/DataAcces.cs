@@ -83,6 +83,39 @@ namespace Storager.Models
 
             return new BindableCollection<UnitOfMeasureModel>(units);
         }
+        
+        public static BindableCollection<DocumentTypeModel> GetAllDocumentTypes()
+        {
+            throw new NotImplementedException();
+            IEnumerable<DocumentTypeModel> documents = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                documents = connection.Query<DocumentTypeModel>($"SELECT * FROM DOCUMENT_TYPES");
+            }
+
+            return new BindableCollection<DocumentTypeModel>(documents);
+        }
+
+        public static BindableCollection<StorageRackModel> GetAllStorageRacks()
+        {
+            IEnumerable<StorageRackModel> racks = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                racks = connection.Query<StorageRackModel>($"SELECT * FROM STORAGE_RACKS");
+            }
+
+            foreach (var rack in racks)
+            {
+                Console.WriteLine($"-{rack.Code}");
+            }
+            return new BindableCollection<StorageRackModel>(racks);
+        }
         #endregion
 
         #region Insert data
@@ -112,6 +145,16 @@ namespace Storager.Models
             }
 
             return 0;
+        }
+        
+        public static void InsertProduct(ProductModel product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static void InsertDocument(DocumentTypeModel document)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }

@@ -15,7 +15,9 @@ namespace Storager.ViewModels
 
         private string _productName;
         private string _productDescription = null;
-        private decimal _productPricePerUnit;
+        private string _productBarcode;
+        private UnitOfMeasureModel _productUnitOfMeasure = null;
+        private string _warningMessage = string.Empty;
 
         public string ProductName
         {
@@ -27,12 +29,24 @@ namespace Storager.ViewModels
         {
             get { return _productDescription; }
             set { _productDescription = value; NotifyOfPropertyChange(() => ProductDescription); }
-        }        
+        }
 
-        public decimal ProductPricePerUnit
+        public string ProductBarcode
         {
-            get { return _productPricePerUnit; }
-            set { _productPricePerUnit = value; NotifyOfPropertyChange(() => ProductPricePerUnit); }
+            get { return _productBarcode; }
+            set { _productBarcode = value; NotifyOfPropertyChange(() => ProductBarcode); }
+        }
+
+        public UnitOfMeasureModel ProductUnitOfMeasure
+        {
+            get { return _productUnitOfMeasure; }
+            set { _productUnitOfMeasure = value; NotifyOfPropertyChange(() => ProductUnitOfMeasure); }
+        }
+
+        public string WarningMessage
+        {
+            get { return _warningMessage; }
+            set { _warningMessage = value; NotifyOfPropertyChange(() => WarningMessage); }
         }
 
         #endregion
@@ -47,7 +61,50 @@ namespace Storager.ViewModels
         #region Methods
         private void Confirm()
         {
+            if (!IsFormValid())
+            {
+                return;
+            }
 
+            ProductModel product = new ProductModel() {
+                Name = ProductName,
+                Description = ProductDescription,
+                Barcode = ProductBarcode,
+                IdUnit = ProductUnitOfMeasure.Id
+            };
+
+            Console.WriteLine("Adding product:");
+            Console.WriteLine($"Name: {product.Name}");
+            Console.WriteLine($"Desc: {product.Description}");
+            Console.WriteLine($"Barc: {product.Barcode}");
+            Console.WriteLine($"IDun: {product.IdUnit}");
+        }
+
+        private bool IsFormValid()
+        {
+            bool result = true;
+            WarningMessage = "";
+
+            if (string.IsNullOrEmpty(ProductName))
+            {
+                WarningMessage += "Name cannot be empty\n";
+                result = false;
+            }
+
+            if (ProductUnitOfMeasure == null)
+            {
+                WarningMessage += "Unit of measure cannot be empty\n";
+                result = false;
+            }
+
+            return result;
+        }
+        #endregion
+
+        #region Button clicks
+        public void ConfirmButton()
+        {
+            Confirm();
         }
         #endregion
     }

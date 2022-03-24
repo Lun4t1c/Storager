@@ -12,15 +12,10 @@ namespace Storager.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public decimal PricePerUnit { get; set; }
+        public string Barcode { get; set; }
+        public int IdUnit { get; set; }
         #endregion
 
-        #region Constructor
-        public ProductModel()
-        {
-
-        }
-        #endregion
 
         #region Methods
 

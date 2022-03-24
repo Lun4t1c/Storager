@@ -18,7 +18,7 @@
         <!--#endregion-->
 
         <ComboBox Grid.Row="0"
-                  x:Name="DocumentTypes"
-                  DisplayMemberPath="Name"/>
+                  x:Name="Racks"
+                  DisplayMemberPath="Code"/>
     </Grid>
 </UserControl>

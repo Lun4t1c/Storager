@@ -4,11 +4,69 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Storager.Views"
-             mc:Ignorable="d" Background="Red"
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <ComboBox Width="100" Height="40"
+        <!--#region GRID DEFINITIONS -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="20" MaxHeight="50"/>
+            <RowDefinition MinHeight="20" MaxHeight="50"/>
+            <RowDefinition MinHeight="20" MaxHeight="50"/>
+            <RowDefinition MinHeight="20" MaxHeight="50"/>
+            <RowDefinition MinHeight="20" MaxHeight="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--#endregion-->
+
+
+        <!--#region FORMS -->
+
+        <!--NAME-->
+        <TextBlock Grid.Column="0" Grid.Row="0"
+                   Text="Name:"/>
+        <TextBox Grid.Column="1" Grid.Row="0"
+                 x:Name="ProductName"
+                 Margin="10,5,50,5"/>
+
+        <!--DESCRIPTION-->
+        <TextBlock Grid.Column="0" Grid.Row="1"
+                   Text="Description:"/>
+        <TextBox Grid.Column="1" Grid.Row="1"
+                 x:Name="ProductDescription"
+                 Margin="10,5,50,5"/>
+
+        <!--BARCODE-->
+        <TextBlock Grid.Column="0" Grid.Row="2"
+                   Text="Barcode:"/>
+        <TextBox Grid.Column="1" Grid.Row="2"
+                 x:Name="ProductBarcode"
+                 Margin="10,5,50,5"/>
+
+
+        <!--UNIT OF MEASURE-->
+        <TextBlock Grid.Column="0" Grid.Row="3"
+                   Text="Unit of measure:"/>
+        <ComboBox Grid.Column="1" Grid.Row="3"
+                  Margin="5"
                   x:Name="UnitsOfMeasure"
-                  DisplayMemberPath="UnitName"/>
+                  DisplayMemberPath="UnitName"
+                  SelectedItem="{Binding ProductUnitOfMeasure, Mode=TwoWay}"/>
+
+        <!--#endregion-->
+
+        <Button Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2"
+                x:Name="ConfirmButton"
+                Content="Confirm"
+                Margin="5"/>
+
+        <TextBlock Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"
+                   Foreground="Red"
+                   TextAlignment="Center"
+                   Text="{Binding WarningMessage}"/>
+
     </Grid>
 </UserControl>
