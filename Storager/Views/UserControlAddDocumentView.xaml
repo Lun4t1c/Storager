@@ -14,11 +14,89 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <!--#endregion-->
 
+        
         <ComboBox Grid.Row="0"
-                  x:Name="Racks"
-                  DisplayMemberPath="Code"/>
+                  x:Name="DocumentTypes"
+                  DisplayMemberPath="DisplayNameInverted"
+                  SelectedItem="{Binding SelectedDocumentType, Mode=OneWayToSource}"/>
+
+        <!--#region DOCUMENT FORMS -->
+        <ScrollViewer Grid.Row="1"
+                      VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <!--#region GRID DEFINITIONS -->
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition MinHeight="20" MaxHeight="50"/>
+                    <RowDefinition MinHeight="20" MaxHeight="50"/>
+                    <RowDefinition MinHeight="20" MaxHeight="50"/>
+                    <RowDefinition MinHeight="20" MaxHeight="50"/>
+                    <RowDefinition MinHeight="20" MaxHeight="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <!--#endregion-->
+
+                
+
+                <!--#region SELECTED STOCKS -->
+                <ScrollViewer Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"
+                          VerticalScrollBarVisibility="Auto">
+
+                    <WrapPanel>
+
+                        <ItemsControl ItemsSource="{Binding SelectedStocks}">
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel/>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid MinHeight="100" MinWidth="100">
+                                        <Button Content="{Binding Amount}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                        </ItemsControl>
+
+
+                        <!--#region ADD STOCK BUTTON -->
+                        <Button Width="100" Height="100"
+                            x:Name="AddSelectedStockButton">
+
+                            <StackPanel>
+                                <TextBlock Text="+" TextAlignment="Center"/>
+                                <TextBlock Text="Add stock" TextAlignment="Center"/>
+                            </StackPanel>
+
+                        </Button>
+                        <!--#endregion-->
+
+                    </WrapPanel>
+
+                </ScrollViewer>
+                <!--#endregion-->
+
+            </Grid>
+        </ScrollViewer>
+        <!--#endregion-->
+
+
+        <!-- CONFIRM BUTTON-->
+        <Button Grid.Column="0" Grid.Row="2"
+                x:Name="ConfirmButton"
+                Content="Confirm"/>
+
     </Grid>
 </UserControl>

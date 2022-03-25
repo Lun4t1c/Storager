@@ -94,6 +94,7 @@
       <DependentUpon>ToastControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\DataAcces.cs" />
+    <Compile Include="Models\DocumentModel.cs" />
     <Compile Include="Models\DocumentTypeModel.cs" />
     <Compile Include="Models\dummydata.cs" />
     <Compile Include="Models\Globals.cs" />

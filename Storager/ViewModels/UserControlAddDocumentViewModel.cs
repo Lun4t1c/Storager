@@ -11,30 +11,16 @@ namespace Storager.ViewModels
     public class UserControlAddDocumentViewModel : Screen
     {
         #region Properties
-        private BindableCollection<DocumentTypeModel> _documentTypes = dummydata.GetDocuments();
+        public BindableCollection<DocumentTypeModel> DocumentTypes { get; set; } = DataAcces.GetAllDocumentTypes();
 
-        public BindableCollection<DocumentTypeModel> DocumentTypes
+
+        private DocumentTypeModel _selectedDocumentType;
+        private BindableCollection<StockModel> _selectedStocks = new BindableCollection<StockModel>();
+
+        public DocumentTypeModel SelectedDocumentType
         {
-            get { return _documentTypes; }
-            set { _documentTypes = value; NotifyOfPropertyChange(() => DocumentTypes); }
-        }
-
-        private BindableCollection<StorageRackModel> _racks = DataAcces.GetAllStorageRacks();
-
-        public BindableCollection<StorageRackModel> Racks
-        {
-            get { return _racks; }
-            set { _racks = value; NotifyOfPropertyChange(() => Racks); }
-        }
-
-
-        private DocumentTypeModel _selectedDocument;
-        private BindableCollection<StockModel> _selectedStocks;
-
-        public DocumentTypeModel SelectedDocument
-        {
-            get { return _selectedDocument; }
-            set { _selectedDocument = value; NotifyOfPropertyChange(() => SelectedDocument); }
+            get { return _selectedDocumentType; }
+            set { _selectedDocumentType = value; NotifyOfPropertyChange(() => SelectedDocumentType); }
         }
 
         public BindableCollection<StockModel> SelectedStocks
@@ -59,9 +45,9 @@ namespace Storager.ViewModels
             throw new NotImplementedException();
         }
 
-        private void AddStock()
+        private void AddSelectedStock()
         {
-            throw new NotImplementedException();
+            SelectedStocks.Add(new StockModel() { Amount = 100, CurrentAmount = 100, PricePerUnit = 99.99M });
         }
         #endregion
 
@@ -72,9 +58,9 @@ namespace Storager.ViewModels
             Confirm();
         }
 
-        public void AddStockButton()
+        public void AddSelectedStockButton()
         {
-            AddStock();
+            AddSelectedStock();
         }
         #endregion
     }

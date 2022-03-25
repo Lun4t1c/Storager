@@ -70,6 +70,7 @@ namespace Storager.Models
             return OutV;
         }
         
+
         public static BindableCollection<UnitOfMeasureModel> GetAllUnitsOfMeasure()
         {
             IEnumerable<UnitOfMeasureModel> units = null;
@@ -86,7 +87,6 @@ namespace Storager.Models
         
         public static BindableCollection<DocumentTypeModel> GetAllDocumentTypes()
         {
-            throw new NotImplementedException();
             IEnumerable<DocumentTypeModel> documents = null;
             using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
             {
@@ -116,13 +116,41 @@ namespace Storager.Models
             }
             return new BindableCollection<StorageRackModel>(racks);
         }
+        
+        public static BindableCollection<StockModel> GetStocksInDocument(DocumentModel document)
+        {
+            throw new NotImplementedException();
+        }
+
+        public static ProductModel GetSingleProduct(int id_product)
+        {
+            ProductModel product = null;
+
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                product = connection.QuerySingleOrDefault<ProductModel>($"SELECT * FROM PRODUCTS WHERE Id = @id", 
+                    new { @id = id_product });
+            }
+
+            return product;
+        }
         #endregion
 
+
         #region Insert data
-        public static int RegisterUser(string login, string email, string password)
-        {
-            Console.WriteLine($"Registering user - {login} - {email} - {password}");
-            
+        /// <summary>
+        /// Register new user in database
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="email"></param>
+        /// <param name="password"></param>
+        /// <param name="id_privilege"></param>
+        /// <returns></returns>
+        public static int RegisterUser(string login, string email, string password, int id_privilege)
+        {            
             byte[] bytes = Encoding.Unicode.GetBytes(password);
             SHA256Managed hashstring = new SHA256Managed();
             byte[] hash = hashstring.ComputeHash(bytes);
@@ -137,21 +165,38 @@ namespace Storager.Models
                 if (connection.State == ConnectionState.Closed)
                     connection.Open();
 
-
-                connection.Execute("INSERT INTO ACCOUNTS(Email, Login, HashedPassword) VALUES(@em, @lg, @hp)",
-                    new { em = email, lg = login, hp = hashString }
-                    );
-
+                connection.Execute("INSERT INTO ACCOUNTS(Email, Login, HashedPassword, Id_privilege) VALUES(@em, @lg, @hp, @idp)",
+                    new { em = email, lg = login, hp = hashString, idp = id_privilege }
+                );
             }
 
             return 0;
         }
         
+        /// <summary>
+        /// Insert product into database using stored procedure
+        /// </summary>
+        /// <param name="product">Product to insert</param>
         public static void InsertProduct(ProductModel product)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("spInsertProduct", connection) { CommandType = CommandType.StoredProcedure })
+                {
+                    cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = product.Name;
+                    cmd.Parameters.Add("@description", SqlDbType.NVarChar).Value = product.Description;
+                    cmd.Parameters.Add("@barcode", SqlDbType.NVarChar).Value = product.Barcode;
+                    cmd.Parameters.Add("@id_unit_of_measure", SqlDbType.TinyInt).Value = product.Id_UnitOfMeasure;
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
+        /// <summary>
+        /// Insert document into database using stored procedure
+        /// </summary>
+        /// <param name="document">Document to insert</param>
         public static void InsertDocument(DocumentTypeModel document)
         {
             throw new NotImplementedException();

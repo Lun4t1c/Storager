@@ -70,14 +70,18 @@ namespace Storager.ViewModels
                 Name = ProductName,
                 Description = ProductDescription,
                 Barcode = ProductBarcode,
-                IdUnit = ProductUnitOfMeasure.Id
+                Id_UnitOfMeasure = ProductUnitOfMeasure.Id
             };
 
+            /*
             Console.WriteLine("Adding product:");
             Console.WriteLine($"Name: {product.Name}");
             Console.WriteLine($"Desc: {product.Description}");
             Console.WriteLine($"Barc: {product.Barcode}");
             Console.WriteLine($"IDun: {product.IdUnit}");
+            */
+
+            DataAcces.InsertProduct(product);
         }
 
         private bool IsFormValid()

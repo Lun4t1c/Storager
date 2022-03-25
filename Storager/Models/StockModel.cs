@@ -13,8 +13,29 @@ namespace Storager.Models
         public decimal PricePerUnit { get; set; }
         public int Amount { get; set; }
         public int CurrentAmount { get; set; }
-        public int IdProduct { get; set; }
-        public int IdStorageRack { get; set; }
+        public int Id_Product { get; set; }
+        public int Id_StorageRack { get; set; }
+        #endregion
+
+
+        #region Properties
+        private ProductModel _product = null;
+
+        public ProductModel Product
+        {
+            get 
+            { 
+                if (_product != null)
+                    return _product;
+                else
+                {
+                    _product = DataAcces.GetSingleProduct(Id_Product);
+                    return _product;
+                }
+            }
+            set { _product = value; }
+        }
+
         #endregion
 
 

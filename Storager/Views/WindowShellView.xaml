@@ -8,6 +8,34 @@
         Title="WindowShellView" Height="450" Width="800"
         WindowState="Maximized">
 
+    <!-- DEFAULT CONTROL STYLES -->
+    <Window.Resources>
+        <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+            </Style>
+            
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+            </Style>
+
+            <Style TargetType="{x:Type Button}">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+            </Style>
+
+            <Style TargetType="{x:Type ComboBox}">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="FontFamily" Value="Segoe UI" />
+            </Style>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <!--#region Grid definitions -->
         <Grid.ColumnDefinitions>
@@ -44,9 +72,9 @@
 
                 <Border>
                     <StackPanel Orientation="Vertical">
-                        <Label Content="Logged as:"/>
-                        <Label Content="{Binding LoggedUser.Login}"/>
-                        <Label Content="{Binding LoggedUser.Email}"/>
+                        <TextBlock Text="Logged as:"/>
+                        <TextBlock Text="{Binding LoggedUser.Login}"/>
+                        <TextBlock Text="{Binding LoggedUser.Email}"/>
                     </StackPanel>
                 </Border>
 
@@ -61,6 +89,9 @@
 
                 <Button x:Name="DocumentsButton"
                         Content="Documents"/>
+
+                <Button x:Name="AddDocumentButton"
+                        Content="Add document"/>
 
                 <Button x:Name="TestButton"
                         Content="Test button"/>

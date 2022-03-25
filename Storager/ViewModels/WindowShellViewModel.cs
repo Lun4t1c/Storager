@@ -57,6 +57,12 @@ namespace Storager.ViewModels
             await ActivateItemAsync(new UserControlWarehouseDocumentsViewModel());
         }
 
+        private async void DisplayAddDocumentControl()
+        {
+            DisplayLoadingScreen();
+            await ActivateItemAsync(new UserControlAddDocumentViewModel());
+        }
+
         private async void ShowToast(string text)
         {
 
@@ -88,6 +94,12 @@ namespace Storager.ViewModels
         {
             DisplayDocuments();
         }
+
+        public void AddDocumentButton()
+        {
+            DisplayAddDocumentControl();
+        }
+
         public void TestButton()
         {
             foreach (string item in dummydata.GenerateRandomNames())

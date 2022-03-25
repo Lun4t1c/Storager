@@ -6,19 +6,18 @@ using System.Threading.Tasks;
 
 namespace Storager.Models
 {
-    public class ProductModel
+    public class DocumentModel
     {
         #region Database columns
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Barcode { get; set; }
-        public int Id_UnitOfMeasure { get; set; }
+        public string Supplier { get; set; }
+        public string InvoiceNumber { get; set; }
+        public DateTime DateOfSigning { get; set; }
         #endregion
 
 
-        #region Methods
-
+        #region Properties
+        public IEnumerable<StockModel> Stocks { get; set; }
         #endregion
     }
 }

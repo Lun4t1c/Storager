@@ -20,8 +20,5 @@
         <ComboBox x:Name="DocumentTypes"
                   DisplayMemberPath="Name"/>
 
-        <local:UserControlAddDocumentView Grid.Row="1"
-                                          Padding="100,0,0,0"/>
-
     </Grid>
 </UserControl>

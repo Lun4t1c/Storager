@@ -36,10 +36,10 @@ namespace Storager.Models
         {
             BindableCollection<DocumentTypeModel> OutV = new BindableCollection<DocumentTypeModel>();
 
-            OutV.Add(new DocumentTypeModel() { Name = "Benc" });
-            OutV.Add(new DocumentTypeModel() { Name = "sdfdfdf" });
-            OutV.Add(new DocumentTypeModel() { Name = "sdasd" });
-            OutV.Add(new DocumentTypeModel() { Name = "vbvcbv" });
+            OutV.Add(new DocumentTypeModel() { FullName = "Benc" });
+            OutV.Add(new DocumentTypeModel() { FullName = "sdfdfdf" });
+            OutV.Add(new DocumentTypeModel() { FullName = "sdasd" });
+            OutV.Add(new DocumentTypeModel() { FullName = "vbvcbv" });
 
             return OutV;
         }
