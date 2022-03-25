@@ -85,6 +85,20 @@ namespace Storager.Models
             return new BindableCollection<UnitOfMeasureModel>(units);
         }
         
+        public static BindableCollection<ProductModel> GetAllProducts()
+        {
+            IEnumerable<ProductModel> products = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                products = connection.Query<ProductModel>($"SELECT * FROM PRODUCTS");
+            }
+
+            return new BindableCollection<ProductModel>(products);
+        }
+
         public static BindableCollection<DocumentTypeModel> GetAllDocumentTypes()
         {
             IEnumerable<DocumentTypeModel> documents = null;

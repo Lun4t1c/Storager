@@ -35,7 +35,6 @@ namespace Storager.Models
             }
             set { _product = value; }
         }
-
         #endregion
 
 

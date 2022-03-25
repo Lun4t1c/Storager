@@ -11,18 +11,18 @@ namespace Storager.ViewModels
     public class UserControlProductsViewModel : Screen
     {
         #region Properties        
-        private BindableCollection<Models.dummydata.product> _products;
-        private BindableCollection<Models.dummydata.product> _filteredProducts;
+        private BindableCollection<ProductModel> _products = DataAcces.GetAllProducts();
+        private BindableCollection<ProductModel> _filteredProducts = DataAcces.GetAllProducts();
         private string _filterString;
 
 
-        public BindableCollection<Models.dummydata.product> Products
+        public BindableCollection<ProductModel> Products
         {
             get { return _products; }
             set { _products = value; NotifyOfPropertyChange(() => Products); }
         }
 
-        public BindableCollection<Models.dummydata.product> FilteredProducts
+        public BindableCollection<ProductModel> FilteredProducts
         {
             get { return _filteredProducts; }
             set { _filteredProducts = value; NotifyOfPropertyChange(() => FilteredProducts); }
@@ -36,32 +36,34 @@ namespace Storager.ViewModels
         
         #endregion
 
+
         #region Constructor
         public UserControlProductsViewModel()
         {
-            Products = Models.dummydata.GetProducts();
-            FilteredProducts = new BindableCollection<Models.dummydata.product>(Products);
+            
         }
         #endregion
+
 
         #region Methods
         private void FilterProducts()
         {
             if (FilterString == "" || FilterString == null)
-                FilteredProducts = new BindableCollection<Models.dummydata.product>(Products);
+                FilteredProducts = new BindableCollection<ProductModel>(Products);
             else
             {
-                IEnumerable<Models.dummydata.product> tempList = 
+                IEnumerable<ProductModel> tempList = 
                     from Product 
                     in Products
-                    where Product.name.ToLower().Contains(FilterString.ToLower())
-                        || Product.description.ToLower().Contains(FilterString.ToLower())
+                    where Product.Name.ToLower().Contains(FilterString.ToLower())
+                        || Product.Description.ToLower().Contains(FilterString.ToLower())
                     select Product;
 
-                FilteredProducts = new BindableCollection<Models.dummydata.product>(tempList);
+                FilteredProducts = new BindableCollection<ProductModel>(tempList);
             }
         }
         #endregion
+
 
         #region Button clicks
 

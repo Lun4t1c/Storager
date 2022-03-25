@@ -102,11 +102,7 @@ namespace Storager.ViewModels
 
         public void TestButton()
         {
-            foreach (string item in dummydata.GenerateRandomNames())
-            {
-                Console.WriteLine(item);                
-            }
-            Console.WriteLine();
+            new WindowManager().ShowWindowAsync(new WindowPopupAdderViewModel(new UserControlAddStockViewModel() { AssignedAction = () => { Console.WriteLine("BENG"); } }));
         }
         #endregion
     }

@@ -90,6 +90,7 @@
     </Compile>
     <Compile Include="Enums\eSettingsPages.cs" />
     <Compile Include="Enums\eLoginResultCodesEnum.cs" />
+    <Compile Include="Misc\IAdder.cs" />
     <Compile Include="Misc\ToastControl.xaml.cs">
       <DependentUpon>ToastControl.xaml</DependentUpon>
     </Compile>
@@ -105,11 +106,13 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="ViewModels\UserControlAddDocumentViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddProductViewModel.cs" />
+    <Compile Include="ViewModels\UserControlAddStockViewModel.cs" />
     <Compile Include="ViewModels\UserControlLoadingScreenViewModel.cs" />
     <Compile Include="ViewModels\UserControlLoginViewModel.cs" />
     <Compile Include="ViewModels\UserControlProductsViewModel.cs" />
     <Compile Include="ViewModels\UserControlProductViewModel.cs" />
     <Compile Include="ViewModels\UserControlWarehouseDocumentsViewModel.cs" />
+    <Compile Include="ViewModels\WindowPopupAdderViewModel.cs" />
     <Compile Include="ViewModels\WindowSettingsViewModel.cs" />
     <Compile Include="ViewModels\WindowShellViewModel.cs" />
     <Compile Include="ViewModels\WindowWelcomeViewModel.cs" />
@@ -118,6 +121,9 @@
     </Compile>
     <Compile Include="Views\UserControlAddProductView.xaml.cs">
       <DependentUpon>UserControlAddProductView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControlAddStockView.xaml.cs">
+      <DependentUpon>UserControlAddStockView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControlLoadingScreenView.xaml.cs">
       <DependentUpon>UserControlLoadingScreenView.xaml</DependentUpon>
@@ -133,6 +139,9 @@
     </Compile>
     <Compile Include="Views\UserControlWarehouseDocumentsView.xaml.cs">
       <DependentUpon>UserControlWarehouseDocumentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WindowPopupAdderView.xaml.cs">
+      <DependentUpon>WindowPopupAdderView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WindowSettingsView.xaml.cs">
       <DependentUpon>WindowSettingsView.xaml</DependentUpon>
@@ -194,6 +203,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControlAddStockView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControlLoadingScreenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -211,6 +224,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControlWarehouseDocumentsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WindowPopupAdderView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

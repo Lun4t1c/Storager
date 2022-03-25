@@ -13,9 +13,9 @@ namespace Storager.ViewModels
         #region Properties
         public BindableCollection<UnitOfMeasureModel> UnitsOfMeasure { get; set; } = DataAcces.GetAllUnitsOfMeasure();
 
-        private string _productName;
+        private string _productName = null;
         private string _productDescription = null;
-        private string _productBarcode;
+        private string _productBarcode = null;
         private UnitOfMeasureModel _productUnitOfMeasure = null;
         private string _warningMessage = string.Empty;
 
@@ -51,12 +51,14 @@ namespace Storager.ViewModels
 
         #endregion
 
+
         #region Constructor
         public UserControlAddProductViewModel()
         {
             
         }
         #endregion
+
 
         #region Methods
         private void Confirm()
@@ -82,6 +84,8 @@ namespace Storager.ViewModels
             */
 
             DataAcces.InsertProduct(product);
+            WarningMessage = "Succesfully added product!";
+            ((Conductor<object>)Parent).ActivateItemAsync(new UserControlProductsViewModel());
         }
 
         private bool IsFormValid()
@@ -104,6 +108,7 @@ namespace Storager.ViewModels
             return result;
         }
         #endregion
+
 
         #region Button clicks
         public void ConfirmButton()

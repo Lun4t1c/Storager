@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Storager.Views"
+             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -60,13 +61,48 @@
                             </ItemsControl.ItemsPanel>
 
 
+                            <!--#region STOCK ITEM TEMPLATE -->
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid MinHeight="100" MinWidth="100">
-                                        <Button Content="{Binding Amount}"/>
-                                    </Grid>
+                                    <Border Margin="5" BorderThickness="1"
+                                            BorderBrush="Black">
+                                        <Grid MinHeight="100" MinWidth="100">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+
+                                            <!--PRODUCT-->
+                                            <TextBlock Grid.Column="0" Grid.Row="0"
+                                                   Text="Product:"/>
+                                            <ComboBox Grid.Column="1" Grid.Row="0"
+                                                      DisplayMemberPath="Name"
+                                                      ItemsSource="{Binding DataContext.Products,
+                                                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                    AncestorType={x:Type ItemsControl}}}"/>
+                                            
+                                            <!--AMOUNT-->
+                                            <TextBlock Grid.Column="0" Grid.Row="1"
+                                                   Text="Amount:"/>
+                                            <TextBox Grid.Column="1" Grid.Row="1"
+                                                 Text="{Binding Amount}"/>
+                                            
+                                            <!--PRICE-->
+                                            <TextBlock Grid.Column="0" Grid.Row="2"
+                                                   Text="Price:"/>
+                                            <TextBox Grid.Column="1" Grid.Row="2"
+                                                 Text="{Binding PricePerUnit}"/>
+
+                                        </Grid>
+                                    </Border>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
+                            <!--#endregion-->
 
                         </ItemsControl>
 
@@ -92,7 +128,7 @@
         </ScrollViewer>
         <!--#endregion-->
 
-
+        
         <!-- CONFIRM BUTTON-->
         <Button Grid.Column="0" Grid.Row="2"
                 x:Name="ConfirmButton"

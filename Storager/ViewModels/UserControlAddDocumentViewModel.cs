@@ -11,7 +11,9 @@ namespace Storager.ViewModels
     public class UserControlAddDocumentViewModel : Screen
     {
         #region Properties
+        public UserControlAddStockViewModel AddStockViewModel { get; set; } = new UserControlAddStockViewModel() { AssignedAction = () => { Console.WriteLine("BEEEENG"); } };
         public BindableCollection<DocumentTypeModel> DocumentTypes { get; set; } = DataAcces.GetAllDocumentTypes();
+        public BindableCollection<ProductModel> Products { get; set; } = DataAcces.GetAllProducts();
 
 
         private DocumentTypeModel _selectedDocumentType;
@@ -48,6 +50,13 @@ namespace Storager.ViewModels
         private void AddSelectedStock()
         {
             SelectedStocks.Add(new StockModel() { Amount = 100, CurrentAmount = 100, PricePerUnit = 99.99M });
+            //SelectedStocks.Add(stock);
+        }
+
+        private void ShowSelectedStockAdder()
+        {
+            new WindowManager().ShowWindowAsync(new WindowPopupAdderViewModel(new UserControlAddStockViewModel())
+            );
         }
         #endregion
 
