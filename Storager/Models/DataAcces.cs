@@ -151,6 +151,22 @@ namespace Storager.Models
 
             return product;
         }
+
+        public static StorageRackModel GetSingleStorageRack(int id_rack)
+        {
+            StorageRackModel rack = null;
+
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                rack = connection.QuerySingleOrDefault<StorageRackModel>($"SELECT * FROM STORAGE_RACKS WHERE Id = @id",
+                    new { @id = id_rack });
+            }
+
+            return rack;
+        }
         #endregion
 
 
@@ -211,7 +227,7 @@ namespace Storager.Models
         /// Insert document into database using stored procedure
         /// </summary>
         /// <param name="document">Document to insert</param>
-        public static void InsertDocument(DocumentTypeModel document)
+        public static void InsertDocument(DocumentModel document)
         {
             throw new NotImplementedException();
         }

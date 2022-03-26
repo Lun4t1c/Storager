@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Storager.Views"
         mc:Ignorable="d" Background="White"
-        Title="WindowShellView" Height="450" Width="800"
+        Title="Storager" Height="450" Width="800"
         WindowState="Maximized">
 
     <!-- DEFAULT CONTROL STYLES -->
@@ -39,7 +39,7 @@
     <Grid>
         <!--#region Grid definitions -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="150"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>

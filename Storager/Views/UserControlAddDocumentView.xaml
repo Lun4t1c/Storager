@@ -15,6 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <!--#endregion-->
@@ -27,6 +28,7 @@
 
         <!--#region DOCUMENT FORMS -->
         <ScrollViewer Grid.Row="1"
+                      Margin="10"
                       VerticalScrollBarVisibility="Auto">
             <Grid>
                 <!--#region GRID DEFINITIONS -->
@@ -40,11 +42,31 @@
                     <RowDefinition MinHeight="20" MaxHeight="50"/>
                     <RowDefinition MinHeight="20" MaxHeight="50"/>
                     <RowDefinition MinHeight="20" MaxHeight="50"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition MinHeight="20" MaxHeight="50"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <!--#endregion-->
 
-                
+                <!-- SUPPLIER -->
+                <TextBlock Grid.Column="0" Grid.Row="0"
+                           Margin="5"
+                           VerticalAlignment="Center"
+                           Text="Supplier:"/>
+                <TextBox Grid.Column="1" Grid.Row="0"
+                         Margin="5"
+                         VerticalContentAlignment="Center"
+                         Text="{Binding SelectedSupplier}"/>
+
+                <!-- INVOICE NUMBER -->
+                <TextBlock Grid.Column="0" Grid.Row="1"
+                           Margin="5"
+                           VerticalAlignment="Center"
+                           Text="Invoice number:"/>
+                <TextBox Grid.Column="1" Grid.Row="1"
+                         Margin="5"
+                         VerticalContentAlignment="Center"
+                         Text="{Binding SelectedInvoiceNumber}"/>
 
                 <!--#region SELECTED STOCKS -->
                 <ScrollViewer Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="2"
@@ -64,9 +86,12 @@
                             <!--#region STOCK ITEM TEMPLATE -->
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
-                                    <Border Margin="5" BorderThickness="1"
-                                            BorderBrush="Black">
-                                        <Grid MinHeight="100" MinWidth="100">
+                                    <Border Margin="5" 
+                                            BorderThickness="2"
+                                            BorderBrush="Black"
+                                            Padding="5">
+                                        
+                                        <Grid MinHeight="160" MinWidth="160">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
@@ -75,28 +100,48 @@
                                                 <RowDefinition Height="*"/>
                                                 <RowDefinition Height="*"/>
                                                 <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
 
                                             <!--PRODUCT-->
                                             <TextBlock Grid.Column="0" Grid.Row="0"
+                                                       Margin="5"
                                                    Text="Product:"/>
                                             <ComboBox Grid.Column="1" Grid.Row="0"
+                                                      Margin="5"
                                                       DisplayMemberPath="Name"
                                                       ItemsSource="{Binding DataContext.Products,
                                                                     RelativeSource={RelativeSource Mode=FindAncestor,
-                                                                    AncestorType={x:Type ItemsControl}}}"/>
-                                            
+                                                                    AncestorType={x:Type ItemsControl}}}"
+                                                      SelectedItem="{Binding Product, Mode=OneWayToSource}"/>
+
                                             <!--AMOUNT-->
                                             <TextBlock Grid.Column="0" Grid.Row="1"
+                                                       Margin="5"
                                                    Text="Amount:"/>
                                             <TextBox Grid.Column="1" Grid.Row="1"
+                                                     Margin="5"
                                                  Text="{Binding Amount}"/>
-                                            
+
                                             <!--PRICE-->
                                             <TextBlock Grid.Column="0" Grid.Row="2"
+                                                       Margin="5"
                                                    Text="Price:"/>
                                             <TextBox Grid.Column="1" Grid.Row="2"
+                                                     Margin="5"
                                                  Text="{Binding PricePerUnit}"/>
+
+                                            <!--STORAGE RACK-->
+                                            <TextBlock Grid.Column="0" Grid.Row="3"
+                                                       Margin="5"
+                                                   Text="Shelf:"/>
+                                            <ComboBox Grid.Column="1" Grid.Row="3"
+                                                      Margin="5"
+                                                      DisplayMemberPath="Code"
+                                                      ItemsSource="{Binding DataContext.StorageRacks,
+                                                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                                                    AncestorType={x:Type ItemsControl}}}"
+                                                      SelectedItem="{Binding Rack, Mode=OneWayToSource}"/>
 
                                         </Grid>
                                     </Border>
@@ -108,7 +153,8 @@
 
 
                         <!--#region ADD STOCK BUTTON -->
-                        <Button Width="100" Height="100"
+                        <Button MinHeight="160" MinWidth="160"
+                                Margin="5"
                             x:Name="AddSelectedStockButton">
 
                             <StackPanel>
@@ -124,13 +170,20 @@
                 </ScrollViewer>
                 <!--#endregion-->
 
+
+                <!-- WARNING MESSAGE -->
+                <TextBlock Grid.Column="0" Grid.Row="6" Grid.ColumnSpan="2"
+                           TextAlignment="Center"
+                           Foreground="Red"
+                           Text="{Binding WarningMessage}"/>
+                
             </Grid>
         </ScrollViewer>
         <!--#endregion-->
-
         
-        <!-- CONFIRM BUTTON-->
-        <Button Grid.Column="0" Grid.Row="2"
+
+        <!-- CONFIRM BUTTON -->
+        <Button Grid.Column="0" Grid.Row="3"
                 x:Name="ConfirmButton"
                 Content="Confirm"/>
 

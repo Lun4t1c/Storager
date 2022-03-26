@@ -19,7 +19,10 @@ namespace Storager.Models
 
 
         #region Properties
+        public bool IsValid { get { return isValid(); } }
+
         private ProductModel _product = null;
+        private StorageRackModel _storageRack = null;
 
         public ProductModel Product
         {
@@ -34,12 +37,33 @@ namespace Storager.Models
                 }
             }
             set { _product = value; }
+        }        
+
+        public StorageRackModel StorageRack
+        {
+            get
+            {
+                if (_storageRack != null)
+                    return _storageRack;
+                else
+                {
+                    _storageRack = DataAcces.GetSingleStorageRack(Id_StorageRack);
+                    return _storageRack;
+                }
+            }
+            set { _storageRack = value; }
         }
         #endregion
 
 
         #region Methods
+        public bool isValid()
+        {
+            if (Product == null)
+                return false;
 
+            return true;
+        }
         #endregion
     }
 }
