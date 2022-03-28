@@ -79,7 +79,8 @@
                 </Border>
 
                 <Button x:Name="ProductsButton"
-                        Content="Products"/>
+                        Content="Products"
+                        Style="{StaticResource MenuButtonStyle}"/>
 
                 <Button x:Name="StorageLayoutButton"
                         Content="Storage layout"/>

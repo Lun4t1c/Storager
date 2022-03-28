@@ -34,7 +34,7 @@ namespace Storager.Models
                 {
                     hashString += String.Format("{0:x2}", x);
                 }
-                
+
                 string tempPass = connection.QuerySingleOrDefault<string>("select HashedPassword from ACCOUNTS WHERE Login = @lg", new { lg = login });
                 Console.WriteLine($"HASH - {hashString}\nTEMP - {tempPass}");
 
@@ -69,7 +69,7 @@ namespace Storager.Models
             }
             return OutV;
         }
-        
+
 
         public static BindableCollection<UnitOfMeasureModel> GetAllUnitsOfMeasure()
         {
@@ -84,7 +84,7 @@ namespace Storager.Models
 
             return new BindableCollection<UnitOfMeasureModel>(units);
         }
-        
+
         public static BindableCollection<ProductModel> GetAllProducts()
         {
             IEnumerable<ProductModel> products = null;
@@ -113,6 +113,25 @@ namespace Storager.Models
             return new BindableCollection<DocumentTypeModel>(documents);
         }
 
+        public static BindableCollection<DocumentModel> GetAllDocuments()
+        {
+            IEnumerable<DocumentModel> documents = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                documents = connection.Query<DocumentModel>($"SELECT * FROM DOCUMENTS");
+
+                foreach (DocumentModel doc in documents)
+                {
+                    doc.Stocks = GetStocksInDocument(doc);
+                }
+            }
+
+            return new BindableCollection<DocumentModel>(documents);
+        }
+
         public static BindableCollection<StorageRackModel> GetAllStorageRacks()
         {
             IEnumerable<StorageRackModel> racks = null;
@@ -130,7 +149,7 @@ namespace Storager.Models
             }
             return new BindableCollection<StorageRackModel>(racks);
         }
-        
+
         public static BindableCollection<StockModel> GetStocksInDocument(DocumentModel document)
         {
             throw new NotImplementedException();
@@ -145,7 +164,7 @@ namespace Storager.Models
                 if (connection.State == ConnectionState.Closed)
                     connection.Open();
 
-                product = connection.QuerySingleOrDefault<ProductModel>($"SELECT * FROM PRODUCTS WHERE Id = @id", 
+                product = connection.QuerySingleOrDefault<ProductModel>($"SELECT * FROM PRODUCTS WHERE Id = @id",
                     new { @id = id_product });
             }
 
@@ -180,7 +199,7 @@ namespace Storager.Models
         /// <param name="id_privilege"></param>
         /// <returns></returns>
         public static int RegisterUser(string login, string email, string password, int id_privilege)
-        {            
+        {
             byte[] bytes = Encoding.Unicode.GetBytes(password);
             SHA256Managed hashstring = new SHA256Managed();
             byte[] hash = hashstring.ComputeHash(bytes);
@@ -202,7 +221,7 @@ namespace Storager.Models
 
             return 0;
         }
-        
+
         /// <summary>
         /// Insert product into database using stored procedure
         /// </summary>
@@ -223,13 +242,92 @@ namespace Storager.Models
             }
         }
 
+        public static void InsertStock(StockModel stock)
+        {
+            using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("spInsertStock", connection) { CommandType = CommandType.StoredProcedure })
+                {
+                    cmd.Parameters.Add("@price_per_unit", SqlDbType.Money).Value = stock.PricePerUnit;
+                    cmd.Parameters.Add("@amount", SqlDbType.Int).Value = stock.Amount;
+                    cmd.Parameters.Add("@current_amount", SqlDbType.Int).Value = stock.CurrentAmount;
+                    cmd.Parameters.Add("@id_product", SqlDbType.Int).Value = stock.Id_Product;
+                    cmd.Parameters.Add("@id_storage_rack", SqlDbType.Int).Value = stock.Id_StorageRack;
+
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         /// <summary>
         /// Insert document into database using stored procedure
         /// </summary>
         /// <param name="document">Document to insert</param>
         public static void InsertDocument(DocumentModel document)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                //document
+                using (SqlCommand cmd = new SqlCommand("spInsertDocument", connection) { CommandType = CommandType.StoredProcedure })
+                {
+                    cmd.Parameters.Add("@supplier", SqlDbType.NVarChar).Value = document.Supplier;
+                    cmd.Parameters.Add("@date_of_signing", SqlDbType.DateTime).Value = document.DateOfSigning;
+
+                    var Id_document_param = cmd.Parameters.Add("@id_document", SqlDbType.Int);
+                    Id_document_param.Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                    connection.Close();
+
+                    document.Id = (int)Id_document_param.Value;
+                }
+
+                //stocks
+                foreach (StockModel stock in document.Stocks)
+                {
+                    int Id_stock;
+                    using (SqlCommand cmd = new SqlCommand("spInsertStock", connection) { CommandType = CommandType.StoredProcedure })
+                    {
+                        cmd.Parameters.Add("@price_per_unit", SqlDbType.Money).Value = stock.PricePerUnit;
+                        cmd.Parameters.Add("@amount", SqlDbType.Int).Value = stock.Amount;
+                        cmd.Parameters.Add("@current_amount", SqlDbType.Int).Value = stock.CurrentAmount;
+                        cmd.Parameters.Add("@id_product", SqlDbType.Int).Value = stock.Product.Id;
+                        cmd.Parameters.Add("@id_storage_rack", SqlDbType.Int).Value = stock.StorageRack.Id;
+
+                        var Id_stock_param = cmd.Parameters.Add("@id_stock", SqlDbType.Int);
+                        Id_stock_param.Direction = ParameterDirection.Output;
+
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                        connection.Close();
+
+                        Id_stock = (int)Id_stock_param.Value;
+                        stock.Id = Id_stock;
+                    }                    
+                }
+            }
+
+            foreach (StockModel stock in document.Stocks)
+            {
+                InsertDocumentStock(document, stock);
+            }
+        }
+
+        public static void InsertDocumentStock(DocumentModel document, StockModel stock)
+        {
+            using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("spInsertDocumentStocks", connection) { CommandType = CommandType.StoredProcedure })
+                {
+                    cmd.Parameters.Add("@id_document", SqlDbType.Int).Value = document.Id;
+                    cmd.Parameters.Add("@id_stock", SqlDbType.Int).Value = stock.Id;
+
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
         #endregion
     }

@@ -29,7 +29,7 @@ namespace Storager.ViewModels
             {
                 _selectedDocumentType = value; 
                 NotifyOfPropertyChange(() => SelectedDocumentType);
-                SwitchDocumentType(value.ShortName);
+                //SwitchDocumentType(value.ShortName);
             }
         }
 
@@ -149,7 +149,8 @@ namespace Storager.ViewModels
         {
             if (stock.Amount <= 0) return false;
             if (stock.PricePerUnit <= 0) return false;
-            if (stock.Product == null) return false;            
+            if (stock.Product == null) return false;
+            if (stock.StorageRack == null) return false;
 
             return true;
         }

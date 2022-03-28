@@ -141,7 +141,7 @@
                                                       ItemsSource="{Binding DataContext.StorageRacks,
                                                                     RelativeSource={RelativeSource Mode=FindAncestor,
                                                                     AncestorType={x:Type ItemsControl}}}"
-                                                      SelectedItem="{Binding Rack, Mode=OneWayToSource}"/>
+                                                      SelectedItem="{Binding StorageRack, Mode=OneWayToSource}"/>
 
                                         </Grid>
                                     </Border>

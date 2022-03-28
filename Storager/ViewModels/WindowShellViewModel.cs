@@ -18,7 +18,6 @@ namespace Storager.ViewModels
         public WindowShellViewModel(UserModel userModel = null)
         {
             LoggedUser = userModel;
-            //ActivateItemAsync(new UserControlLoginViewModel());
         }
         #endregion
 

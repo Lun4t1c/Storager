@@ -13,7 +13,7 @@
                 <!-- LOGIN TEXT BOX STYLE -->
                 <ResourceDictionary Source="./ControlStyles/LoginTextboxStyle.xaml"/>
 
-                <!-- DEFAULT FONT -->
+                <ResourceDictionary Source="./ControlStyles/MenuButtonStyle.xaml"/>
                 
 
             </ResourceDictionary.MergedDictionaries>
