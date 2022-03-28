@@ -44,18 +44,55 @@ namespace Storager.Models
             return OutV;
         }
 
-        public static void InsertRandomValuesToDatabase()
-        {
-
-        }
-
         public static IEnumerable<ProductModel> GenerateRandomProducts()
         {
-            IEnumerable<ProductModel> OutV = new List<ProductModel>();
+            List<ProductModel> OutV = new List<ProductModel>();
+            Random random = new Random();
 
+            var units = DataAcces.GetAllUnitsOfMeasure();
+            foreach (var name in GenerateRandomNames())
+            {
+                OutV.Add(new ProductModel()
+                {
+                    Name = name,
+                    Barcode = random.Next(100000, 999999).ToString(),
+                    Description = string.Empty,
+                    Id_UnitOfMeasure = units[random.Next(units.Count)].Id
+                });
+            }
 
+            foreach (ProductModel product in OutV)
+            {
+                DataAcces.InsertProduct(product);
+            }
 
             return OutV;
+        }
+
+        public static void GenerateRandomStocks(int amount)
+        {
+            BindableCollection<StockModel> stocks = new BindableCollection<StockModel>();
+            BindableCollection<ProductModel> products = DataAcces.GetAllProducts();
+            BindableCollection<StorageRackModel> storageRacks = DataAcces.GetAllStorageRacks();
+            Random random = new Random();
+
+            for (int i = 0; i < amount; i++)
+            {
+                int temp = random.Next(10, 100);
+                stocks.Add(new StockModel()
+                {
+                    PricePerUnit = (decimal) ((float)random.Next(0,101) + (float)random.Next(0, 99) / 100),
+                    Amount = temp,
+                    CurrentAmount = random.Next(temp),
+                    Id_Product = products[random.Next(products.Count)].Id,
+                    Id_StorageRack = storageRacks[random.Next(storageRacks.Count)].Id
+                }); 
+            }
+
+            foreach (var stock in stocks)
+            {
+                DataAcces.InsertStock(stock);
+            }
         }
 
         public static IEnumerable<string> GenerateRandomNames()
@@ -76,7 +113,7 @@ namespace Storager.Models
 
                 adjectives.RemoveAt(adjInd);
                 nouns.RemoveAt(nounInd);
-            }
+            }           
 
             return OutV;
         }
@@ -99,7 +136,8 @@ namespace Storager.Models
 
         static string[] Nouns =
         {
-            "mud",
+            "tentegownik",
+            "mug",
             "TV",
             "elevator",
             "doormat",

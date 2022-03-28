@@ -17,6 +17,27 @@ namespace Storager.Models
         #endregion
 
 
+        #region Other properties
+        private UnitOfMeasureModel _unitOfMeasure = null;
+
+        public UnitOfMeasureModel UnitOfMeasure
+        {
+            get
+            {
+                if (_unitOfMeasure != null)
+                    return _unitOfMeasure;
+                else
+                {
+                    _unitOfMeasure = DataAcces.GetSingleUnitOfMeasure(Id_UnitOfMeasure);
+                    return _unitOfMeasure;
+                }
+            }
+            set { _unitOfMeasure = value; }
+        }
+
+        #endregion
+
+
         #region Methods
 
         #endregion

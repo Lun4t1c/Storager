@@ -10,7 +10,7 @@
                 <ControlTemplate TargetType="{x:Type Button}">
 
                     <Border Name="MainBorder" Background="#190d4a"
-                            CornerRadius="10">
+                            CornerRadius="0">
                         <ContentPresenter x:Name="MyContentPresenter"
                                           TextBlock.Foreground="White"
                                           TextBlock.FontFamily="Segoe UI Light"
@@ -25,14 +25,11 @@
 
 
                         <!-- ANIMATIONS -->
-
                         <!--Mouse enter-->
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard Duration="0:0:0.2">
-                                    <ColorAnimation Storyboard.TargetName="MainBorder"
-                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                    To="Red"/>
+
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
@@ -41,9 +38,7 @@
                         <EventTrigger RoutedEvent="MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard Duration="0:0:1">
-                                    <ColorAnimation Storyboard.TargetName="MainBorder"
-                                                    Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)"
-                                                    To="Blue"/>
+
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>

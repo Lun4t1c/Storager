@@ -37,9 +37,9 @@
     </Window.Resources>
 
     <Grid>
-        <!--#region Grid definitions -->
+        <!--#region GRID DEFINITIONS -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -49,6 +49,7 @@
         </Grid.RowDefinitions>
         <!--#endregion-->
 
+        
         <!--#region TOP MENU -->
         <Menu Grid.Row="0" Grid.ColumnSpan="2">
 
@@ -61,10 +62,20 @@
                 <MenuItem Header="Database connection"/>
             </MenuItem>
 
+            <MenuItem Header="Data">
+                <MenuItem Header="Generate random products" x:Name="GenerateRandomProductsButton"/>
+                <MenuItem Header="Generate random stocks" x:Name="GenerateRandomStocksButton"/>
+                <Separator/>
+                <MenuItem Header="Delete documents data" x:Name="DeleteAllDocumentsDataButton"/>
+                <MenuItem Header="Delete stocks data" x:Name="DeleteAllStocksDataButton"/>
+                <MenuItem Header="Delete products data" x:Name="DeleteAllProductsDataButton"/>
+            </MenuItem>
+
         </Menu>
         <!--#endregion-->
 
-        <!--#region LEFT SIDE CONTROLS -->
+        
+        <!--#region SIDE MENU BUTTONS -->
         <Border Grid.Column="0" Grid.Row="1"
                 Background="LightGray">
 
@@ -78,24 +89,68 @@
                     </StackPanel>
                 </Border>
 
-                <Button x:Name="ProductsButton"
-                        Content="Products"
-                        Style="{StaticResource MenuButtonStyle}"/>
-
+                
+                <!--STORAGE LAYOUT BUTTON-->
                 <Button x:Name="StorageLayoutButton"
-                        Content="Storage layout"/>
+                        Content="Storage layout"
+                        HorizontalContentAlignment="Left"/>
+                
+                <!--PRODUCTS BUTTON-->
+                <Button x:Name="ProductsButton"
+                        HorizontalContentAlignment="Left">
+                    <BulletDecorator Margin="2">
+                        <BulletDecorator.Bullet>
+                            <Image Source="pack://application:,,,/Resources/ProductIcon.png"
+                                   MaxHeight="20"/>
+                        </BulletDecorator.Bullet>
+                        <TextBlock Text="Products"
+                                   Margin="10,0,0,0"/>
+                    </BulletDecorator>
+                </Button>
 
+                <!--ADD PRODUCT BUTTON-->
                 <Button x:Name="AddProductButton"
-                        Content="Add product"/>
+                        HorizontalContentAlignment="Left">
+                    <BulletDecorator Margin="2">
+                        <BulletDecorator.Bullet>
+                            <Image Source="pack://application:,,,/Resources/PlusIcon.png"
+                                   MaxHeight="20"/>
+                        </BulletDecorator.Bullet>
+                        <TextBlock Text="Add product"
+                                   Margin="10,0,0,0"/>
+                    </BulletDecorator>
+                </Button>
 
+                <!--DOCUMENTS BUTTON-->
                 <Button x:Name="DocumentsButton"
-                        Content="Documents"/>
+                        HorizontalContentAlignment="Left">
+                    <BulletDecorator Margin="2">
+                        <BulletDecorator.Bullet>
+                            <Image Source="pack://application:,,,/Resources/DocumentIcon.png"
+                                   MaxHeight="20"/>
+                        </BulletDecorator.Bullet>
+                        <TextBlock Text="Documents"
+                                   Margin="10,0,0,0"/>
+                    </BulletDecorator>
+                </Button>
 
+                <!--ADD DOCUMENT BUTTON-->
                 <Button x:Name="AddDocumentButton"
-                        Content="Add document"/>
+                        HorizontalContentAlignment="Left">
+                    <BulletDecorator Margin="2">
+                        <BulletDecorator.Bullet>
+                            <Image Source="pack://application:,,,/Resources/PlusIcon.png"
+                                   MaxHeight="20"/>
+                        </BulletDecorator.Bullet>
+                        <TextBlock Text="Add document"
+                                   Margin="10,0,0,0"/>
+                    </BulletDecorator>
+                </Button>
 
+                
                 <Button x:Name="TestButton"
-                        Content="Test button"/>
+                        Content="Test button"
+                        HorizontalContentAlignment="Left"/>
             </StackPanel>
 
         </Border>
@@ -107,6 +162,7 @@
                         x:Name="ActiveItem"/>
         <!--#endregion-->
 
+        
         <!--#region STATUS BAR -->
         <StatusBar Grid.Row="2" Grid.ColumnSpan="2">
 

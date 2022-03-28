@@ -132,6 +132,20 @@ namespace Storager.Models
             return new BindableCollection<DocumentModel>(documents);
         }
 
+        public static BindableCollection<StockModel> GetAllStocks()
+        {
+            IEnumerable<StockModel> stocks = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                stocks = connection.Query<StockModel>($"SELECT * FROM STOCKS");
+            }
+
+            return new BindableCollection<StockModel>(stocks);
+        }
+
         public static BindableCollection<StorageRackModel> GetAllStorageRacks()
         {
             IEnumerable<StorageRackModel> racks = null;
@@ -152,7 +166,18 @@ namespace Storager.Models
 
         public static BindableCollection<StockModel> GetStocksInDocument(DocumentModel document)
         {
-            throw new NotImplementedException();
+            IEnumerable<StockModel> stocks = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                stocks = connection.Query<StockModel>($"SELECT * FROM DOCUMENT_STOCKS WHERE Id_document = @id_doc",
+                    new { @id_doc = document.Id }
+                );
+            }
+
+            return new BindableCollection<StockModel>(stocks);
         }
 
         public static ProductModel GetSingleProduct(int id_product)
@@ -185,6 +210,38 @@ namespace Storager.Models
             }
 
             return rack;
+        }
+        
+        public static UnitOfMeasureModel GetSingleUnitOfMeasure(int id_unit)
+        {
+            UnitOfMeasureModel unit = null;
+
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                unit = connection.QuerySingleOrDefault<UnitOfMeasureModel>($"SELECT * FROM UNITS_OF_MEASURE WHERE Id = @id",
+                    new { @id = id_unit });
+            }
+
+            return unit;
+        }
+        
+        public static DocumentTypeModel GetSingleDocumentType(int id_doctype)
+        {
+            DocumentTypeModel doctype = null;
+
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                doctype = connection.QuerySingleOrDefault<DocumentTypeModel>($"SELECT * FROM DOCUMENT_TYPES WHERE Id = @id",
+                    new { @id = id_doctype });
+            }
+
+            return doctype;
         }
         #endregion
 
@@ -242,6 +299,10 @@ namespace Storager.Models
             }
         }
 
+        /// <summary>
+        /// Insert stock into database using stored procedure
+        /// </summary>
+        /// <param name="stock">Stock to insert</param>
         public static void InsertStock(StockModel stock)
         {
             using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
@@ -254,9 +315,27 @@ namespace Storager.Models
                     cmd.Parameters.Add("@id_product", SqlDbType.Int).Value = stock.Id_Product;
                     cmd.Parameters.Add("@id_storage_rack", SqlDbType.Int).Value = stock.Id_StorageRack;
 
+                    var Id_stock_param = cmd.Parameters.Add("@id_stock", SqlDbType.Int);
+                    Id_stock_param.Direction = ParameterDirection.Output;
+
                     connection.Open();
                     cmd.ExecuteNonQuery();
                 }
+            }
+        }
+
+        public static void InsertDocument(DocumentModel document)
+        {
+            switch (document.DocumentType.ShortName)
+            {
+                case "PZ":
+                    InsertDocumentPZ(document);
+                    break;
+
+                case "WZ":
+                    break;
+
+                default: throw new ArgumentException("Unknonw document type.");
             }
         }
 
@@ -264,7 +343,7 @@ namespace Storager.Models
         /// Insert document into database using stored procedure
         /// </summary>
         /// <param name="document">Document to insert</param>
-        public static void InsertDocument(DocumentModel document)
+        public static void InsertDocumentPZ(DocumentModel document)
         {
             using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
             {
@@ -273,6 +352,8 @@ namespace Storager.Models
                 {
                     cmd.Parameters.Add("@supplier", SqlDbType.NVarChar).Value = document.Supplier;
                     cmd.Parameters.Add("@date_of_signing", SqlDbType.DateTime).Value = document.DateOfSigning;
+                    cmd.Parameters.Add("@invoice_number", SqlDbType.NVarChar).Value = document.InvoiceNumber;
+                    cmd.Parameters.Add("@id_document_type", SqlDbType.Int).Value = document.DocumentType.Id;
 
                     var Id_document_param = cmd.Parameters.Add("@id_document", SqlDbType.Int);
                     Id_document_param.Direction = ParameterDirection.Output;
@@ -315,6 +396,16 @@ namespace Storager.Models
             }
         }
 
+        public static void InsertDocumentWZ(DocumentModel document)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Add stock to existing document using stored procedure
+        /// </summary>
+        /// <param name="document"></param>
+        /// <param name="stock"></param>
         public static void InsertDocumentStock(DocumentModel document, StockModel stock)
         {
             using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
@@ -324,6 +415,45 @@ namespace Storager.Models
                     cmd.Parameters.Add("@id_document", SqlDbType.Int).Value = document.Id;
                     cmd.Parameters.Add("@id_stock", SqlDbType.Int).Value = stock.Id;
 
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+        #endregion
+
+
+        #region Delete data
+        public static void DeleteAllDocumentsData()
+        {
+            using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("spDeleteAllDocumentsData", connection) { CommandType = CommandType.StoredProcedure })
+                {
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void DeleteAllProductsData()
+        {
+            using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("spDeleteAllProductsData", connection) { CommandType = CommandType.StoredProcedure })
+                {
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void DeleteAllStocksData()
+        {
+            using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("spDeleteAllStocksData", connection) { CommandType = CommandType.StoredProcedure })
+                {
                     connection.Open();
                     cmd.ExecuteNonQuery();
                 }

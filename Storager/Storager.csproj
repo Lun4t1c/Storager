@@ -104,7 +104,9 @@
     <Compile Include="Models\StorageRackModel.cs" />
     <Compile Include="Models\UnitOfMeasureModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="ViewModels\UserControlAddDocumentPZViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddDocumentViewModel.cs" />
+    <Compile Include="ViewModels\UserControlAddDocumentWZViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddProductViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddStockViewModel.cs" />
     <Compile Include="ViewModels\UserControlLoadingScreenViewModel.cs" />
@@ -116,8 +118,14 @@
     <Compile Include="ViewModels\WindowSettingsViewModel.cs" />
     <Compile Include="ViewModels\WindowShellViewModel.cs" />
     <Compile Include="ViewModels\WindowWelcomeViewModel.cs" />
+    <Compile Include="Views\UserControlAddDocumentPZView.xaml.cs">
+      <DependentUpon>UserControlAddDocumentPZView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControlAddDocumentView.xaml.cs">
       <DependentUpon>UserControlAddDocumentView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\UserControlAddDocumentWZView.xaml.cs">
+      <DependentUpon>UserControlAddDocumentWZView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControlAddProductView.xaml.cs">
       <DependentUpon>UserControlAddProductView.xaml</DependentUpon>
@@ -185,6 +193,13 @@
     <Content Include="Images\loading.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\PlusIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\ProductIcon.png" />
+    <Resource Include="Resources\DocumentIcon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Page Include="ControlStyles\LoginTextboxStyle.xaml">
@@ -199,7 +214,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControlAddDocumentPZView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControlAddDocumentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControlAddDocumentWZView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

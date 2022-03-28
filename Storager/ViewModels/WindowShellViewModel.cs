@@ -24,7 +24,7 @@ namespace Storager.ViewModels
         #region Methods
         private async void DisplayProducts()
         {
-            DisplayLoadingScreen("Loading products...");
+            await Task.Run(() => DisplayLoadingScreen("Loading products..."));
             await ActivateItemAsync(new UserControlProductsViewModel());
         }
 
@@ -46,19 +46,19 @@ namespace Storager.ViewModels
 
         private async void DisplayAddProductControl()
         {
-            DisplayLoadingScreen();
+            await Task.Run(() => DisplayLoadingScreen());
             await ActivateItemAsync(new UserControlAddProductViewModel());
         }
 
         private async void DisplayDocuments()
         {
-            DisplayLoadingScreen("Loading documents...");
+            await Task.Run(() => DisplayLoadingScreen("Loading documents..."));
             await ActivateItemAsync(new UserControlWarehouseDocumentsViewModel());
         }
 
         private async void DisplayAddDocumentControl()
         {
-            DisplayLoadingScreen();
+            await Task.Run(() => DisplayLoadingScreen());
             await ActivateItemAsync(new UserControlAddDocumentViewModel());
         }
 
@@ -103,6 +103,40 @@ namespace Storager.ViewModels
         {
             new WindowManager().ShowWindowAsync(new WindowPopupAdderViewModel(new UserControlAddStockViewModel() { AssignedAction = () => { Console.WriteLine("BENG"); } }));
         }
+
+
+        #region Menu buttons
+        public void GenerateRandomProductsButton()
+        {
+            dummydata.GenerateRandomProducts();
+            System.Windows.MessageBox.Show("Generated random products!");
+        }
+
+        public void GenerateRandomStocksButton()
+        {
+            dummydata.GenerateRandomStocks(16);
+            System.Windows.MessageBox.Show("Generated random stocks!");
+        }
+
+        public void DeleteAllDocumentsDataButton()
+        {
+            DataAcces.DeleteAllDocumentsData();
+            System.Windows.MessageBox.Show("Deleted all documents data!");
+        }
+
+        public void DeleteAllStocksDataButton()
+        {
+            DataAcces.DeleteAllStocksData();
+            System.Windows.MessageBox.Show("Deleted all stocks data!");
+        }
+
+        public void DeleteAllProductsDataButton()
+        {
+            DataAcces.DeleteAllProductsData();
+            System.Windows.MessageBox.Show("Deleted all products data!");
+        }
+        #endregion
+
         #endregion
     }
 }

@@ -20,6 +20,7 @@ namespace Storager.Models
 
         #region Properties
         public bool IsValid { get { return isValid(); } }
+        public int WithdrawnAmount { get; set; } = 0;
 
         private ProductModel _product = null;
         private StorageRackModel _storageRack = null;

@@ -8,19 +8,12 @@ using System.Threading.Tasks;
 
 namespace Storager.ViewModels
 {
-    public class UserControlAddDocumentViewModel : Screen
+    public class UserControlAddDocumentViewModel : Conductor<object>
     {
         #region Properties
         public BindableCollection<DocumentTypeModel> DocumentTypes { get; set; } = DataAcces.GetAllDocumentTypes();
-        public BindableCollection<ProductModel> Products { get; set; } = DataAcces.GetAllProducts();
-        public BindableCollection<StorageRackModel> StorageRacks { get; set; } = DataAcces.GetAllStorageRacks();
-
 
         private DocumentTypeModel _selectedDocumentType = null;
-        private BindableCollection<StockModel> _selectedStocks = new BindableCollection<StockModel>();
-        private string _selectedSupplier = null;
-        private string _selectedInvoiceNumber = null;
-        private string _warningMessage = string.Empty;
 
         public DocumentTypeModel SelectedDocumentType
         {
@@ -29,32 +22,8 @@ namespace Storager.ViewModels
             {
                 _selectedDocumentType = value; 
                 NotifyOfPropertyChange(() => SelectedDocumentType);
-                //SwitchDocumentType(value.ShortName);
+                SwitchDocumentType(value?.ShortName);
             }
-        }
-
-        public BindableCollection<StockModel> SelectedStocks
-        {
-            get { return _selectedStocks; }
-            set { _selectedStocks = value; NotifyOfPropertyChange(() => SelectedStocks); }
-        }        
-
-        public string SelectedSupplier
-        {
-            get { return _selectedSupplier; }
-            set { _selectedSupplier = value; NotifyOfPropertyChange(() => SelectedSupplier); }
-        }        
-
-        public string SelectedInvoiceNumber
-        {
-            get { return _selectedInvoiceNumber; }
-            set { _selectedInvoiceNumber = value; NotifyOfPropertyChange(() => SelectedInvoiceNumber); }
-        }
-
-        public string WarningMessage
-        {
-            get { return _warningMessage; }
-            set { _warningMessage = value; NotifyOfPropertyChange(() => WarningMessage); }
         }
         #endregion
 
@@ -67,34 +36,7 @@ namespace Storager.ViewModels
         #endregion
 
 
-        #region Methods
-        private void Confirm()
-        {
-            if (!isFormValid()) return;
-            
-            DocumentModel document = new DocumentModel() 
-            {
-                Supplier = SelectedSupplier,
-                InvoiceNumber = SelectedInvoiceNumber,
-                DateOfSigning = DateTime.Now,
-                Stocks = new List<StockModel>(SelectedStocks)
-            };
-
-            DataAcces.InsertDocument(document);
-        }
-
-        private void AddSelectedStock()
-        {
-            SelectedStocks.Add(new StockModel());
-            //SelectedStocks.Add(stock);
-        }
-
-        private void ShowSelectedStockAdder()
-        {
-            new WindowManager().ShowWindowAsync(new WindowPopupAdderViewModel(new UserControlAddStockViewModel())
-            );
-        }
-        
+        #region Methods       
         private void SwitchDocumentType(string type)
         {
             switch (type)
@@ -114,59 +56,19 @@ namespace Storager.ViewModels
 
         private void SwitchToPZ()
         {
-            throw new NotImplementedException();
+            ActivateItemAsync(new UserControlAddDocumentPZViewModel());
+            
         }
 
         private void SwitchToWZ()
         {
-            throw new NotImplementedException();
-        }
-
-        private bool isFormValid()
-        {
-            bool result = true;
-
-            if (string.IsNullOrEmpty(SelectedSupplier))
-            {
-                WarningMessage += "Supplier cannot be empty\n";
-                result = false;
-            }
-
-            foreach (StockModel stock in SelectedStocks)
-            {
-                if (!stock.IsValid)
-                {
-                    WarningMessage += "One or more stocks invalid!\n";
-                    result = false;
-                }
-            }
-
-            if (result == true) WarningMessage = string.Empty;
-            return result;
-        }
-
-        private bool isStockValid(StockModel stock)
-        {
-            if (stock.Amount <= 0) return false;
-            if (stock.PricePerUnit <= 0) return false;
-            if (stock.Product == null) return false;
-            if (stock.StorageRack == null) return false;
-
-            return true;
+            ActivateItemAsync(new UserControlAddDocumentWZViewModel());
         }
         #endregion
 
 
         #region Button clicks
-        public void ConfirmButton()
-        {
-            Confirm();
-        }
 
-        public void AddSelectedStockButton()
-        {
-            AddSelectedStock();
-        }
         #endregion
     }
 }
