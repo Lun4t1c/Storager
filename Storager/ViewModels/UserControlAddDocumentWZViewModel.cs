@@ -11,20 +11,48 @@ namespace Storager.ViewModels
     public class UserControlAddDocumentWZViewModel : Screen
     {
         #region Properties
-        private BindableCollection<StockModel> _stocksInDatabase = DataAcces.GetAllStocks();
-        private BindableCollection<StockModel> _selectedStocks = new BindableCollection<StockModel>();
+        private string _selectedSupplier = string.Empty;
+        private string _selectedInvoiceNumber = string.Empty;
+        private BindableCollection<ProductModel> _productsInDatabase = DataAcces.GetAllProducts();
+        private BindableCollection<ProductModel> _filteredProducts = DataAcces.GetAllProducts();
+        private BindableCollection<ProductModel> _selectedProducts = new BindableCollection<ProductModel>();
+        private string _stocksFilterText = string.Empty;
         private string _warningMessage = string.Empty;
 
-        public BindableCollection<StockModel> StocksInDatabase
+        public string SelectedSupplier
         {
-            get { return _stocksInDatabase; }
-            set { _stocksInDatabase = value; NotifyOfPropertyChange(() => StocksInDatabase); }
-        }        
+            get { return _selectedSupplier; }
+            set { _selectedSupplier = value; NotifyOfPropertyChange(() => SelectedSupplier); }
+        }
 
-        public BindableCollection<StockModel> SelectedStocks
+        public string SelectedInvoiceNumber
         {
-            get { return _selectedStocks; }
-            set { _selectedStocks = value; NotifyOfPropertyChange(() => SelectedStocks); }
+            get { return _selectedInvoiceNumber; }
+            set { _selectedInvoiceNumber = value; NotifyOfPropertyChange(() => SelectedInvoiceNumber); }
+        }
+
+        public BindableCollection<ProductModel> ProductsInDatabase
+        {
+            get { return _productsInDatabase; }
+            set { _productsInDatabase = value; NotifyOfPropertyChange(() => ProductsInDatabase); }
+        }
+
+        public BindableCollection<ProductModel> FilteredProducts
+        {
+            get { return _filteredProducts; }
+            set { _filteredProducts = value; NotifyOfPropertyChange(() => FilteredProducts); }
+        }
+
+        public BindableCollection<ProductModel> SelectedProducts
+        {
+            get { return _selectedProducts; }
+            set { _selectedProducts = value; NotifyOfPropertyChange(() => SelectedProducts); }
+        }
+
+        public string ProductsFilterText
+        {
+            get { return _stocksFilterText; }
+            set { _stocksFilterText = value; NotifyOfPropertyChange(() => ProductsFilterText); FilterProducts(); }
         }
 
         public string WarningMessage
@@ -44,33 +72,44 @@ namespace Storager.ViewModels
 
 
         #region Methods
-        private void Confirm()
+        private async void Confirm()
         {
+            if (!isFormValid()) return;
 
+            DocumentModel document = new DocumentModel()
+            {
+                Supplier = SelectedSupplier,
+                InvoiceNumber = SelectedInvoiceNumber,
+                DateOfSigning = DateTime.Now,
+                //Stocks = new BindableCollection<ProductModel>(SelectedProducts),
+                DocumentType = ((UserControlAddDocumentViewModel)Parent).SelectedDocumentType
+            };
+
+            try
+            {
+                await Task.Run(() => DataAcces.InsertDocument(document));
+
+                foreach (StockModel stock in document.Stocks)
+                    DataAcces.UpdateStockCurrentAmount(stock, stock.CurrentAmount - stock.WithdrawnAmount);
+
+                ResetForm();
+            }
+            catch (Exception e)
+            {
+                System.Windows.MessageBox.Show(e.Message, "ERROR", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Error);
+            }            
         }
 
-        private void AddSelectedStock(StockModel stock)
+        private void AddSelectedProduct(ProductModel product)
         {
-            SelectedStocks.Add(stock);
+            ProductsInDatabase.Remove(product);
+            FilteredProducts.Remove(product);
+            SelectedProducts.Add(product);
         }
 
         private bool isFormValid()
         {
-            bool result = true;
-
-           
-            foreach (StockModel stock in SelectedStocks)
-            {
-                if (!isStockValid(stock))
-                {
-                    WarningMessage += "One or more stocks invalid\n";
-                    result = false;
-                    break;
-                }
-            }
-
-            if (result == true) WarningMessage = string.Empty;
-            return result;
+            throw new NotImplementedException();
         }
 
         private bool isStockValid(StockModel stock)
@@ -79,6 +118,36 @@ namespace Storager.ViewModels
 
             return true;
         }
+        
+        private void FilterProducts()
+        {
+            if (string.IsNullOrEmpty(ProductsFilterText))
+            {
+                FilteredProducts = new BindableCollection<ProductModel>(ProductsInDatabase);
+            }
+            else
+            {
+                IEnumerable<ProductModel> tempList =
+                        from product
+                        in ProductsInDatabase
+                        where product.Name.ToLower().Contains(ProductsFilterText)
+                        select product;
+
+                FilteredProducts = new BindableCollection<ProductModel>(tempList);
+            }
+        }
+        
+        private void ResetForm()
+        {
+            SelectedSupplier = string.Empty;            
+            SelectedProducts = new BindableCollection<ProductModel>();
+            SelectedInvoiceNumber = string.Empty;
+            WarningMessage = string.Empty;
+
+            ProductsInDatabase = DataAcces.GetAllProducts();
+            ProductsFilterText = string.Empty;
+            FilterProducts();
+        }
         #endregion
 
 
@@ -86,11 +155,6 @@ namespace Storager.ViewModels
         public void ConfirmButton()
         {
             Confirm();
-        }
-
-        public void StockItemClick(StockModel stock)
-        {
-            AddSelectedStock(stock);
         }
         #endregion
     }

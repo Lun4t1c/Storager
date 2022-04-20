@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <!--#endregion-->
 
-        <!--#region SELECTED STOCKS -->
+        <!--#region DOCUMENT ITEMS -->
         <ScrollViewer Grid.Row="1"
                           VerticalScrollBarVisibility="Auto">
 
@@ -44,6 +44,7 @@
                                 <TextBlock Text="{Binding Id}"/>
                                 <Rectangle VerticalAlignment="Stretch" Fill="Black" Width="2" Margin="10,0,10,0"/>
                                 <TextBlock Text="{Binding DocumentType.ShortName}"/>
+                                <Rectangle VerticalAlignment="Stretch" Fill="Black" Width="2" Margin="10,0,10,0"/>
 
                                 <!--#region STOCKS -->
                                 <ItemsControl ItemsSource="{Binding Stocks}">
@@ -85,10 +86,10 @@
                                                     <!--AMOUNT-->
                                                     <TextBlock Grid.Column="0" Grid.Row="1"
                                                        Margin="5"
-                                                   Text="Amount left:"/>
+                                                   Text="Starting amount:"/>
                                                     <TextBlock Grid.Column="1" Grid.Row="1"
                                                      Margin="5"
-                                                 Text="{Binding CurrentAmount}"/>
+                                                 Text="{Binding Amount}"/>
 
                                                 </Grid>
                                             </Border>

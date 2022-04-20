@@ -104,6 +104,7 @@
     <Compile Include="Models\StorageRackModel.cs" />
     <Compile Include="Models\UnitOfMeasureModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="ValueConverters\vcStockWithdrawAmountToBoolConverter.cs" />
     <Compile Include="ViewModels\UserControlAddDocumentPZViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddDocumentViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddDocumentWZViewModel.cs" />
@@ -112,7 +113,6 @@
     <Compile Include="ViewModels\UserControlLoadingScreenViewModel.cs" />
     <Compile Include="ViewModels\UserControlLoginViewModel.cs" />
     <Compile Include="ViewModels\UserControlProductsViewModel.cs" />
-    <Compile Include="ViewModels\UserControlProductViewModel.cs" />
     <Compile Include="ViewModels\UserControlWarehouseDocumentsViewModel.cs" />
     <Compile Include="ViewModels\WindowPopupAdderViewModel.cs" />
     <Compile Include="ViewModels\WindowSettingsViewModel.cs" />
@@ -141,9 +141,6 @@
     </Compile>
     <Compile Include="Views\UserControlProductsView.xaml.cs">
       <DependentUpon>UserControlProductsView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\UserControlProductView.xaml.cs">
-      <DependentUpon>UserControlProductView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControlWarehouseDocumentsView.xaml.cs">
       <DependentUpon>UserControlWarehouseDocumentsView.xaml</DependentUpon>
@@ -243,10 +240,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControlProductsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\UserControlProductView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

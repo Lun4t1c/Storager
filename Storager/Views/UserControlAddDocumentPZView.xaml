@@ -84,6 +84,7 @@
                                             Padding="5">
 
                                         <Grid MinHeight="160" MinWidth="160">
+                                            <!--#region GRID DEFINITIONS -->
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"/>
                                                 <ColumnDefinition Width="*"/>
@@ -94,6 +95,7 @@
                                                 <RowDefinition Height="*"/>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
+                                            <!--#endregion-->
 
                                             <!--PRODUCT-->
                                             <TextBlock Grid.Column="0" Grid.Row="0"
@@ -118,7 +120,7 @@
                                             <!--PRICE-->
                                             <TextBlock Grid.Column="0" Grid.Row="2"
                                                        Margin="5"
-                                                   Text="Price:"/>
+                                                   Text="Price per unit:"/>
                                             <TextBox Grid.Column="1" Grid.Row="2"
                                                      Margin="5"
                                                  Text="{Binding PricePerUnit}"/>

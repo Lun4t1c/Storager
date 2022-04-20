@@ -18,8 +18,6 @@ namespace Storager.ViewModels
             get { return _documents; }
             set { _documents = value; NotifyOfPropertyChange(() => Documents); }
         }
-
-
         #endregion
 
         #region Constructor

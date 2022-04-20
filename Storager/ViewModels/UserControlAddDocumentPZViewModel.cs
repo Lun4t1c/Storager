@@ -60,16 +60,14 @@ namespace Storager.ViewModels
             if (!isFormValid()) return;
 
             foreach (StockModel stock in SelectedStocks)
-            {
                 stock.CurrentAmount = stock.Amount;
-            }
 
             DocumentModel document = new DocumentModel()
             {
                 Supplier = SelectedSupplier,
                 InvoiceNumber = SelectedInvoiceNumber,
                 DateOfSigning = DateTime.Now,
-                Stocks = new List<StockModel>(SelectedStocks),
+                Stocks = new BindableCollection<StockModel>(SelectedStocks),
                 DocumentType = ((UserControlAddDocumentViewModel)Parent).SelectedDocumentType
             };
 

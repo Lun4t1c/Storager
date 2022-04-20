@@ -4,10 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Storager.Views"
+             xmlns:vcs="clr-namespace:Storager.ValueConverters"
              xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
              xmlns:ii="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid>
         <!--#region GRID DEFINITIONS-->
         <Grid.ColumnDefinitions>
@@ -85,6 +87,7 @@
                                             Padding="5">
 
                                     <Grid MinHeight="160" MinWidth="160">
+                                        <!--#region GRID DEFINITIONS -->
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*"/>
                                             <ColumnDefinition Width="*"/>
@@ -95,13 +98,14 @@
                                             <RowDefinition Height="*"/>
                                             <RowDefinition Height="*"/>
                                         </Grid.RowDefinitions>
+                                        <!--#endregion-->
 
                                         <!--PRODUCT-->
                                         <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
                                                        Margin="5"
                                                    Text="{Binding Product.Name}"/>
 
-                                        <!--AMOUNT-->
+                                        <!--CURRENT AMOUNT-->
                                         <TextBlock Grid.Column="0" Grid.Row="1"
                                                        Margin="5"
                                                    Text="Amount left:"/>
@@ -144,6 +148,7 @@
 
                     <!--SEARCH BOX-->
                     <TextBox Grid.Row="0"
+                             x:Name="StocksFilterText"
                              Margin="5"
                              VerticalContentAlignment="Center"
                              FontSize="20">
@@ -177,11 +182,11 @@
 
                         <WrapPanel>
 
-                            <ItemsControl ItemsSource="{Binding StocksInDatabase}">
+                            <ItemsControl ItemsSource="{Binding FilteredProducts}">
 
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <WrapPanel/>
+                                        <StackPanel Orientation="Vertical"/>
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
 
@@ -194,53 +199,7 @@
                                                 Padding="5"
                                                 cal:Message.Attach="[Event MouseLeftButtonDown] = [Action StockItemClick($dataContext)]">
 
-                                            <Grid MinHeight="100" MinWidth="100">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*"/>
-                                                    <RowDefinition Height="*"/>
-                                                </Grid.RowDefinitions>
-
-
-                                                <!--PRODUCT-->
-                                                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2"
-                                                           Margin="5"
-                                                           FontFamily="Segoe UI"
-                                                           FontSize="20"
-                                                           Text="{Binding Product.Name}"/>
-
-                                                <!--AMOUNT LEFT-->
-                                                <Grid Grid.Column="0" Grid.Row="1"
-                                                               Margin="5">
-                                                    <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="auto"/>
-                                                        <ColumnDefinition Width="auto"/>
-                                                        <ColumnDefinition Width="auto"/>
-                                                    </Grid.ColumnDefinitions>
-
-                                                    <TextBlock Grid.Column="0"
-                                                               Margin="5"
-                                                                   FontFamily="Segoe UI"
-                                                               FontSize="16"
-                                                               Text="Amount left:"/>
-                                                    <TextBlock Grid.Column="1"
-                                                             Margin="5"
-                                                                   FontFamily="Segoe UI"
-                                                               FontSize="16"
-                                                             Text="{Binding CurrentAmount}"/>
-                                                    <TextBlock Grid.Column="2"
-                                                             Margin="5"
-                                                                   FontFamily="Segoe UI"
-                                                               FontSize="16"
-                                                             Text="{Binding Product.UnitOfMeasure.ShortName}"/>
-                                                </Grid>
-
-                                            </Grid>
-
-                                            
+                                            <TextBlock Text="{Binding Name}"/>
 
                                             <Border.Style>
                                                 <Style TargetType="Border">

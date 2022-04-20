@@ -172,7 +172,9 @@ namespace Storager.Models
                 if (connection.State == ConnectionState.Closed)
                     connection.Open();
 
-                stocks = connection.Query<StockModel>($"SELECT * FROM DOCUMENT_STOCKS WHERE Id_document = @id_doc",
+                stocks = connection.Query<StockModel>($"SELECT * FROM DOCUMENT_STOCKS ds " +
+                    $"JOIN STOCKS s ON ds.Id_stock = s.Id " +
+                    $"WHERE ds.Id_document = @id_doc",
                     new { @id_doc = document.Id }
                 );
             }
@@ -242,6 +244,29 @@ namespace Storager.Models
             }
 
             return doctype;
+        }
+        
+        public static int? CountProductAmountLeft(int id_product)
+        {
+            int? AmountLeft = null;
+
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                try
+                {
+                    AmountLeft = connection.QuerySingleOrDefault<int>($"SELECT SUM(CurrentAmount) FROM STOCKS WHERE Id_Product = @id",
+                                new { @id = id_product });
+                }
+                catch 
+                {
+                    AmountLeft = 0;
+                }
+            }
+            if (AmountLeft == null) return 0;
+            return AmountLeft;
         }
         #endregion
 
@@ -324,6 +349,12 @@ namespace Storager.Models
             }
         }
 
+        /// <summary>
+        /// Insert document into database by determining document type and calling
+        /// appropriate method
+        /// </summary>
+        /// <param name="document"></param>
+        /// <exception cref="ArgumentException"></exception>
         public static void InsertDocument(DocumentModel document)
         {
             switch (document.DocumentType.ShortName)
@@ -333,6 +364,7 @@ namespace Storager.Models
                     break;
 
                 case "WZ":
+                    InsertDocumentWZ(document);
                     break;
 
                 default: throw new ArgumentException("Unknonw document type.");
@@ -340,7 +372,7 @@ namespace Storager.Models
         }
 
         /// <summary>
-        /// Insert document into database using stored procedure
+        /// Insert PZ document into database using stored procedure
         /// </summary>
         /// <param name="document">Document to insert</param>
         public static void InsertDocumentPZ(DocumentModel document)
@@ -418,6 +450,24 @@ namespace Storager.Models
                     connection.Open();
                     cmd.ExecuteNonQuery();
                 }
+            }
+        }
+        #endregion
+
+
+        #region Update data
+        public static void UpdateStockCurrentAmount(StockModel stock, int newAmount)
+        {
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                connection.Execute(
+                    "UPDATE STOCKS " +
+                    "SET CurrentAmount = @na " +
+                    "WHERE Id = @id",
+                    new { id = stock.Id, na = newAmount });
             }
         }
         #endregion

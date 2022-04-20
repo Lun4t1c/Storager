@@ -19,6 +19,7 @@ namespace Storager.Models
 
         #region Other properties
         private UnitOfMeasureModel _unitOfMeasure = null;
+        private int? _amountLeft = null;
 
         public UnitOfMeasureModel UnitOfMeasure
         {
@@ -35,6 +36,20 @@ namespace Storager.Models
             set { _unitOfMeasure = value; }
         }
 
+        public int? AmountLeft
+        {
+            get
+            {
+                if (_amountLeft != null)
+                    return _amountLeft;
+                else
+                {
+                    _amountLeft = DataAcces.CountProductAmountLeft(Id);
+                    return _amountLeft;
+                }
+            }
+            set { _amountLeft = value; }
+        }
         #endregion
 
 

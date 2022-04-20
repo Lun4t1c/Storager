@@ -2,51 +2,28 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="Button" x:Key="MenuButtonStyle">
-        <Setter Property="FontFamily" Value="Segoe"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
 
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
+        <Style.Triggers>
+            <!-- ANIMATIONS -->
+            <!--Mouse enter-->
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard Duration="0:0:1">
+                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="DarkGray"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
 
-                    <Border Name="MainBorder" Background="#190d4a"
-                            CornerRadius="0">
-                        <ContentPresenter x:Name="MyContentPresenter"
-                                          TextBlock.Foreground="White"
-                                          TextBlock.FontFamily="Segoe UI Light"
-                                          Content="{TemplateBinding Content}"
-                                          HorizontalAlignment="Center"
-                                          VerticalAlignment="Center"
-                                          Margin="10,0,10,0" />
-                    </Border>
+            <!--Mouse leave-->
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard Duration="0:0:1">
+                        <ColorAnimation Storyboard.TargetProperty="(Button.Background).(SolidColorBrush.Color)" To="Red"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Style.Triggers>
 
-                    <ControlTemplate.Triggers>
-
-
-
-                        <!-- ANIMATIONS -->
-                        <!--Mouse enter-->
-                        <EventTrigger RoutedEvent="MouseEnter">
-                            <BeginStoryboard>
-                                <Storyboard Duration="0:0:0.2">
-
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-
-                        <!--Mouse leave-->
-                        <EventTrigger RoutedEvent="MouseLeave">
-                            <BeginStoryboard>
-                                <Storyboard Duration="0:0:1">
-
-                                </Storyboard>
-                            </BeginStoryboard>
-                        </EventTrigger>
-                    </ControlTemplate.Triggers>
-
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
     </Style>
 
 </ResourceDictionary>

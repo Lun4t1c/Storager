@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +19,8 @@ namespace Storager.Models
 
 
         #region Properties
-        public IEnumerable<StockModel> Stocks { get; set; }
-
         private DocumentTypeModel _documentType = null;
+        private BindableCollection<StockModel> _stocks = null;
 
         public DocumentTypeModel DocumentType
         {
@@ -35,6 +35,21 @@ namespace Storager.Models
                 }
             }
             set { _documentType = value; }
+        }
+
+        public BindableCollection<StockModel> Stocks
+        {
+            get
+            {
+                if (_stocks != null)
+                    return _stocks;
+                else
+                {
+                    _stocks = DataAcces.GetStocksInDocument(this);
+                    return _stocks;
+                }
+            }
+            set { _stocks = value; }
         }
         #endregion
     }

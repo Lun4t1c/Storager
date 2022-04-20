@@ -14,7 +14,6 @@
                 <ResourceDictionary Source="./ControlStyles/LoginTextboxStyle.xaml"/>
 
                 <ResourceDictionary Source="./ControlStyles/MenuButtonStyle.xaml"/>
-                
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
