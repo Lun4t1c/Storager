@@ -11,9 +11,9 @@ namespace Storager.ViewModels
     public class UserControlWarehouseDocumentsViewModel : Screen
     {
         #region Properties
-        private BindableCollection<DocumentModel> _documents = DataAcces.GetAllDocuments();
+        private BindableCollection<DocumentBaseModel> _documents = new BindableCollection<DocumentBaseModel>();
 
-        public BindableCollection<DocumentModel> Documents
+        public BindableCollection<DocumentBaseModel> Documents
         {
             get { return _documents; }
             set { _documents = value; NotifyOfPropertyChange(() => Documents); }
@@ -23,7 +23,8 @@ namespace Storager.ViewModels
         #region Constructor
         public UserControlWarehouseDocumentsViewModel()
         {
-
+            Documents.AddRange(DataAcces.GetAllDocumentsPz());
+            Documents.AddRange(DataAcces.GetAllDocumentsWz());
         }
         #endregion
 

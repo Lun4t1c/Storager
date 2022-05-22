@@ -132,6 +132,44 @@ namespace Storager.Models
             return new BindableCollection<DocumentModel>(documents);
         }
 
+        public static BindableCollection<DocumentPzModel> GetAllDocumentsPz()
+        {
+            IEnumerable<DocumentPzModel> documents_pz = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                documents_pz = connection.Query<DocumentPzModel>($"SELECT * FROM DOCUMENTS_PZ");
+
+                foreach (DocumentPzModel doc in documents_pz)
+                {
+                    doc.Stocks = GetStocksInDocumentPz(doc);
+                }
+            }
+
+            return new BindableCollection<DocumentPzModel>(documents_pz);
+        }
+
+        public static BindableCollection<DocumentWzModel> GetAllDocumentsWz()
+        {
+            IEnumerable<DocumentWzModel> documents_wz = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                documents_wz = connection.Query<DocumentWzModel>($"SELECT * FROM DOCUMENTS_WZ");
+
+                foreach (DocumentWzModel doc in documents_wz)
+                {
+                    doc.Products = GetProductsInDocumentWz(doc);
+                }
+            }
+
+            return new BindableCollection<DocumentWzModel>(documents_wz);
+        }
+
         public static BindableCollection<StockModel> GetAllStocks()
         {
             IEnumerable<StockModel> stocks = null;
@@ -180,6 +218,42 @@ namespace Storager.Models
             }
 
             return new BindableCollection<StockModel>(stocks);
+        }
+
+        public static BindableCollection<StockModel> GetStocksInDocumentPz(DocumentPzModel document_pz)
+        {
+            IEnumerable<StockModel> stocks = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                stocks = connection.Query<StockModel>($"SELECT * FROM DOCUMENT_PZ_STOCKS ds " +
+                    $"JOIN STOCKS s ON ds.Id_stock = s.Id " +
+                    $"WHERE ds.Id_documentPz = @id_doc",
+                    new { @id_doc = document_pz.Id }
+                );
+            }
+
+            return new BindableCollection<StockModel>(stocks);
+        }
+
+        public static BindableCollection<ProductModel> GetProductsInDocumentWz(DocumentWzModel document_pz)
+        {
+            IEnumerable<ProductModel> products = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                products = connection.Query<ProductModel>($"SELECT * FROM DOCUMENT_WZ_PRODUCTS ds " +
+                    $"JOIN STOCKS s ON ds.Id_stock = s.Id " +
+                    $"WHERE ds.Id_documentWz = @id_doc",
+                    new { @id_doc = document_pz.Id }
+                );
+            }
+
+            return new BindableCollection<ProductModel>(products);
         }
 
         public static ProductModel GetSingleProduct(int id_product)
