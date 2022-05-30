@@ -62,18 +62,18 @@ namespace Storager.ViewModels
             foreach (StockModel stock in SelectedStocks)
                 stock.CurrentAmount = stock.Amount;
 
-            DocumentModel document = new DocumentModel()
+            DocumentPzModel document_pz = new DocumentPzModel()
             {
                 Supplier = SelectedSupplier,
                 InvoiceNumber = SelectedInvoiceNumber,
                 DateOfSigning = DateTime.Now,
                 Stocks = new BindableCollection<StockModel>(SelectedStocks),
-                DocumentType = ((UserControlAddDocumentViewModel)Parent).SelectedDocumentType
+                Id_ApprovedBy = Globals.LoggedUser.Id
             };
 
             try
             {
-                await Task.Run(() => DataAcces.InsertDocument(document));
+                await Task.Run(() => DataAcces.InsertDocumentPz(document_pz));
                 ResetForm();
             }
             catch (Exception e)

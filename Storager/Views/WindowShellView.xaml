@@ -161,38 +161,7 @@
         <ContentControl Grid.Column="1" Grid.Row="1"
                         x:Name="ActiveItem"/>
         <!--#endregion-->
-
         
-        <!--#region STATUS BAR -->
-        <StatusBar Grid.Row="2" Grid.ColumnSpan="2">
-
-            <!-- TEMPLATE -->
-            <StatusBar.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="auto"/>
-                            <ColumnDefinition Width="100"/>
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </ItemsPanelTemplate>
-            </StatusBar.ItemsPanel>
-
-            <!-- ITEMS -->
-            <StatusBarItem>
-                <TextBlock Text="status bar benc benc"/>
-            </StatusBarItem>
-
-            <Separator Grid.Column="1"/>
-
-            <StatusBarItem Grid.Column="2">
-                <ProgressBar Value="50" Width="100" Height="16"/>
-            </StatusBarItem>
-
-        </StatusBar>
-        <!--#endregion-->
-
     </Grid>
 
 </Window>

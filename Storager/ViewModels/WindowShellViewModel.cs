@@ -11,13 +11,13 @@ namespace Storager.ViewModels
     public class WindowShellViewModel : Conductor<object>
     {
         #region Properties
-        public UserModel LoggedUser { get; set; }
+
         #endregion
 
         #region Constructor
-        public WindowShellViewModel(UserModel userModel = null)
+        public WindowShellViewModel()
         {
-            LoggedUser = userModel;
+
         }
         #endregion
 
@@ -135,8 +135,6 @@ namespace Storager.ViewModels
             DataAcces.DeleteAllProductsData();
             System.Windows.MessageBox.Show("Deleted all products data!");
         }
-        #endregion
-
         #endregion
     }
 }

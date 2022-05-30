@@ -96,12 +96,12 @@
     </Compile>
     <Compile Include="Models\DataAcces.cs" />
     <Compile Include="Models\DocumentBaseModel.cs" />
-    <Compile Include="Models\DocumentModel.cs" />
     <Compile Include="Models\DocumentPzModel.cs" />
     <Compile Include="Models\DocumentTypeModel.cs" />
     <Compile Include="Models\DocumentWzModel.cs" />
     <Compile Include="Models\dummydata.cs" />
     <Compile Include="Models\Globals.cs" />
+    <Compile Include="Models\ProductAndAmount.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\StockModel.cs" />
     <Compile Include="Models\StorageRackModel.cs" />
@@ -276,9 +276,6 @@
     <Resource Include="Resources\LoginImage.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="tempCode.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

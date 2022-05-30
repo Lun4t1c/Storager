@@ -48,7 +48,8 @@ namespace Storager.ViewModels
         private void StartUpMainShell(UserModel userModel)
         {
             IWindowManager manager = new WindowManager();
-            manager.ShowWindowAsync(new ViewModels.WindowShellViewModel(userModel));
+            manager.ShowWindowAsync(new ViewModels.WindowShellViewModel());
+            Globals.LoggedUser = new UserModel() { Id = 9 };
         }
 
         private void LogIn()

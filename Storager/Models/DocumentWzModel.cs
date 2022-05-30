@@ -10,26 +10,26 @@ namespace Storager.Models
     public class DocumentWzModel : DocumentBaseModel
     {
         #region Database columns
-        public int Recipent { get; set; }
+        public string Recipent { get; set; }
         #endregion
 
 
         #region Other properties
-        private BindableCollection<ProductModel> _products = null;
+        private BindableCollection<ProductAndAmount> _productsAndAmount = null;
 
-        public BindableCollection<ProductModel> Products
+        public BindableCollection<ProductAndAmount> ProductsAndAmount
         {
             get 
             {
-                if (_products != null)
-                    return _products;
+                if (_productsAndAmount != null)
+                    return _productsAndAmount;
                 else
                 {
-                    _products = DataAcces.GetProductsInDocumentWz(this);
-                    return _products;
+                    _productsAndAmount = DataAcces.GetProductsAndAmountsInDocumentWz(this);
+                    return _productsAndAmount;
                 }
             }
-            set { _products = value; }
+            set { _productsAndAmount = value; }
         }
         #endregion
     }

@@ -16,6 +16,10 @@ namespace Storager.Models
 {
     public static class DataAcces
     {
+        #region Utilities
+
+        #endregion
+
         #region Get data
         private static bool CheckPassword(string login, SecureString password)
         {
@@ -112,26 +116,6 @@ namespace Storager.Models
 
             return new BindableCollection<DocumentTypeModel>(documents);
         }
-
-        public static BindableCollection<DocumentModel> GetAllDocuments()
-        {
-            IEnumerable<DocumentModel> documents = null;
-            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
-            {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
-
-                documents = connection.Query<DocumentModel>($"SELECT * FROM DOCUMENTS");
-
-                foreach (DocumentModel doc in documents)
-                {
-                    doc.Stocks = GetStocksInDocument(doc);
-                }
-            }
-
-            return new BindableCollection<DocumentModel>(documents);
-        }
-
         public static BindableCollection<DocumentPzModel> GetAllDocumentsPz()
         {
             IEnumerable<DocumentPzModel> documents_pz = null;
@@ -163,7 +147,7 @@ namespace Storager.Models
 
                 foreach (DocumentWzModel doc in documents_wz)
                 {
-                    doc.Products = GetProductsInDocumentWz(doc);
+                    doc.ProductsAndAmount = GetProductsAndAmountsInDocumentWz(doc);
                 }
             }
 
@@ -201,25 +185,6 @@ namespace Storager.Models
             }
             return new BindableCollection<StorageRackModel>(racks);
         }
-
-        public static BindableCollection<StockModel> GetStocksInDocument(DocumentModel document)
-        {
-            IEnumerable<StockModel> stocks = null;
-            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
-            {
-                if (connection.State == ConnectionState.Closed)
-                    connection.Open();
-
-                stocks = connection.Query<StockModel>($"SELECT * FROM DOCUMENT_STOCKS ds " +
-                    $"JOIN STOCKS s ON ds.Id_stock = s.Id " +
-                    $"WHERE ds.Id_document = @id_doc",
-                    new { @id_doc = document.Id }
-                );
-            }
-
-            return new BindableCollection<StockModel>(stocks);
-        }
-
         public static BindableCollection<StockModel> GetStocksInDocumentPz(DocumentPzModel document_pz)
         {
             IEnumerable<StockModel> stocks = null;
@@ -238,22 +203,37 @@ namespace Storager.Models
             return new BindableCollection<StockModel>(stocks);
         }
 
-        public static BindableCollection<ProductModel> GetProductsInDocumentWz(DocumentWzModel document_pz)
+        public static BindableCollection<ProductAndAmount> GetProductsAndAmountsInDocumentWz(DocumentWzModel document_wz)
         {
             IEnumerable<ProductModel> products = null;
+            BindableCollection<ProductAndAmount> productsAndAmounts = new BindableCollection<ProductAndAmount>();
+
             using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
             {
                 if (connection.State == ConnectionState.Closed)
                     connection.Open();
 
-                products = connection.Query<ProductModel>($"SELECT * FROM DOCUMENT_WZ_PRODUCTS ds " +
-                    $"JOIN STOCKS s ON ds.Id_stock = s.Id " +
-                    $"WHERE ds.Id_documentWz = @id_doc",
-                    new { @id_doc = document_pz.Id }
+                products = connection.Query<ProductModel>($"SELECT * FROM DOCUMENT_WZ_PRODUCTS dp " +
+                    $"JOIN PRODUCTS p ON dp.Id_product = p.Id " +
+                    $"WHERE dp.Id_documentWz = @id_doc",
+                    new { @id_doc = document_wz.Id }
                 );
+
+                if (products != null)
+                {
+                    foreach (ProductModel product in products)
+                    {
+                        int amount = connection.QuerySingle<int>($"SELECT Amount FROM DOCUMENT_WZ_PRODUCTS " +
+                            $"WHERE Id_Product = @id_product AND Id_DocumentWz = @id_document_wz",
+                            new { @id_product = product.Id, @id_document_wz = document_wz.Id});
+
+                        productsAndAmounts.Add(new ProductAndAmount(product, amount));
+                    }
+                }
+                else throw new Exception("ERROR while getting data from database.");
             }
 
-            return new BindableCollection<ProductModel>(products);
+            return new BindableCollection<ProductAndAmount>(productsAndAmounts);
         }
 
         public static ProductModel GetSingleProduct(int id_product)
@@ -424,42 +404,20 @@ namespace Storager.Models
         }
 
         /// <summary>
-        /// Insert document into database by determining document type and calling
-        /// appropriate method
-        /// </summary>
-        /// <param name="document"></param>
-        /// <exception cref="ArgumentException"></exception>
-        public static void InsertDocument(DocumentModel document)
-        {
-            switch (document.DocumentType.ShortName)
-            {
-                case "PZ":
-                    InsertDocumentPZ(document);
-                    break;
-
-                case "WZ":
-                    InsertDocumentWZ(document);
-                    break;
-
-                default: throw new ArgumentException("Unknonw document type.");
-            }
-        }
-
-        /// <summary>
         /// Insert PZ document into database using stored procedure
         /// </summary>
-        /// <param name="document">Document to insert</param>
-        public static void InsertDocumentPZ(DocumentModel document)
+        /// <param name="document_pz">Document to insert</param>
+        public static void InsertDocumentPz(DocumentPzModel document_pz)
         {
             using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
             {
                 //document
-                using (SqlCommand cmd = new SqlCommand("spInsertDocument", connection) { CommandType = CommandType.StoredProcedure })
+                using (SqlCommand cmd = new SqlCommand("spInsertDocumentPz", connection) { CommandType = CommandType.StoredProcedure })
                 {
-                    cmd.Parameters.Add("@supplier", SqlDbType.NVarChar).Value = document.Supplier;
-                    cmd.Parameters.Add("@date_of_signing", SqlDbType.DateTime).Value = document.DateOfSigning;
-                    cmd.Parameters.Add("@invoice_number", SqlDbType.NVarChar).Value = document.InvoiceNumber;
-                    cmd.Parameters.Add("@id_document_type", SqlDbType.Int).Value = document.DocumentType.Id;
+                    cmd.Parameters.Add("@supplier", SqlDbType.NVarChar).Value = document_pz.Supplier;
+                    cmd.Parameters.Add("@date_of_signing", SqlDbType.DateTime).Value = document_pz.DateOfSigning;
+                    cmd.Parameters.Add("@invoice_number", SqlDbType.NVarChar).Value = document_pz.InvoiceNumber;
+                    cmd.Parameters.Add("@id_approved_by", SqlDbType.Int).Value = document_pz.Id_ApprovedBy;
 
                     var Id_document_param = cmd.Parameters.Add("@id_document", SqlDbType.Int);
                     Id_document_param.Direction = ParameterDirection.Output;
@@ -468,11 +426,11 @@ namespace Storager.Models
                     cmd.ExecuteNonQuery();
                     connection.Close();
 
-                    document.Id = (int)Id_document_param.Value;
+                    document_pz.Id = (int)Id_document_param.Value;
                 }
 
                 //stocks
-                foreach (StockModel stock in document.Stocks)
+                foreach (StockModel stock in document_pz.Stocks)
                 {
                     int Id_stock;
                     using (SqlCommand cmd = new SqlCommand("spInsertStock", connection) { CommandType = CommandType.StoredProcedure })
@@ -496,29 +454,63 @@ namespace Storager.Models
                 }
             }
 
-            foreach (StockModel stock in document.Stocks)
+            foreach (StockModel stock in document_pz.Stocks)
             {
-                InsertDocumentStock(document, stock);
+                InsertDocumentPzStock(document_pz, stock);
             }
         }
 
-        public static void InsertDocumentWZ(DocumentModel document)
+        public static void InsertDocumentWz(DocumentWzModel document_wz)
         {
-            throw new NotImplementedException();
+            using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                //document
+                using (SqlCommand cmd = new SqlCommand("spInsertDocumentWz", connection) { CommandType = CommandType.StoredProcedure })
+                {
+                    cmd.Parameters.Add("@recipent", SqlDbType.NVarChar).Value = document_wz.Recipent;
+                    cmd.Parameters.Add("@date_of_signing", SqlDbType.DateTime).Value = document_wz.DateOfSigning;
+                    cmd.Parameters.Add("@invoice_number", SqlDbType.NVarChar).Value = document_wz.InvoiceNumber;
+                    cmd.Parameters.Add("@id_approved_by", SqlDbType.Int).Value = document_wz.Id_ApprovedBy;
+
+                    var Id_document_param = cmd.Parameters.Add("@id_document", SqlDbType.Int);
+                    Id_document_param.Direction = ParameterDirection.Output;
+
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                    connection.Close();
+
+                    document_wz.Id = (int)Id_document_param.Value;
+                }
+
+                //products
+                foreach (ProductAndAmount productAndAmount in document_wz.ProductsAndAmount)
+                {
+                    using (SqlCommand cmd = new SqlCommand("spInsertDocumentWzProduct", connection) { CommandType = CommandType.StoredProcedure })
+                    {
+                        cmd.Parameters.Add("@id_document", SqlDbType.Int).Value = document_wz.Id;
+                        cmd.Parameters.Add("@id_product", SqlDbType.Int).Value = productAndAmount.Product.Id;
+                        cmd.Parameters.Add("@amount", SqlDbType.Int).Value = productAndAmount.Amount;
+
+                        connection.Open();
+                        cmd.ExecuteNonQuery();
+                        connection.Close();
+                    }
+                }
+            }
         }
 
         /// <summary>
         /// Add stock to existing document using stored procedure
         /// </summary>
-        /// <param name="document"></param>
+        /// <param name="document_pz"></param>
         /// <param name="stock"></param>
-        public static void InsertDocumentStock(DocumentModel document, StockModel stock)
+        public static void InsertDocumentPzStock(DocumentPzModel document_pz, StockModel stock)
         {
             using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
             {
-                using (SqlCommand cmd = new SqlCommand("spInsertDocumentStocks", connection) { CommandType = CommandType.StoredProcedure })
+                using (SqlCommand cmd = new SqlCommand("spInsertDocumentPzStocks", connection) { CommandType = CommandType.StoredProcedure })
                 {
-                    cmd.Parameters.Add("@id_document", SqlDbType.Int).Value = document.Id;
+                    cmd.Parameters.Add("@id_document", SqlDbType.Int).Value = document_pz.Id;
                     cmd.Parameters.Add("@id_stock", SqlDbType.Int).Value = stock.Id;
 
                     connection.Open();
