@@ -20,6 +20,7 @@ namespace Storager.Models
 
         #endregion
 
+
         #region Get data
         private static bool CheckPassword(string login, SecureString password)
         {
@@ -74,6 +75,21 @@ namespace Storager.Models
             return OutV;
         }
 
+        public static string GetUserLogin(int user_id)
+        {
+            string login = null;
+
+            using (IDbConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                login = connection.QuerySingleOrDefault<string>("SELECT Login FROM ACCOUNTS WHERE Id = @uid",
+                    new { @uid = user_id });
+            }
+
+            return login;
+        }
 
         public static BindableCollection<UnitOfMeasureModel> GetAllUnitsOfMeasure()
         {
@@ -321,6 +337,22 @@ namespace Storager.Models
             }
             if (AmountLeft == null) return 0;
             return AmountLeft;
+        }
+
+        public static BindableCollection<StockModel> GetNonEmptyStocksWithProduct(ProductModel product)
+        {
+            IEnumerable<StockModel> stocks = null;
+
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                stocks = connection.Query<StockModel>($"SELECT * FROM STOCKS WHERE Id_Product = @id AND CurrentAmount > 0",
+                    new { @idp = product.Id });
+            }
+
+            return new BindableCollection<StockModel>(stocks);
         }
         #endregion
 

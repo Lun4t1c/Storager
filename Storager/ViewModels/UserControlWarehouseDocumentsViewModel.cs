@@ -25,6 +25,9 @@ namespace Storager.ViewModels
         {
             Documents.AddRange(DataAcces.GetAllDocumentsPz());
             Documents.AddRange(DataAcces.GetAllDocumentsWz());
+
+            Documents = new BindableCollection<DocumentBaseModel>(Documents.OrderBy(doc => doc.DateOfSigning));
+            
         }
         #endregion
 
@@ -32,5 +35,12 @@ namespace Storager.ViewModels
 
         #endregion
 
+        #region Button clicks
+        public void DocumentItemClick(DocumentBaseModel document)
+        {
+            IWindowManager windowManager = new WindowManager();
+            windowManager.ShowWindowAsync(new ViewModels.WindowDocumentInspectorViewModel(document));
+        }
+        #endregion
     }
 }

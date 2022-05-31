@@ -45,7 +45,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <!--#endregion-->
 
@@ -77,15 +77,18 @@
         
         <!--#region SIDE MENU BUTTONS -->
         <Border Grid.Column="0" Grid.Row="1"
-                Background="LightGray">
+                Background="#2a14b8">
 
             <StackPanel Orientation="Vertical">
 
-                <Border>
+                <Border Margin="0,0,0,20">
                     <StackPanel Orientation="Vertical">
-                        <TextBlock Text="Logged as:"/>
-                        <TextBlock Text="{Binding LoggedUser.Login}"/>
-                        <TextBlock Text="{Binding LoggedUser.Email}"/>
+                        <TextBlock Text="Logged as:"
+                                   Foreground="White"/>
+                        <TextBlock Text="{Binding LoggedUser.Login}"
+                                   Foreground="White"/>
+                        <TextBlock Text="{Binding LoggedUser.Email}"
+                                   Foreground="White"/>
                     </StackPanel>
                 </Border>
 
@@ -93,11 +96,13 @@
                 <!--STORAGE LAYOUT BUTTON-->
                 <Button x:Name="StorageLayoutButton"
                         Content="Storage layout"
-                        HorizontalContentAlignment="Left"/>
+                        HorizontalContentAlignment="Left"
+                        Style="{StaticResource ShellSideMenuButtonStyle}"/>
                 
                 <!--PRODUCTS BUTTON-->
                 <Button x:Name="ProductsButton"
-                        HorizontalContentAlignment="Left">
+                        HorizontalContentAlignment="Left"
+                        Style="{StaticResource ShellSideMenuButtonStyle}">
                     <BulletDecorator Margin="2">
                         <BulletDecorator.Bullet>
                             <Image Source="pack://application:,,,/Resources/ProductIcon.png"
@@ -110,7 +115,8 @@
 
                 <!--ADD PRODUCT BUTTON-->
                 <Button x:Name="AddProductButton"
-                        HorizontalContentAlignment="Left">
+                        HorizontalContentAlignment="Left"
+                        Style="{StaticResource ShellSideMenuButtonStyle}">
                     <BulletDecorator Margin="2">
                         <BulletDecorator.Bullet>
                             <Image Source="pack://application:,,,/Resources/PlusIcon.png"
@@ -123,7 +129,8 @@
 
                 <!--DOCUMENTS BUTTON-->
                 <Button x:Name="DocumentsButton"
-                        HorizontalContentAlignment="Left">
+                        HorizontalContentAlignment="Left"
+                        Style="{StaticResource ShellSideMenuButtonStyle}">
                     <BulletDecorator Margin="2">
                         <BulletDecorator.Bullet>
                             <Image Source="pack://application:,,,/Resources/DocumentIcon.png"
@@ -136,7 +143,8 @@
 
                 <!--ADD DOCUMENT BUTTON-->
                 <Button x:Name="AddDocumentButton"
-                        HorizontalContentAlignment="Left">
+                        HorizontalContentAlignment="Left"
+                        Style="{StaticResource ShellSideMenuButtonStyle}">
                     <BulletDecorator Margin="2">
                         <BulletDecorator.Bullet>
                             <Image Source="pack://application:,,,/Resources/PlusIcon.png"
@@ -146,11 +154,6 @@
                                    Margin="10,0,0,0"/>
                     </BulletDecorator>
                 </Button>
-
-                
-                <Button x:Name="TestButton"
-                        Content="Test button"
-                        HorizontalContentAlignment="Left"/>
             </StackPanel>
 
         </Border>

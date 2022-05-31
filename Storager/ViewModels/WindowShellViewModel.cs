@@ -11,7 +11,7 @@ namespace Storager.ViewModels
     public class WindowShellViewModel : Conductor<object>
     {
         #region Properties
-
+        public UserModel LoggedUser { get; set; } = Globals.LoggedUser;
         #endregion
 
         #region Constructor
@@ -135,6 +135,8 @@ namespace Storager.ViewModels
             DataAcces.DeleteAllProductsData();
             System.Windows.MessageBox.Show("Deleted all products data!");
         }
+        #endregion
+
         #endregion
     }
 }

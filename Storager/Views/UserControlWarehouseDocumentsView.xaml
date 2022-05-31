@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Storager.Views"
+             xmlns:cal="clr-namespace:Caliburn.Micro;assembly=Caliburn.Micro.Platform"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800"
              FontSize="25" FontFamily="Segoe UI">
@@ -38,12 +39,15 @@
                         <Border Margin="5" 
                                 BorderThickness="2"
                                 BorderBrush="Black"
-                                Padding="5">
+                                Padding="5"
+                                cal:Message.Attach="[Event MouseLeftButtonDown] = [Action DocumentItemClick($dataContext)]">
 
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding Id}"/>
-                                <Rectangle VerticalAlignment="Stretch" Fill="Black" Width="2" Margin="10,0,10,0"/>
                                 <TextBlock Text="{Binding DocumentNumber}"/>
+                                <Rectangle VerticalAlignment="Stretch" Fill="Black" Width="2" Margin="10,0,10,0"/>
+                                <TextBlock Text="{Binding DateOfSigning}"/>
+                                <Rectangle VerticalAlignment="Stretch" Fill="Black" Width="2" Margin="10,0,10,0"/>
+                                <TextBlock Text="{Binding ApprovedBy}"/>
                                 <Rectangle VerticalAlignment="Stretch" Fill="Black" Width="2" Margin="10,0,10,0"/>
                             </StackPanel>
 

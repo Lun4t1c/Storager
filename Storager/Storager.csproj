@@ -117,6 +117,7 @@
     <Compile Include="ViewModels\UserControlLoginViewModel.cs" />
     <Compile Include="ViewModels\UserControlProductsViewModel.cs" />
     <Compile Include="ViewModels\UserControlWarehouseDocumentsViewModel.cs" />
+    <Compile Include="ViewModels\WindowDocumentInspectorViewModel.cs" />
     <Compile Include="ViewModels\WindowPopupAdderViewModel.cs" />
     <Compile Include="ViewModels\WindowSettingsViewModel.cs" />
     <Compile Include="ViewModels\WindowShellViewModel.cs" />
@@ -147,6 +148,9 @@
     </Compile>
     <Compile Include="Views\UserControlWarehouseDocumentsView.xaml.cs">
       <DependentUpon>UserControlWarehouseDocumentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WindowDocumentInspectorView.xaml.cs">
+      <DependentUpon>WindowDocumentInspectorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WindowPopupAdderView.xaml.cs">
       <DependentUpon>WindowPopupAdderView.xaml</DependentUpon>
@@ -210,6 +214,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ControlStyles\ShellSideMenuButtonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Misc\ToastControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -247,6 +255,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControlWarehouseDocumentsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WindowDocumentInspectorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -39,19 +39,19 @@ namespace Storager.ViewModels
         #region Constructor
         public UserControlLoginViewModel()
         {
-            StartUpMainShell(null);
-            System.Windows.Window.GetWindow((System.Windows.Controls.UserControl)this.GetView()).Close();
+            //StartUpMainShell(null);
+            //System.Windows.Window.GetWindow((System.Windows.Controls.UserControl)this.GetView()).Close();
         }
         #endregion
 
         #region Methods
-        private void StartUpMainShell(UserModel userModel)
+        private void StartUpMainShell()
         {
             IWindowManager manager = new WindowManager();
             manager.ShowWindowAsync(new ViewModels.WindowShellViewModel());
-            Globals.LoggedUser = new UserModel() { Id = 9 };
         }
 
+        [Obsolete]
         private void LogIn()
         {
             UserModel userModel;
@@ -59,7 +59,7 @@ namespace Storager.ViewModels
             switch (DataAcces.CheckCredentials(UserLogin, SecurePassword))
             {
                 case Enums.eLoginResultCodes.OK:
-                    userModel = DataAcces.GetUser(UserLogin, SecurePassword);
+                    Globals.LoggedUser = DataAcces.GetUser(UserLogin, SecurePassword);
                     LastLoginMessage = "Logging in...";
                     break;
 
@@ -95,8 +95,8 @@ namespace Storager.ViewModels
             {
                 case Enums.eLoginResultCodes.OK:                    
                     LastLoginMessage = "Logging in...";
-                    userModel = await Task.Run( () => DataAcces.GetUser(UserLogin, SecurePassword) );
-                    
+                    Globals.LoggedUser = await Task.Run( () => DataAcces.GetUser(UserLogin, SecurePassword) );
+
 
                     //Finds and closes WindowWelcomeView after succesfuly logging in
                     var window = System.Windows.Window.GetWindow((System.Windows.Controls.UserControl)this.GetView());
@@ -104,7 +104,7 @@ namespace Storager.ViewModels
                     await Task.Run(() => System.Threading.Thread.Sleep(1000));
                     window.Close();
 
-                    StartUpMainShell(userModel);
+                    StartUpMainShell();
                     break;
 
                 case Enums.eLoginResultCodes.INVALID_LOGIN:

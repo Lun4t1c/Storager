@@ -89,6 +89,26 @@ namespace Storager.ViewModels
             {
                 await Task.Run(() => DataAcces.InsertDocumentWz(document_wz));
 
+                foreach (ProductAndAmount productAndAmount in SelectedProductsAndAmount)
+                {
+                    int amount_withdrawn = productAndAmount.Amount;
+                    BindableCollection<StockModel> StocksWithProduct = DataAcces.GetNonEmptyStocksWithProduct(productAndAmount.Product);
+
+                    foreach (StockModel stock in StocksWithProduct)
+                    {
+                        if (amount_withdrawn > stock.CurrentAmount)
+                        {
+                            amount_withdrawn -= stock.CurrentAmount;
+                            await Task.Run(() => DataAcces.UpdateStockCurrentAmount(stock, 0));
+                        }
+                        else if (amount_withdrawn <= stock.CurrentAmount)
+                        {
+                            await Task.Run(() => DataAcces.UpdateStockCurrentAmount(stock, stock.CurrentAmount - amount_withdrawn));
+                            break;
+                        }
+                    }
+                }
+
                 WarningMessage = "Successfully added document";
                 ResetForm();
             }
@@ -100,13 +120,22 @@ namespace Storager.ViewModels
 
         private bool isFormValid()
         {
-            //throw new NotImplementedException();
-            return true;
+            bool result = true;
+            WarningMessage = "";
+
+            if (!isSelectedProductsValid())
+            {
+                WarningMessage += "Selected products are invalid.\n";
+                result = false;
+            }
+
+            return result;
         }
 
-        private bool isStockValid(StockModel stock)
+        private bool isSelectedProductsValid()
         {
-            if (stock.WithdrawnAmount > stock.CurrentAmount) return false;
+            foreach (ProductAndAmount productAndAmount in SelectedProductsAndAmount)
+                if (productAndAmount.Amount > productAndAmount.Product.AmountLeft) return false;
 
             return true;
         }

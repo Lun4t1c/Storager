@@ -15,6 +15,9 @@
 
                 <ResourceDictionary Source="./ControlStyles/MenuButtonStyle.xaml"/>
 
+                <!-- SHELL BUTTON STYLE -->
+                <ResourceDictionary Source="./ControlStyles/ShellSideMenuButtonStyle.xaml"/>
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
  
