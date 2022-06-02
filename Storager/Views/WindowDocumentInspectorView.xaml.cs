@@ -23,5 +23,11 @@ namespace Storager.Views
         {
             InitializeComponent();
         }
+
+        private void SecurePassword_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            { ((dynamic)this.DataContext).UserPassword = ((PasswordBox)sender).SecurePassword; }
+        }
     }
 }

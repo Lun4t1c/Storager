@@ -137,7 +137,7 @@
 
                     <PasswordBox Width="250"
                              x:Name="SecurePassword"
-                                 PasswordChanged="SecurePassword_PasswordChanged"
+                             PasswordChanged="SecurePassword_PasswordChanged"
                              Margin="5"
                              Style="{StaticResource PasswordTextboxStyle}"/>
 

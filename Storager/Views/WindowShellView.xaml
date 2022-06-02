@@ -93,12 +93,6 @@
                 </Border>
 
                 
-                <!--STORAGE LAYOUT BUTTON-->
-                <Button x:Name="StorageLayoutButton"
-                        Content="Storage layout"
-                        HorizontalContentAlignment="Left"
-                        Style="{StaticResource ShellSideMenuButtonStyle}"/>
-                
                 <!--PRODUCTS BUTTON-->
                 <Button x:Name="ProductsButton"
                         HorizontalContentAlignment="Left"

@@ -22,7 +22,7 @@ namespace Storager.Models
 
 
         #region Get data
-        private static bool CheckPassword(string login, SecureString password)
+        public static bool CheckPassword(string login, SecureString password)
         {
             string s = new System.Net.NetworkCredential(string.Empty, password).Password;
 

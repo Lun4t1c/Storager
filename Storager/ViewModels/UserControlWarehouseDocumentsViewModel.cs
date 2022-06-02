@@ -26,7 +26,7 @@ namespace Storager.ViewModels
             Documents.AddRange(DataAcces.GetAllDocumentsPz());
             Documents.AddRange(DataAcces.GetAllDocumentsWz());
 
-            Documents = new BindableCollection<DocumentBaseModel>(Documents.OrderBy(doc => doc.DateOfSigning));
+            Documents = new BindableCollection<DocumentBaseModel>(Documents.OrderByDescending(doc => doc.DateOfSigning));
             
         }
         #endregion

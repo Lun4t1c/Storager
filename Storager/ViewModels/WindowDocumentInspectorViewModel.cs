@@ -3,8 +3,10 @@ using Storager.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Storager.ViewModels
 {
@@ -13,7 +15,11 @@ namespace Storager.ViewModels
         #region Properties
         private DocumentBaseModel _document;
         private BindableCollection<StockModel> _stocks = null;
-        private BindableCollection<ProductAndAmount> _productsAndAmounts;
+        private BindableCollection<ProductAndAmount> _productsAndAmounts = null;
+        private Visibility _passwordPromptVisibility = Visibility.Hidden;
+        private SecureString _userPassword;
+        private string _passwordResultString = "";
+
 
         public DocumentBaseModel Document
         {
@@ -31,6 +37,12 @@ namespace Storager.ViewModels
         {
             get { return _productsAndAmounts; }
             set { _productsAndAmounts = value; NotifyOfPropertyChange(() => ProductsAndAmounts); }
+        }
+
+        public Visibility PasswordPromptVisibility
+        {
+            get { return _passwordPromptVisibility; }
+            set { _passwordPromptVisibility = value; NotifyOfPropertyChange(() => PasswordPromptVisibility); }
         }
 
 
@@ -52,8 +64,19 @@ namespace Storager.ViewModels
                 if (Document.GetType() == typeof(DocumentWzModel)) return "Recipent";
                 return null;
             }
-        }
+        }        
 
+        public SecureString UserPassword
+        {
+            get { return _userPassword; }
+            set { _userPassword = value; NotifyOfPropertyChange(() => UserPassword); }
+        }        
+
+        public string PasswordResultString
+        {
+            get { return _passwordResultString; }
+            set { _passwordResultString = value; NotifyOfPropertyChange(() => PasswordResultString); }
+        }
         #endregion
 
         #region Constructor
@@ -78,11 +101,41 @@ namespace Storager.ViewModels
                 Console.WriteLine("LOADING PRODUCTS");
                 Stocks = null;
                 ProductsAndAmounts = ((DocumentWzModel)Document).ProductsAndAmount;
+            }
+        }
 
-                foreach (var x in ((DocumentWzModel)Document).ProductsAndAmount)
-                {
-                    Console.WriteLine("BLERG");
-                }
+        private void EnableEdit()
+        {
+            
+        }
+
+        private async void CheckPassword()
+        {
+            PasswordResultString = "";
+            bool isPasswordValid = await Task.Run(() => DataAcces.CheckPassword(Globals.LoggedUser.Login, UserPassword));
+
+            if (isPasswordValid)
+            {
+                PasswordPromptVisibility = Visibility.Hidden;
+                EnableEdit();
+            }
+            else PasswordResultString = "Invalid password.";
+        }
+        #endregion
+
+        #region Button clicks
+        public void EnableEditButton()
+        {
+            PasswordPromptVisibility = Visibility.Visible;
+        }
+        #endregion
+
+        #region Key downs
+        public void UserPasswordPreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                CheckPassword();
             }
         }
         #endregion
