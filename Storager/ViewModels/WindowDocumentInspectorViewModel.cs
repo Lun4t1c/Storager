@@ -13,13 +13,16 @@ namespace Storager.ViewModels
     public class WindowDocumentInspectorViewModel : Screen
     {
         #region Properties
+        public BindableCollection<ContractorModel> AllContractors { get; set; } = DataAcces.GetAllContractors();
+
         private DocumentBaseModel _document;
         private BindableCollection<StockModel> _stocks = null;
         private BindableCollection<ProductAndAmount> _productsAndAmounts = null;
         private Visibility _passwordPromptVisibility = Visibility.Hidden;
         private SecureString _userPassword;
         private string _passwordResultString = "";
-
+        private bool _isEditingEnabled = false;
+        private ContractorModel _selectedContractor;
 
         public DocumentBaseModel Document
         {
@@ -45,27 +48,6 @@ namespace Storager.ViewModels
             set { _passwordPromptVisibility = value; NotifyOfPropertyChange(() => PasswordPromptVisibility); }
         }
 
-
-        public string RecipentSupplierString
-        {
-            get 
-            {
-                if (Document.GetType() == typeof(DocumentPzModel)) return ((DocumentPzModel)Document).Supplier;
-                if (Document.GetType() == typeof(DocumentWzModel)) return ((DocumentWzModel)Document).Recipent;
-                return null;
-            }
-        }
-
-        public string RecipentSupplier
-        {
-            get
-            {
-                if (Document.GetType() == typeof(DocumentPzModel)) return "Supplier";
-                if (Document.GetType() == typeof(DocumentWzModel)) return "Recipent";
-                return null;
-            }
-        }        
-
         public SecureString UserPassword
         {
             get { return _userPassword; }
@@ -76,6 +58,18 @@ namespace Storager.ViewModels
         {
             get { return _passwordResultString; }
             set { _passwordResultString = value; NotifyOfPropertyChange(() => PasswordResultString); }
+        }        
+
+        public bool isEditingEnabled
+        {
+            get { return _isEditingEnabled; }
+            set { _isEditingEnabled = value; NotifyOfPropertyChange(() => isEditingEnabled); }
+        }        
+
+        public ContractorModel SelectedContractor
+        {
+            get { return _selectedContractor; }
+            set { _selectedContractor = value; NotifyOfPropertyChange(() => SelectedContractor); }
         }
         #endregion
 
@@ -83,6 +77,7 @@ namespace Storager.ViewModels
         public WindowDocumentInspectorViewModel(DocumentBaseModel document)
         {
             Document = document;
+            SelectedContractor = FindContractorFromDocument(document);
             LoadStocksOrProducts();
         }
         #endregion
@@ -106,7 +101,20 @@ namespace Storager.ViewModels
 
         private void EnableEdit()
         {
-            
+            isEditingEnabled = true;
+        }
+
+        private void ConfirmChanges()
+        {
+
+            if (Document.GetType() == typeof(DocumentPzModel))
+                ((DocumentPzModel)Document).Supplier = SelectedContractor;
+            else if (Document.GetType() == typeof(DocumentWzModel))
+                ((DocumentWzModel)Document).Recipent = SelectedContractor;
+            else
+                return;
+
+            DataAcces.UpdateDocument(Document);
         }
 
         private async void CheckPassword()
@@ -121,12 +129,33 @@ namespace Storager.ViewModels
             }
             else PasswordResultString = "Invalid password.";
         }
+
+        private ContractorModel FindContractorFromDocument(DocumentBaseModel document)
+        {
+            if (document.GetType() == typeof(DocumentPzModel))
+            {
+                ContractorModel contractor = AllContractors.FirstOrDefault(c => c.Name == ((DocumentPzModel)document).Supplier.Name);
+                return contractor;
+            }
+            if (document.GetType() == typeof(DocumentWzModel))
+            {
+                ContractorModel contractor = AllContractors.FirstOrDefault(c => c.Name == ((DocumentWzModel)document).Recipent.Name);
+                return contractor;
+            }
+
+            return null;
+        }
         #endregion
 
         #region Button clicks
         public void EnableEditButton()
         {
             PasswordPromptVisibility = Visibility.Visible;
+        }
+
+        public void ConfirmChangesButton()
+        {
+            ConfirmChanges();
         }
         #endregion
 

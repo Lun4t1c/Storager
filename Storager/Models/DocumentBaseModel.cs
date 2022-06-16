@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Storager.Models
 {
-    public class DocumentBaseModel
+    public abstract class DocumentBaseModel
     {
         #region Database columns
         public int Id { get; set; }
@@ -33,7 +33,6 @@ namespace Storager.Models
             }
             set { ApprovedBy = value; }
         }
-
         #endregion
 
         #region Methods

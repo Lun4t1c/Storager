@@ -132,6 +132,7 @@ namespace Storager.Models
 
             return new BindableCollection<DocumentTypeModel>(documents);
         }
+        
         public static BindableCollection<DocumentPzModel> GetAllDocumentsPz()
         {
             IEnumerable<DocumentPzModel> documents_pz = null;
@@ -201,6 +202,20 @@ namespace Storager.Models
             }
             return new BindableCollection<StorageRackModel>(racks);
         }
+        
+        public static BindableCollection<ContractorModel> GetAllContractors()
+        {
+            IEnumerable<ContractorModel> contractors = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                contractors = connection.Query<ContractorModel>($"SELECT * FROM CONTRACTORS");
+            }
+            return new BindableCollection<ContractorModel>(contractors);
+        }
+
         public static BindableCollection<StockModel> GetStocksInDocumentPz(DocumentPzModel document_pz)
         {
             IEnumerable<StockModel> stocks = null;
@@ -250,6 +265,22 @@ namespace Storager.Models
             }
 
             return new BindableCollection<ProductAndAmount>(productsAndAmounts);
+        }
+
+        public static BindableCollection<StockModel> GetStocksInStorageRack(StorageRackModel storageRack)
+        {
+            IEnumerable<StockModel> stocks = null;
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                stocks = connection.Query<StockModel>($"SELECT * FROM STOCKS WHERE Id_StorageRack = @id",
+                    new { @id = storageRack.Id }
+                );
+            }
+
+            return new BindableCollection<StockModel>(stocks);
         }
 
         public static ProductModel GetSingleProduct(int id_product)
@@ -316,6 +347,22 @@ namespace Storager.Models
             return doctype;
         }
         
+        public static ContractorModel GetSingleContractor(int id_contractor)
+        {
+            ContractorModel contractor = null;
+
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                contractor = connection.QuerySingleOrDefault<ContractorModel>($"SELECT * FROM CONTRACTORS WHERE Id = @id",
+                    new { @id = id_contractor });
+            }
+
+            return contractor;
+        }
+    
         public static int? CountProductAmountLeft(int id_product)
         {
             int? AmountLeft = null;
@@ -348,7 +395,7 @@ namespace Storager.Models
                 if (connection.State == ConnectionState.Closed)
                     connection.Open();
 
-                stocks = connection.Query<StockModel>($"SELECT * FROM STOCKS WHERE Id_Product = @id AND CurrentAmount > 0",
+                stocks = connection.Query<StockModel>($"SELECT * FROM STOCKS WHERE Id_Product = @idp AND CurrentAmount > 0",
                     new { @idp = product.Id });
             }
 
@@ -446,7 +493,7 @@ namespace Storager.Models
                 //document
                 using (SqlCommand cmd = new SqlCommand("spInsertDocumentPz", connection) { CommandType = CommandType.StoredProcedure })
                 {
-                    cmd.Parameters.Add("@supplier", SqlDbType.NVarChar).Value = document_pz.Supplier;
+                    cmd.Parameters.Add("@id_supplier", SqlDbType.Int).Value = document_pz.Supplier.Id;
                     cmd.Parameters.Add("@date_of_signing", SqlDbType.DateTime).Value = document_pz.DateOfSigning;
                     cmd.Parameters.Add("@invoice_number", SqlDbType.NVarChar).Value = document_pz.InvoiceNumber;
                     cmd.Parameters.Add("@id_approved_by", SqlDbType.Int).Value = document_pz.Id_ApprovedBy;
@@ -499,7 +546,7 @@ namespace Storager.Models
                 //document
                 using (SqlCommand cmd = new SqlCommand("spInsertDocumentWz", connection) { CommandType = CommandType.StoredProcedure })
                 {
-                    cmd.Parameters.Add("@recipent", SqlDbType.NVarChar).Value = document_wz.Recipent;
+                    cmd.Parameters.Add("@id_recipent", SqlDbType.Int).Value = document_wz.Recipent.Id;
                     cmd.Parameters.Add("@date_of_signing", SqlDbType.DateTime).Value = document_wz.DateOfSigning;
                     cmd.Parameters.Add("@invoice_number", SqlDbType.NVarChar).Value = document_wz.InvoiceNumber;
                     cmd.Parameters.Add("@id_approved_by", SqlDbType.Int).Value = document_wz.Id_ApprovedBy;
@@ -527,6 +574,36 @@ namespace Storager.Models
                         cmd.ExecuteNonQuery();
                         connection.Close();
                     }
+                }
+            }
+        }
+
+        public static void InsertStorageRack(StorageRackModel storageRack)
+        {
+            using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("spInsertStorageRack", connection) { CommandType = CommandType.StoredProcedure })
+                {
+                    cmd.Parameters.Add("@code", SqlDbType.NVarChar).Value = storageRack.Code;
+
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static void InsertContractor(ContractorModel contractor)
+        {
+            using (SqlConnection connection = new System.Data.SqlClient.SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("spInsertContractor", connection) { CommandType = CommandType.StoredProcedure })
+                {
+                    cmd.Parameters.Add("@name", SqlDbType.NVarChar).Value = contractor.Name;
+                    cmd.Parameters.Add("@email", SqlDbType.NVarChar).Value = contractor.Email;
+                    cmd.Parameters.Add("@address", SqlDbType.NVarChar).Value = contractor.Address;
+
+                    connection.Open();
+                    cmd.ExecuteNonQuery();
                 }
             }
         }
@@ -566,6 +643,49 @@ namespace Storager.Models
                     "SET CurrentAmount = @na " +
                     "WHERE Id = @id",
                     new { id = stock.Id, na = newAmount });
+            }
+        }
+
+        public static void UpdateDocument(DocumentBaseModel document)
+        {
+            if (document.GetType() == typeof(DocumentPzModel))
+            {
+                UpdateDocumentPz((DocumentPzModel)document);
+                return;
+            }
+
+            if (document.GetType() == typeof(DocumentWzModel))
+            {
+                UpdateDocumentWz((DocumentWzModel)document);
+                return;
+            }
+        }
+
+        public static void UpdateDocumentPz(DocumentPzModel document)
+        {
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                connection.Execute(
+                    $"UPDATE DOCUMENTS_PZ " +
+                    $"SET Id_Supplier = {document.Supplier.Id} " +
+                    $"WHERE Id = {document.Id}");
+            }
+        }
+
+        public static void UpdateDocumentWz(DocumentWzModel document)
+        {
+            using (IDbConnection connection = new SqlConnection(ConfigurationManager.ConnectionStrings["cn"].ConnectionString))
+            {
+                if (connection.State == ConnectionState.Closed)
+                    connection.Open();
+
+                connection.Execute(
+                    $"UPDATE DOCUMENTS_WZ " +
+                    $"SET Id_Recipent = {document.Recipent.Id} " +
+                    $"WHERE Id = {document.Id}");
             }
         }
         #endregion

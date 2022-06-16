@@ -90,10 +90,14 @@
     </Compile>
     <Compile Include="Enums\eSettingsPages.cs" />
     <Compile Include="Enums\eLoginResultCodesEnum.cs" />
+    <Compile Include="Enums\eSortMode.cs" />
+    <Compile Include="Enums\eSortOrder.cs" />
     <Compile Include="Misc\IAdder.cs" />
+    <Compile Include="Misc\SortModeAndOrder.cs" />
     <Compile Include="Misc\ToastControl.xaml.cs">
       <DependentUpon>ToastControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\ContractorModel.cs" />
     <Compile Include="Models\DataAcces.cs" />
     <Compile Include="Models\DocumentBaseModel.cs" />
     <Compile Include="Models\DocumentPzModel.cs" />
@@ -107,21 +111,29 @@
     <Compile Include="Models\StorageRackModel.cs" />
     <Compile Include="Models\UnitOfMeasureModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="ValueConverters\vcPriceToString.cs" />
     <Compile Include="ValueConverters\vcStockWithdrawAmountToBoolConverter.cs" />
+    <Compile Include="ViewModels\UserControlAddContractorViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddDocumentPZViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddDocumentViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddDocumentWZViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddProductViewModel.cs" />
     <Compile Include="ViewModels\UserControlAddStockViewModel.cs" />
+    <Compile Include="ViewModels\UserControlContractorsViewModel.cs" />
     <Compile Include="ViewModels\UserControlLoadingScreenViewModel.cs" />
     <Compile Include="ViewModels\UserControlLoginViewModel.cs" />
     <Compile Include="ViewModels\UserControlProductsViewModel.cs" />
+    <Compile Include="ViewModels\UserControlStorageRacksViewModel.cs" />
     <Compile Include="ViewModels\UserControlWarehouseDocumentsViewModel.cs" />
+    <Compile Include="ViewModels\WindowAddStorageRackViewModel.cs" />
     <Compile Include="ViewModels\WindowDocumentInspectorViewModel.cs" />
     <Compile Include="ViewModels\WindowPopupAdderViewModel.cs" />
     <Compile Include="ViewModels\WindowSettingsViewModel.cs" />
     <Compile Include="ViewModels\WindowShellViewModel.cs" />
     <Compile Include="ViewModels\WindowWelcomeViewModel.cs" />
+    <Compile Include="Views\UserControlAddContractorView.xaml.cs">
+      <DependentUpon>UserControlAddContractorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControlAddDocumentPZView.xaml.cs">
       <DependentUpon>UserControlAddDocumentPZView.xaml</DependentUpon>
     </Compile>
@@ -137,6 +149,9 @@
     <Compile Include="Views\UserControlAddStockView.xaml.cs">
       <DependentUpon>UserControlAddStockView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControlContractorsView.xaml.cs">
+      <DependentUpon>UserControlContractorsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControlLoadingScreenView.xaml.cs">
       <DependentUpon>UserControlLoadingScreenView.xaml</DependentUpon>
     </Compile>
@@ -146,8 +161,14 @@
     <Compile Include="Views\UserControlProductsView.xaml.cs">
       <DependentUpon>UserControlProductsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControlStorageRacksView.xaml.cs">
+      <DependentUpon>UserControlStorageRacksView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\UserControlWarehouseDocumentsView.xaml.cs">
       <DependentUpon>UserControlWarehouseDocumentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WindowAddStorageRackView.xaml.cs">
+      <DependentUpon>WindowAddStorageRackView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WindowDocumentInspectorView.xaml.cs">
       <DependentUpon>WindowDocumentInspectorView.xaml</DependentUpon>
@@ -197,6 +218,10 @@
     <Content Include="Images\loading.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\RackIcon.png" />
+    <Resource Include="Resources\bg.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\PlusIcon.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
@@ -222,6 +247,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControlAddContractorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControlAddDocumentPZView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -242,6 +271,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControlContractorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControlLoadingScreenView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -254,7 +287,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\UserControlStorageRacksView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\UserControlWarehouseDocumentsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WindowAddStorageRackView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

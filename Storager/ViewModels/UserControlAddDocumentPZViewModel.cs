@@ -13,10 +13,11 @@ namespace Storager.ViewModels
         #region Properties
         public BindableCollection<ProductModel> Products { get; set; } = DataAcces.GetAllProducts();
         public BindableCollection<StorageRackModel> StorageRacks { get; set; } = DataAcces.GetAllStorageRacks();
+        public BindableCollection<ContractorModel> AllContractors { get; set; } = DataAcces.GetAllContractors();
 
 
         private BindableCollection<StockModel> _selectedStocks = new BindableCollection<StockModel>();
-        private string _selectedSupplier = null;
+        private ContractorModel _selectedSupplier = null;
         private string _selectedInvoiceNumber = null;
         private string _warningMessage = string.Empty;
 
@@ -26,7 +27,7 @@ namespace Storager.ViewModels
             set { _selectedStocks = value; NotifyOfPropertyChange(() => SelectedStocks); }
         }
 
-        public string SelectedSupplier
+        public ContractorModel SelectedSupplier
         {
             get { return _selectedSupplier; }
             set { _selectedSupplier = value; NotifyOfPropertyChange(() => SelectedSupplier); }
@@ -92,7 +93,7 @@ namespace Storager.ViewModels
             bool result = true;
             WarningMessage = string.Empty;
 
-            if (string.IsNullOrEmpty(SelectedSupplier))
+            if (SelectedSupplier == null)
             {
                 WarningMessage += "Supplier cannot be empty\n";
                 result = false;
@@ -123,7 +124,7 @@ namespace Storager.ViewModels
 
         private void ResetForm()
         {
-            SelectedSupplier = string.Empty;
+            SelectedSupplier = null;
             SelectedStocks = new BindableCollection<StockModel>();
             SelectedInvoiceNumber = string.Empty;
             WarningMessage = string.Empty;

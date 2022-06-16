@@ -10,12 +10,13 @@ namespace Storager.Models
     public class DocumentPzModel : DocumentBaseModel
     {
         #region Database columns
-        public string Supplier { get; set; }
+        public int Id_Supplier { get; set; }
         #endregion
 
 
         #region Other properties
         private BindableCollection<StockModel> _stocks = null;
+        private ContractorModel _supplier = null;
 
         public BindableCollection<StockModel> Stocks
         {
@@ -30,7 +31,23 @@ namespace Storager.Models
                 }
             }
             set { _stocks = value; }
+        }        
+
+        public ContractorModel Supplier
+        {
+            get
+            {
+                if (_supplier != null)
+                    return _supplier;
+                else
+                {
+                    _supplier = DataAcces.GetSingleContractor(Id_Supplier);
+                    return _supplier;
+                }
+            }
+            set { _supplier = value; }
         }
+
         #endregion
     }
 }

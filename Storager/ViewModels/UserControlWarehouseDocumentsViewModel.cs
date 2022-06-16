@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Storager.Misc;
 using Storager.Models;
 using System;
 using System.Collections.Generic;
@@ -12,11 +13,18 @@ namespace Storager.ViewModels
     {
         #region Properties
         private BindableCollection<DocumentBaseModel> _documents = new BindableCollection<DocumentBaseModel>();
+        private SortModeAndOrder _sortMode;
 
         public BindableCollection<DocumentBaseModel> Documents
         {
             get { return _documents; }
             set { _documents = value; NotifyOfPropertyChange(() => Documents); }
+        }        
+
+        public SortModeAndOrder SortMode
+        {
+            get { return _sortMode; }
+            set { _sortMode = value; NotifyOfPropertyChange(() => SortMode); }
         }
         #endregion
 
@@ -26,13 +34,22 @@ namespace Storager.ViewModels
             Documents.AddRange(DataAcces.GetAllDocumentsPz());
             Documents.AddRange(DataAcces.GetAllDocumentsWz());
 
-            Documents = new BindableCollection<DocumentBaseModel>(Documents.OrderByDescending(doc => doc.DateOfSigning));
-            
+            SortDocuments();            
         }
         #endregion
 
         #region Methods
+        private void SortDocuments()
+        {
+            Documents = new BindableCollection<DocumentBaseModel>(Documents.OrderByDescending(doc => doc.DateOfSigning));
+        }
 
+        private void AddDocument()
+        {
+            var window = System.Windows.Window.GetWindow((System.Windows.Controls.UserControl)this.GetView());
+            WindowShellViewModel shell = window.DataContext as WindowShellViewModel;
+            shell?.AddDocumentButton();
+        }
         #endregion
 
         #region Button clicks
@@ -40,6 +57,11 @@ namespace Storager.ViewModels
         {
             IWindowManager windowManager = new WindowManager();
             windowManager.ShowWindowAsync(new ViewModels.WindowDocumentInspectorViewModel(document));
+        }
+
+        public void AddDocumentButton()
+        {
+
         }
         #endregion
     }

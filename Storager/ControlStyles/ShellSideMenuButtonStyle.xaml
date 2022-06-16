@@ -7,7 +7,7 @@
         <Setter Property="FontFamily" Value="Segoe UI" />
         <Setter Property="Foreground" Value="Wheat"/>
 
-        <Setter Property="Background" Value="#2a14b8"/>
+        <Setter Property="Background" Value="Transparent"/>
         
         <Setter Property="Template">
             <Setter.Value>

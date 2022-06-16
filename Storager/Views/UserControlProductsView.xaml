@@ -59,16 +59,14 @@
 
             <!--#region DATA COLUMNS -->
             <DataGrid.Columns>
-                <!-- ID -->
-                <DataGridTextColumn Header="ID"
-                                    Binding="{Binding Id}"/>
-                
+
                 <!-- NAME -->
                 <DataGridTextColumn Header="Name"
                                     Binding="{Binding Name}"/>
 
                 <!-- DESCRIPTION -->
                 <DataGridTextColumn Header="Description"
+                                    Width="200"
                                     Binding="{Binding Description}"/>
 
                 <!-- BARCODE -->

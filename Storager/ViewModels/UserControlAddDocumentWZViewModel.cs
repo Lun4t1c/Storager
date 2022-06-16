@@ -11,7 +11,9 @@ namespace Storager.ViewModels
     public class UserControlAddDocumentWZViewModel : Screen
     {
         #region Properties
-        private string _selectedRecipent = string.Empty;
+        public BindableCollection<ContractorModel> AllContractors { get; set; } = DataAcces.GetAllContractors();
+
+        private ContractorModel _selectedRecipent = null;
         private string _selectedInvoiceNumber = string.Empty;
         private BindableCollection<ProductModel> _productsInDatabase = DataAcces.GetAllProducts();
         private BindableCollection<ProductModel> _filteredProducts = DataAcces.GetAllProducts();
@@ -19,7 +21,7 @@ namespace Storager.ViewModels
         private string _productsFilterText = string.Empty;
         private string _warningMessage = string.Empty;
 
-        public string SelectedRecipent
+        public ContractorModel SelectedRecipent
         {
             get { return _selectedRecipent; }
             set { _selectedRecipent = value; NotifyOfPropertyChange(() => SelectedRecipent); }
@@ -165,7 +167,7 @@ namespace Storager.ViewModels
 
         private void ResetForm()
         {
-            SelectedRecipent = string.Empty;            
+            SelectedRecipent = null;            
             SelectedProductsAndAmount = new BindableCollection<ProductAndAmount>();
             SelectedInvoiceNumber = string.Empty;
             WarningMessage = string.Empty;

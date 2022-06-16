@@ -22,15 +22,32 @@ namespace Storager.ViewModels
         #endregion
 
         #region Methods
+        private async void DisplayContractors()
+        {
+            await Task.Run(() => DisplayLoadingScreen("Loading contractors..."));
+            UserControlContractorsViewModel userControlContractorsViewModel = await Task.Run(() => new UserControlContractorsViewModel());
+            await ActivateItemAsync(userControlContractorsViewModel);
+        }
+
+        private async void DisplayAddContractorControl()
+        {
+            await Task.Run(() => DisplayLoadingScreen());
+            UserControlAddContractorViewModel userControlAddContractorViewModel = await Task.Run(() => new UserControlAddContractorViewModel());
+            await ActivateItemAsync(userControlAddContractorViewModel);
+        }
+
         private async void DisplayProducts()
         {
             await Task.Run(() => DisplayLoadingScreen("Loading products..."));
-            await ActivateItemAsync(new UserControlProductsViewModel());
+            UserControlProductsViewModel userControlProducts = await Task.Run(() => new UserControlProductsViewModel());
+            await ActivateItemAsync(userControlProducts);
         }
 
-        private void DisplayStorageLayout()
+        private async void DisplayStorageRacks()
         {
-            DisplayLoadingScreen("Loading storage layout...");
+            DisplayLoadingScreen("Loading storage racks...");
+            UserControlStorageRacksViewModel userControlStorageRacksViewModel = await Task.Run(() => new UserControlStorageRacksViewModel());
+            await ActivateItemAsync(userControlStorageRacksViewModel);
         }
 
         private void ShowSettingsWindow()
@@ -47,19 +64,22 @@ namespace Storager.ViewModels
         private async void DisplayAddProductControl()
         {
             await Task.Run(() => DisplayLoadingScreen());
-            await ActivateItemAsync(new UserControlAddProductViewModel());
+            UserControlAddProductViewModel userControlAddProductViewModel = await Task.Run(() => new UserControlAddProductViewModel());
+            await ActivateItemAsync(userControlAddProductViewModel);
         }
 
         private async void DisplayDocuments()
         {
             await Task.Run(() => DisplayLoadingScreen("Loading documents..."));
-            await ActivateItemAsync(new UserControlWarehouseDocumentsViewModel());
+            UserControlWarehouseDocumentsViewModel userControlWarehouseDocumentsViewModel = await Task.Run(() => new UserControlWarehouseDocumentsViewModel());
+            await ActivateItemAsync(userControlWarehouseDocumentsViewModel);
         }
 
         private async void DisplayAddDocumentControl()
         {
             await Task.Run(() => DisplayLoadingScreen());
-            await ActivateItemAsync(new UserControlAddDocumentViewModel());
+            UserControlAddDocumentViewModel userControlAddDocumentViewModel = await Task.Run(() => new UserControlAddDocumentViewModel());
+            await ActivateItemAsync(userControlAddDocumentViewModel);
         }
 
         private async void ShowToast(string text)
@@ -69,14 +89,23 @@ namespace Storager.ViewModels
         #endregion
 
         #region Button clicks
+        public void ContractorsButton()
+        {
+            DisplayContractors();
+        }
+
+        public void AddContractorButton()
+        {
+            DisplayAddContractorControl();
+        }
         public void ProductsButton()
         {
             DisplayProducts();
         }
 
-        public void StorageLayoutButton()
+        public void StorageRacksButton()
         {
-            DisplayStorageLayout();
+            DisplayStorageRacks();
         }
 
         public void SettingsButton()
@@ -101,7 +130,7 @@ namespace Storager.ViewModels
 
         public void TestButton()
         {
-            new WindowManager().ShowWindowAsync(new WindowPopupAdderViewModel(new UserControlAddStockViewModel() { AssignedAction = () => { Console.WriteLine("BENG"); } }));
+            new WindowManager().ShowWindowAsync(new WindowDocumentInspectorViewModel(DataAcces.GetAllDocumentsWz()[0]));
         }
 
 
@@ -110,6 +139,12 @@ namespace Storager.ViewModels
         {
             dummydata.GenerateRandomProducts();
             System.Windows.MessageBox.Show("Generated random products!");
+        }
+
+        public void GenerateRandomSeriousProductsButton()
+        {
+            dummydata.GenerateRandomSeriousProducts();
+            System.Windows.MessageBox.Show("Generated random serious products!");
         }
 
         public void GenerateRandomStocksButton()

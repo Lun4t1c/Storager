@@ -69,6 +69,42 @@ namespace Storager.Models
             return OutV;
         }
 
+        public static void GenerateRandomSeriousProducts()
+        {
+            List<ProductModel> products = new List<ProductModel>();
+            Random random = new Random();
+
+            BindableCollection<UnitOfMeasureModel> units = DataAcces.GetAllUnitsOfMeasure();
+
+            products.Add(new ProductModel() 
+            { 
+                Name = "Wylewka betonowa Weber B50 25 kg",
+                Description = "Do mniejszych lub większych prac betoniarskich świetnie sprawdzi się bardzo wytrzymała wylewka betonowa Weber B50. Mieszankę charakteryzują doskonałe parametry robocze i mrozoodporność, którą wylewka uzyskuje po stwardnieniu. Dodatkowym atutem produktu jest krótki czas wiązania. Wylewkę wykorzystasz wewnątrz oraz na zewnątrz budynków. Wykonasz nią spadki na balkonie i przeprowadzisz niekonstrukcyjne naprawy betonu.",
+                Barcode = random.Next(100000, 999999).ToString(),
+                Id_UnitOfMeasure = units.FirstOrDefault(u => u.UnitName == "Kilograms").Id
+            });
+
+            products.Add(new ProductModel()
+            {
+                Name = "Drabina 4 stopniowa MacAllister",
+                Description = "Drabina 4 stopniowa MacAllister jest produktem, którego możesz potrzebować w domu i ogrodzie. Wykonana została z dobrego stopu aluminium, co wpływa na jej wytrzymałość. Jednocześnie drabina jest lekka i z łatwością przeniesiesz ją w wybrane miejsce. Cztery szerokie stopnie pozwolą Ci osiągnąć zasięg pracy powyżej dwóch i pół metra.",
+                Barcode = random.Next(100000, 999999).ToString(),
+                Id_UnitOfMeasure = units.FirstOrDefault(u => u.UnitName == "SingleItem").Id
+            });
+
+            products.Add(new ProductModel()
+            {
+                Name = "Farba Dulux Ściany i Sufity neutralna biel 5 l",
+                Description = "Farba Dulux Ściany i Sufity neutralna biel wyróżnia się gęstą i kremową recepturą, co znacznie ułatwia malowanie. Zaletą tego produktu jest doskonała siła krycia. Lateksowa farba jest odporna na szorowanie, dzięki czemu bez trudu usuniesz z niej powstałe zabrudzenia. Sprawdź inne kolory i różne pojemności farb z serii Ściany i Sufity, które znajdziesz w naszym asortymencie.",
+                Barcode = random.Next(100000, 999999).ToString(),
+                Id_UnitOfMeasure = units.FirstOrDefault(u => u.UnitName == "Liters").Id
+            });
+
+
+            foreach (ProductModel product in products)
+                DataAcces.InsertProduct(product);
+        }
+
         public static void GenerateRandomStocks(int amount)
         {
             BindableCollection<StockModel> stocks = new BindableCollection<StockModel>();

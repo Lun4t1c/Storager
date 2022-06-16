@@ -44,14 +44,18 @@
             <!-- DOCUMENT NUMBER -->
             <TextBlock Grid.Column="0" Grid.Row="1"
                    Text="Number:"/>
-            <TextBox Grid.Column="1" Grid.Row="1"
+            <TextBlock Grid.Column="1" Grid.Row="1"
                    Text="{Binding Document.DocumentNumber}"/>
 
             <!-- RECIPENT / SUPPLIER -->
             <TextBlock Grid.Column="0" Grid.Row="2"
                    Text="{Binding RecipentSupplier}"/>
-            <TextBox Grid.Column="1" Grid.Row="2"
-                   Text="{Binding RecipentSupplierString}"/>
+            <ComboBox Grid.Column="1" Grid.Row="2"
+                      IsEditable="False"
+                      IsEnabled="{Binding isEditingEnabled}"
+                      ItemsSource="{Binding AllContractors}"
+                      SelectedItem="{Binding SelectedContractor, Mode=TwoWay}"
+                      DisplayMemberPath="Name"/>
 
             <!-- DATE OF SIGNING -->
             <TextBlock Grid.Column="0" Grid.Row="3"
@@ -205,9 +209,14 @@
 
 
             <!-- ENABLE EDIT BUTTON -->
-            <Button Grid.Row="7" Grid.ColumnSpan="2"
+            <Button Grid.Column="0" Grid.Row="7"
                     Content="Enable editing"
                     x:Name="EnableEditButton"/>
+
+            <Button Grid.Column="1" Grid.Row="7"
+                    Content="Confirm changes"
+                    x:Name="ConfirmChangesButton"
+                    IsEnabled="{Binding isEditingEnabled}"/>
 
         </Grid>
 
@@ -230,6 +239,8 @@
                        VerticalAlignment="Center"/>
 
             <PasswordBox Grid.Row="1" Margin="30"
+                         HorizontalContentAlignment="Center"
+                         VerticalContentAlignment="Center"
                          x:Name="SecurePassword"
                          PasswordChanged="SecurePassword_PasswordChanged"
                          cal:Message.Attach="[Event PreviewKeyDown] = [Action UserPasswordPreviewKeyDown($source, $eventArgs)]"/>

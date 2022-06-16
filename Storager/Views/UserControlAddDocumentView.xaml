@@ -26,7 +26,8 @@
 
         <!--#region SELECTED DOCUMENT PANEL -->
         <ContentControl Grid.Row="1" 
-                        x:Name="ActiveItem"/>
+                        x:Name="ActiveItem">
+        </ContentControl>
         <!--#endregion-->
 
     </Grid>

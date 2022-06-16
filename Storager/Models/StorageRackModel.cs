@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Caliburn.Micro;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +12,26 @@ namespace Storager.Models
         #region Database columns
         public int Id { get; set; }
         public string Code { get; set; }
-        public ushort LevelsCount { get; set; }
         #endregion
 
         #region Other properties
-        public IEnumerable<StockModel> Stocks { get; set; }
+        private BindableCollection<StockModel> _stocks = null;
+
+        public BindableCollection<StockModel> Stocks
+        {
+            get
+            {
+                if (_stocks != null)
+                    return _stocks;
+                else
+                {
+                    _stocks = DataAcces.GetStocksInStorageRack(this);
+                    return _stocks;
+                }
+            }
+            set { _stocks = value; }
+        }
+
         #endregion
     }
 }

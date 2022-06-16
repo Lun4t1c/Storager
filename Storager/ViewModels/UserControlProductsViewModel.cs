@@ -40,7 +40,7 @@ namespace Storager.ViewModels
         #region Constructor
         public UserControlProductsViewModel()
         {
-            
+
         }
         #endregion
 
